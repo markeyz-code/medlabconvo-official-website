@@ -29,7 +29,8 @@
             <div 
               v-for="member in category.members" 
               :key="member._id"
-              class="group relative flex flex-col h-full bg-white transition-all duration-700"
+              @click="selectedMember = member"
+              class="group relative flex flex-col h-full bg-white transition-all duration-700 cursor-pointer"
             >
               <!-- Portrait Layer -->
               <div class="relative aspect-square max-w-[280px] mx-auto rounded-[3rem] overflow-hidden bg-gray-50 border border-gray-100 mb-8">
@@ -66,21 +67,26 @@
                   {{ member.title }}
                 </p>
                 
-                <!-- Bio & Achievements Accordion-style or Static -->
+                <!-- Bio snippet -->
                 <p 
-                  class="text-gray-500 font-medium leading-relaxed mb-8 line-clamp-3 group-hover:line-clamp-none transition-all duration-500"
+                  class="text-sm text-gray-500 font-medium leading-relaxed mb-4 line-clamp-3 transition-all duration-500"
                   v-html="member.bio"
                 ></p>
 
-                <!-- Impact Chips -->
-                <div class="flex flex-wrap gap-2 mt-auto">
-                   <div 
-                     v-for="(ach, idx) in member.achievements" 
-                     :key="idx"
-                     class="px-3 py-1.5 bg-gray-50 text-gray-400 text-[9px] font-bold rounded-xl hover:bg-black hover:text-white transition-all cursor-default"
-                   >
-                     {{ ach }}
-                   </div>
+                <!-- Read More & Impact Chips -->
+                <div class="mt-auto pt-4 flex flex-col items-start gap-4">
+                  <div class="flex items-center text-sm font-bold text-gray-400 group-hover:text-[#27628C] transition-colors">
+                    Read more <Icon name="lucide:arrow-right" class="w-4 h-4 ml-1" />
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                     <div 
+                       v-for="(ach, idx) in member.achievements" 
+                       :key="idx"
+                       class="px-3 py-1.5 bg-gray-50 text-gray-400 text-[9px] font-bold rounded-xl group-hover:bg-black group-hover:text-white transition-all"
+                     >
+                       {{ ach }}
+                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -93,6 +99,47 @@
          <p class="text-sm font-bold text-gray-300">The Board is currently in Recess.</p>
       </div>
     </div>
+
+    <!-- Member Modal -->
+    <div v-if="selectedMember" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+      <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" @click="selectedMember = null"></div>
+      <div class="relative bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl animate-fade-in-up">
+        <button @click="selectedMember = null" class="absolute top-6 right-6 w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full flex items-center justify-center transition-colors z-10">
+          <Icon name="lucide:x" class="w-5 h-5" />
+        </button>
+        <div class="flex flex-col md:flex-row gap-8 p-8 md:p-12">
+          <div class="w-full md:w-1/3 shrink-0">
+            <div class="aspect-square rounded-[2rem] overflow-hidden bg-gray-50 border border-gray-100">
+              <img 
+                v-if="selectedMember.image" 
+                :src="selectedMember.image" 
+                :alt="selectedMember.name"
+                class="w-full h-full object-cover" 
+              />
+              <div v-else class="w-full h-full flex items-center justify-center text-gray-200">
+                <Icon name="lucide:user" class="w-20 h-20" />
+              </div>
+            </div>
+            <div class="flex gap-3 mt-6">
+              <a 
+                v-for="social in selectedMember.profiles" 
+                :key="social.type" 
+                :href="social.url" 
+                target="_blank"
+                class="w-10 h-10 bg-gray-50 flex items-center justify-center rounded-xl text-gray-900 hover:bg-[#27628C] hover:text-white transition-all border border-gray-100"
+              >
+                <Icon :name="getSocialIcon(social.type)" class="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{{ selectedMember.name }}</h3>
+            <p class="text-[#27628C] font-bold tracking-wider mb-8">{{ selectedMember.title }}</p>
+            <div class="prose prose-sm md:prose-base prose-slate max-w-none" v-html="selectedMember.bio"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -101,6 +148,8 @@ import { ref, onMounted, computed } from 'vue'
 import Icon from '@/components/Icon.vue'
 import { useGetTeamMembers } from '@/composables/modules/teams/useGetTeamMembers'
 import { teams_api } from '@/api_factory/modules/teams'
+
+const selectedMember = ref<any>(null)
 
 const { getTeamMembers, teamMembers: members, loading } = useGetTeamMembers()
 const backendCategories = ref<any[]>([])
