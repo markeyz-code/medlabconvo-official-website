@@ -4,10 +4,10 @@
       <div class="relative isolate overflow-hidden pt-14">
         <div class="mx-auto max-w-2xl lg:py-32 lg:mt-10 mt-36">
           <div class="text-center space-y-5">
-            <h1 class="font-bold tracking-tight text-gray-900 text-lg sm:text-xl lg:text-xl">
+            <h1 class="font-bold tracking-tight text-gray-900 text-6xl sm:text-8xl lg:text-9xl mb-6">
               Support MedLabConvo
             </h1>
-            <p class="text-lg sm:text-lg lg:text-lg text-gray-900  font-light animate-fade-in-delay">
+            <p class="text-2xl sm:text-3xl text-gray-600 font-light animate-fade-in-delay">
               Empower the Future of Laboratory Medicine.
             </p>
           </div>
