@@ -7,12 +7,12 @@
   
       <div class="relative max-w-6xl mx-auto">
         <div v-if="title" class="text-center mb-12">
-          <h2 class="text-lg font-bold text-gray-900 mb-4 leading-tight">
-            <span class="bg-gradient-to-r text-4xl from-[#27628C] via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+          <h2 class="font-bold text-gray-900 mb-4 leading-tight">
+            <span class="bg-gradient-to-r text-5xl sm:text-7xl lg:text-8xl from-[#27628C] via-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {{ title }}
             </span>
           </h2>
-          <p v-if="subtitle" class="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p v-if="subtitle" class="text-2xl text-gray-600 font-medium max-w-3xl mx-auto">
             {{ subtitle }}
           </p>
         </div>

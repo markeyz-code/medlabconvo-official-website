@@ -225,14 +225,14 @@
 
     <div class="flex justify-center items-center px-4 mt-20">
       <div class="max-w-[900px] w-full flex flex-col justify-center items-center">
-        <h2 class="text-4xl font-bold text-gray-900 text-center">
+        <h2 class="text-5xl sm:text-7xl lg:text-8xl font-bold text-gray-900 text-center mb-6">
           Join Us in Making an Impact
         </h2>
-        <p class="text-xl max-w-[800px] w-full text-gray-600 text-center mt-6 leading-relaxed">
+        <p class="text-2xl max-w-[800px] w-full text-gray-600 text-center mt-6 leading-relaxed">
           By supporting MedLabConvo, you are investing in a future where healthcare professionals are better
           equipped, more connected, and more empowered to drive change in healthcare.
         </p>
-        <p class="text-3xl font-bold text-gray-900 text-center mt-14">
+        <p class="text-4xl sm:text-5xl font-bold text-gray-900 text-center mt-14">
           Donate Today and Be Part of the Change!
         </p>
       </div>
