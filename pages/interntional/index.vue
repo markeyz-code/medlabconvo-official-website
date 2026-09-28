@@ -52,10 +52,10 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8 flex justify-center items-center w-full flex-col pt-16">
         <div class="mx-auto max-w-2xl lg:mx-0 flex justify-center items-center w-full flex-col">
           <h2
-            class="text-lg font-bold text-center tracking-tight text-white sm:text-xl mt-20">
+            class="text-5xl font-bold text-center tracking-tight text-white sm:text-7xl mt-20">
             Interntional
           </h2>
-          <p class="mt-3 text-lg leading-8 text-white text-center">
+          <p class="mt-3 text-2xl sm:text-3xl leading-8 text-white text-center">
             Maximize Opportunities | Attain Full Potential | Lead Impact
           </p>
         </div>

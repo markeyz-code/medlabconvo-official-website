@@ -15,15 +15,15 @@
 
     <div class="relative mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
       <div class="text-center">
-        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-in">
+        <h1 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-6 animate-fade-in">
           <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
             MedLabConvo
           </span>
         </h1>
-        <p class="text-lg sm:text-lg lg:text-lg text-blue-100 font-light mb-4 animate-fade-in-delay">
+        <p class="text-xl sm:text-2xl lg:text-3xl text-blue-100 font-light mb-4 animate-fade-in-delay">
           A Platform for Laboratory Science, Health Innovation,
         </p>
-        <p class="text-lg sm:text-lg lg:text-lg text-blue-100 font-light mb-8 animate-fade-in-delay">
+        <p class="text-xl sm:text-2xl lg:text-3xl text-blue-100 font-light mb-8 animate-fade-in-delay">
           and Workforce Development
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
