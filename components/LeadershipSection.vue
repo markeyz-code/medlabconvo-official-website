@@ -21,7 +21,7 @@
         <div v-for="category in activeCategories" :key="category.name" class="space-y-12 animate-fade-in-up">
           <div class="flex items-center gap-4">
              <div class="h-px flex-1 bg-gray-100"></div>
-             <h3 class="text-[11px] font-bold text-gray-400 capitalize">{{ category.name }}</h3>
+             <h3 class="text-sm font-bold text-gray-400 capitalize">{{ category.name }}</h3>
              <div class="h-px flex-1 bg-gray-100"></div>
           </div>
 
@@ -67,9 +67,10 @@
                 </p>
                 
                 <!-- Bio & Achievements Accordion-style or Static -->
-                <p class="text-gray-500 font-medium leading-relaxed mb-8 line-clamp-3 group-hover:line-clamp-none transition-all duration-500">
-                  {{ member.bio }}
-                </p>
+                <p 
+                  class="text-gray-500 font-medium leading-relaxed mb-8 line-clamp-3 group-hover:line-clamp-none transition-all duration-500"
+                  v-html="member.bio"
+                ></p>
 
                 <!-- Impact Chips -->
                 <div class="flex flex-wrap gap-2 mt-auto">
@@ -89,7 +90,7 @@
 
       <!-- Empty State -->
       <div v-if="!loading && activeCategories.length === 0" class="py-40 text-center">
-         <p class="text-[11px] font-bold text-gray-300">The Board is currently in Recess.</p>
+         <p class="text-sm font-bold text-gray-300">The Board is currently in Recess.</p>
       </div>
     </div>
   </section>
