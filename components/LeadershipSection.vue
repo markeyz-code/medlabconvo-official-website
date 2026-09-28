@@ -14,7 +14,7 @@
       <!-- Categories & Grid -->
       <div v-if="loading" class="flex flex-col items-center justify-center py-40 gap-6">
         <div class="w-12 h-12 border-4 border-gray-100 border-t-[#27628C] rounded-full animate-spin"></div>
-        <p class="text-[10px] font-bold text-gray-400">Fetching Leadership nodes...</p>
+        <p class="text-sm font-bold text-gray-400">Fetching Leadership nodes...</p>
       </div>
 
       <div v-else class="space-y-32">
@@ -25,7 +25,7 @@
              <div class="h-px flex-1 bg-gray-100"></div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
             <div 
               v-for="member in category.members" 
               :key="member._id"
@@ -62,7 +62,7 @@
                 <h4 class="text-lg md:text-xl font-bold text-gray-900 mb-2 tracking-normal  group-hover:text-[#27628C] transition-colors">
                   {{ member.name }}
                 </h4>
-                <p class="text-[10px] font-bold text-gray-400 tracking-wider mb-6">
+                <p class="text-sm font-bold text-gray-400 tracking-wider mb-6">
                   {{ member.title }}
                 </p>
                 

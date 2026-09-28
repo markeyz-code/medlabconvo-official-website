@@ -34,7 +34,7 @@
 
         <!-- Column 2: Platform Links -->
         <div class="space-y-8">
-          <h3 class="text-[10px] font-bold text-white  tracking-normal">Platform</h3>
+          <h3 class="text-sm font-bold text-white  tracking-normal">Platform</h3>
           <ul role="list" class="space-y-4">
             <li v-for="item in platform" :key="item.name">
               <NuxtLink :to="item.href" class="text-sm text-gray-400 hover:text-white transition-all flex items-center group">
@@ -48,7 +48,7 @@
         <!-- Column 3: Company & Legal -->
         <div class="space-y-12">
           <div class="space-y-8">
-            <h3 class="text-[10px] font-bold text-white  tracking-normal">Company</h3>
+            <h3 class="text-sm font-bold text-white  tracking-normal">Company</h3>
             <ul role="list" class="space-y-4">
               <li v-for="item in company" :key="item.name">
                 <NuxtLink :to="item.href" class="text-sm text-gray-400 hover:text-white transition-all flex items-center group">
@@ -60,7 +60,7 @@
           </div>
           
           <div class="space-y-8">
-            <h3 class="text-[10px] font-bold text-white  tracking-normal">Insights & Policy</h3>
+            <h3 class="text-sm font-bold text-white  tracking-normal">Insights & Policy</h3>
             <ul role="list" class="space-y-4">
               <li v-for="item in legal" :key="item.name">
                 <NuxtLink :to="item.href" class="text-sm text-gray-400 hover:text-white transition-all flex items-center group">
@@ -156,7 +156,7 @@ const platform = [
 const company = [
   { name: 'About Us', href: '/about-us' },
   { name: 'Community', href: '/community' },
-  { name: 'Contact', href: '/contact-us' },
+  { name: 'Contact', href: '/enquiries' },
 ]
 
 const legal = [
