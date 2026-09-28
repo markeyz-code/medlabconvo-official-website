@@ -7,7 +7,7 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center pt-16 text-center">
         <div class="max-w-3xl">
           <h1 class="text-2xl font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Merchandise & Knowledge</h1>
-          <h2 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">Professional Shop</h2>
+          <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">Professional Shop</h2>
           <p class="text-2xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
             Expertly curated resources, professional tools, and learning materials designed to support your journey in medical laboratory science.
           </p>
@@ -49,7 +49,7 @@
             <div class="h-1.5 w-12 bg-[#27628C] mt-2 rounded-full"></div>
           </div>
           <div class="flex items-center gap-4">
-            <span class="text-[10px] font-bold text-gray-400 tracking-normal">{{ products.length }} items</span>
+            <span class="text-sm font-bold text-gray-400 tracking-normal">{{ products.length }} items</span>
             <div class="flex items-center bg-gray-100 rounded-lg p-1">
               <button 
                 @click="viewMode = 'grid'" 
@@ -82,10 +82,10 @@
               
               <!-- Badges -->
               <div class="absolute top-6 left-6 flex flex-col gap-2">
-                <div v-if="product.isDigital" class="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-[10px] font-bold text-gray-900 shadow-sm border border-white/20">
+                <div v-if="product.isDigital" class="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-sm font-bold text-gray-900 shadow-sm border border-white/20">
                   Digital
                 </div>
-                <div v-if="product.availability === 'out_of_stock'" class="bg-red-500/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-[10px] font-bold text-white shadow-sm">
+                <div v-if="product.availability === 'out_of_stock'" class="bg-red-500/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-sm font-bold text-white shadow-sm">
                   Sold Out
                 </div>
               </div>
@@ -101,7 +101,7 @@
             <!-- Product Info -->
             <div class="flex flex-col flex-1 px-2">
               <div class="flex items-center gap-2 mb-3">
-                <span class="text-[10px] font-bold text-[#27628C] tracking-normal">{{ product.category }}</span>
+                <span class="text-sm font-bold text-[#27628C] tracking-normal">{{ product.category }}</span>
               </div>
               <h3 class="text-xl font-bold text-gray-900 mb-2 tracking-tight line-clamp-2 min-h-[3.5rem] group-hover:text-[#27628C] transition-colors">
                 {{ product.name }}
@@ -122,7 +122,7 @@
                 
                 <button 
                   @click.prevent="triggerCheckout(product)"
-                  class="flex items-center gap-2 text-[10px] font-black text-[#27628C] hover:text-blue-800  tracking-normal transition-colors cursor-pointer"
+                  class="flex items-center gap-2 text-sm font-black text-[#27628C] hover:text-blue-800  tracking-normal transition-colors cursor-pointer"
                 >
                   Purchase Securely
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,13 +162,13 @@
                   <p class="text-xs text-gray-500 mt-1">by {{ product.author || product.instructor || 'MedLabConvo' }}</p>
                 </td>
                 <td class="p-4">
-                  <span v-if="product.isDigital" class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800">
+                  <span v-if="product.isDigital" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-bold bg-blue-100 text-blue-800">
                     Digital
                   </span>
-                  <span v-else class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-800">
+                  <span v-else class="inline-flex items-center px-2 py-0.5 rounded text-sm font-bold bg-gray-100 text-gray-800">
                     Physical
                   </span>
-                  <span v-if="product.availability === 'out_of_stock'" class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-800 ml-2">
+                  <span v-if="product.availability === 'out_of_stock'" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-bold bg-red-100 text-red-800 ml-2">
                     Sold Out
                   </span>
                 </td>

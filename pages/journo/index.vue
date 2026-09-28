@@ -7,7 +7,7 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center pt-16 text-center">
         <div class="max-w-3xl">
           <h1 class="text-2xl font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Research, Articles & Insights</h1>
-          <h2 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">Journo</h2>
+          <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">Journo</h2>
           <p class="text-2xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
             Research publications, clinical perspectives, and curated articles at the intersection of laboratory science and global health.
           </p>
@@ -39,7 +39,7 @@
                 <div v-else class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center text-xl">📄</div>
                 
                 <div class="absolute top-12 left-12">
-                  <span class="bg-gray-900 text-white px-6 py-2 rounded-full text-[10px] font-black  tracking-normal">
+                  <span class="bg-gray-900 text-white px-6 py-2 rounded-full text-sm font-black  tracking-normal">
                     FEATURED PUBLICATION
                   </span>
                 </div>
@@ -50,12 +50,12 @@
                 <div class="space-y-12">
                   <div class="flex items-center gap-6">
                     <div class="flex flex-col">
-                      <span class="text-[10px] font-black text-gray-300  tracking-normal mb-1">Published</span>
+                      <span class="text-sm font-black text-gray-300  tracking-normal mb-1">Published</span>
                       <span class="text-sm font-bold text-gray-900">{{ formatDate(latestPublication.createdAt) }}</span>
                     </div>
                     <div class="h-8 w-px bg-gray-100"></div>
                     <div class="flex flex-col">
-                      <span class="text-[10px] font-black text-gray-300  tracking-normal mb-1">Author</span>
+                      <span class="text-sm font-black text-gray-300  tracking-normal mb-1">Author</span>
                       <span class="text-sm font-bold text-gray-900">{{ latestPublication.authors }}</span>
                     </div>
                   </div>
@@ -69,10 +69,10 @@
                   </p>
                   
                   <div class="flex flex-wrap items-center gap-3">
-                    <span class="bg-blue-50 text-[#27628C] px-4 py-1.5 rounded-xl text-[10px] font-black  tracking-normal border border-blue-100">
+                    <span class="bg-blue-50 text-[#27628C] px-4 py-1.5 rounded-xl text-sm font-black  tracking-normal border border-blue-100">
                       {{ latestPublication.journal }}
                     </span>
-                    <span class="bg-gray-50 text-gray-400 px-4 py-1.5 rounded-xl text-[10px] font-black  tracking-normal border border-gray-100">
+                    <span class="bg-gray-50 text-gray-400 px-4 py-1.5 rounded-xl text-sm font-black  tracking-normal border border-gray-100">
                       {{ latestPublication.category }}
                     </span>
                   </div>
@@ -104,7 +104,7 @@
         <div class="max-center max-w-7xl mx-auto">
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
             <div>
-              <h2 class="text-[10px] font-bold text-[#27628C] mb-4">The Archive</h2>
+              <h2 class="text-sm font-bold text-[#27628C] mb-4">The Archive</h2>
               <h3 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-normal">All Publications</h3>
             </div>
             <p class="text-gray-400 text-sm font-medium">
@@ -148,7 +148,7 @@
                 
                 <!-- Meta & Content -->
                 <div class="space-y-4 px-4">
-                  <div class="flex items-center gap-4 text-[10px] font-bold text-gray-300">
+                  <div class="flex items-center gap-4 text-sm font-bold text-gray-300">
                     <span>{{ publication.year }}</span>
                     <div class="w-1 h-1 rounded-full bg-gray-200"></div>
                     <span class="truncate max-w-[150px]">{{ publication.journal }}</span>
@@ -163,7 +163,7 @@
                   </p>
                   
                   <div class="flex items-center gap-3 pt-6 border-t border-gray-50">
-                     <div class="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center text-white text-[10px] font-bold">
+                     <div class="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center text-white text-sm font-bold">
                        {{ (publication.authors || 'A').charAt(0) }}
                      </div>
                      <div class="flex flex-col">

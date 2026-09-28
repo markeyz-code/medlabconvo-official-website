@@ -117,7 +117,7 @@
                             <div class="absolute inset-0 pointer-events-none border border-white/10 rounded-[1.5rem]"></div>
                         </div>
                         <div class="text-center">
-                            <p class="text-[10px] font-bold text-white/60  tracking-normal">Foreword &amp; Introduction</p>
+                            <p class="text-sm font-bold text-white/60  tracking-normal">Foreword &amp; Introduction</p>
                         </div>
                     </div>
 
@@ -139,7 +139,7 @@
                             <div class="absolute inset-0 pointer-events-none border border-white/10 rounded-[1.5rem]"></div>
                         </div>
                         <div class="text-center">
-                            <p class="text-[10px] font-bold text-white/60  tracking-normal">Story of the Book</p>
+                            <p class="text-sm font-bold text-white/60  tracking-normal">Story of the Book</p>
                         </div>
                     </div>
                 </div>

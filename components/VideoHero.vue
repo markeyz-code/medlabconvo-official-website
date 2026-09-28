@@ -77,7 +77,7 @@
           
           <!-- Subtle Quote / Caption -->
           <div class="mt-8 text-center animate-pulse">
-             <p class="text-[10px] font-bold text-[#27628C]  tracking-normal">Watch Our Vision for 2025</p>
+             <p class="text-sm font-bold text-[#27628C]  tracking-normal">Watch Our Vision for 2025</p>
           </div>
         </div>
       </div>

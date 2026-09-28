@@ -12,7 +12,7 @@
       <div v-else-if="section.isVisible" class="max-w-4xl mx-auto py-20 border-b border-gray-50 last:border-0 px-6">
         <!-- Section Header -->
         <div v-if="section.title" class="mb-10">
-          <div class="inline-block px-4 py-1.5 bg-blue-50 text-[#27628C] text-[10px] font-bold rounded-full mb-4 capitalize">
+          <div class="inline-block px-4 py-1.5 bg-blue-50 text-[#27628C] text-sm font-bold rounded-full mb-4 capitalize">
             {{ section.id?.replace(/_/g, ' ') || 'Insight' }}
           </div>
           <h2 class="text-xl md:text-lg font-bold text-gray-900 leading-tight tracking-normal ">

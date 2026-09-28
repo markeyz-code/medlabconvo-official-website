@@ -7,7 +7,7 @@
       <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center pt-16 text-center">
         <div class="max-w-3xl">
           <h1 class="text-2xl font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Audio & Visual Insights</h1>
-          <h2 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">LabCast</h2>
+          <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">LabCast</h2>
           <p class="text-2xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
             Conversations with laboratory scientists, public health experts, health innovators, and policy leaders shaping the future of healthcare.
           </p>
@@ -167,7 +167,7 @@
 
             <!-- Progress/Status Badge -->
             <div class="absolute top-4 left-4">
-              <div class="bg-white/90 backdrop-blur-md text-slate-900 px-3 py-1 rounded-lg text-[10px] font-bold shadow-sm border border-slate-100">
+              <div class="bg-white/90 backdrop-blur-md text-slate-900 px-3 py-1 rounded-lg text-sm font-bold shadow-sm border border-slate-100">
                 S{{ episode.season }} E{{ episode.episode }}
               </div>
             </div>
@@ -176,7 +176,7 @@
           <!-- Card Content -->
           <div class="p-6 flex-1 flex flex-col justify-between border-x border-b border-slate-100 rounded-b-2xl">
             <div class="space-y-4">
-              <div class="flex items-center justify-between text-[10px] font-bold text-slate-400">
+              <div class="flex items-center justify-between text-sm font-bold text-slate-400">
                 <span class="flex items-center gap-1.5">
                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -202,13 +202,13 @@
 
             <!-- Links -->
             <div class="flex items-center gap-2 pt-6 mt-6 border-t border-slate-50">
-              <a :href="episode.spotifyUrl" target="_blank" class="flex-1 flex items-center justify-center py-2.5 bg-slate-50 text-slate-400 hover:bg-[#1DB954] hover:text-white rounded-xl transition-all active:scale-95 shadow-sm border border-slate-100 text-[10px] font-bold gap-2">
+              <a :href="episode.spotifyUrl" target="_blank" class="flex-1 flex items-center justify-center py-2.5 bg-slate-50 text-slate-400 hover:bg-[#1DB954] hover:text-white rounded-xl transition-all active:scale-95 shadow-sm border border-slate-100 text-sm font-bold gap-2">
                  Spotify
               </a>
-              <a :href="episode.appleUrl" target="_blank" class="flex-1 flex items-center justify-center py-2.5 bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white rounded-xl transition-all active:scale-95 shadow-sm border border-slate-100 text-[10px] font-bold gap-2">
+              <a :href="episode.appleUrl" target="_blank" class="flex-1 flex items-center justify-center py-2.5 bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white rounded-xl transition-all active:scale-95 shadow-sm border border-slate-100 text-sm font-bold gap-2">
                  Apple
               </a>
-              <a v-if="episode.youtubeUrl" :href="episode.youtubeUrl" target="_blank" class="flex-1 flex items-center justify-center py-2.5 bg-slate-50 text-slate-400 hover:bg-[#FF0000] hover:text-white rounded-xl transition-all active:scale-95 shadow-sm border border-slate-100 text-[10px] font-bold gap-2">
+              <a v-if="episode.youtubeUrl" :href="episode.youtubeUrl" target="_blank" class="flex-1 flex items-center justify-center py-2.5 bg-slate-50 text-slate-400 hover:bg-[#FF0000] hover:text-white rounded-xl transition-all active:scale-95 shadow-sm border border-slate-100 text-sm font-bold gap-2">
                  YouTube
               </a>
             </div>

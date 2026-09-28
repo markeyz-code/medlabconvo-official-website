@@ -19,7 +19,7 @@
           <div class="space-y-4">
              <div class="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-md">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-[10px] font-black text-white  tracking-normal">Enrolment Portal</span>
+                <span class="text-sm font-black text-white  tracking-normal">Enrolment Portal</span>
              </div>
              <h1 class="text-lg md:text-xl font-black text-white tracking-tight leading-tight">
                {{ program?.title || 'Program Registration' }}
@@ -107,7 +107,7 @@
                        <span class="text-xs font-black text-gray-900  tracking-normal group-focus-within:text-[#27628C] transition-colors">
                          {{ field.label }}
                        </span>
-                       <span v-if="field.required" class="text-[10px] font-black text-[#DE6129] ">Required</span>
+                       <span v-if="field.required" class="text-sm font-black text-[#DE6129] ">Required</span>
                      </label>
 
                      <!-- Dynamic Input Types -->
@@ -163,7 +163,7 @@
                        class="h-16 w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-6 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#27628C] focus:ring-0 transition-all outline-none"
                      />
                      
-                     <p v-if="field.description" class="text-[10px] text-gray-400 font-bold italic">{{ field.description }}</p>
+                     <p v-if="field.description" class="text-sm text-gray-400 font-bold italic">{{ field.description }}</p>
                    </div>
                  </div>
 
@@ -183,7 +183,7 @@
                      <div v-if="submitting" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                      <span>{{ submitting ? 'Finalising Enrolment...' : 'Register Now' }}</span>
                    </button>
-                    <p class="text-[10px] text-gray-400 font-bold  tracking-normal text-center leading-relaxed">
+                    <p class="text-sm text-gray-400 font-bold  tracking-normal text-center leading-relaxed">
                       By registering, you confirm that the information provided is accurate and agree to our Terms and Conditions and Privacy Policy.
                     </p>
                  </div>

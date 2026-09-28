@@ -55,8 +55,8 @@
           
           <div class="space-y-6">
             <div class="flex items-center gap-3">
-              <span class="text-[10px] font-bold text-[#27628C] bg-[#27628C]/5 px-3 py-1 rounded-full capitalize">{{ featuredPublication.category }}</span>
-              <span class="text-[10px] font-medium text-gray-400">{{ featuredPublication.readTime || 5 }} min read</span>
+              <span class="text-sm font-bold text-[#27628C] bg-[#27628C]/5 px-3 py-1 rounded-full capitalize">{{ featuredPublication.category }}</span>
+              <span class="text-sm font-medium text-gray-400">{{ featuredPublication.readTime || 5 }} min read</span>
             </div>
             <NuxtLink :to="`/convostack/${featuredPublication.slug}`">
               <h2 class="text-xl md:text-lg font-bold text-gray-900 leading-tight tracking-normal hover:text-[#27628C] transition-colors">
@@ -100,8 +100,8 @@
                 <div class="flex flex-col md:flex-row gap-8">
                   <div class="flex-1 space-y-4">
                     <div class="flex items-center gap-3">
-                       <span class="text-[10px] font-bold text-[#27628C] capitalize">{{ pub.category }}</span>
-                       <span class="text-[10px] font-medium text-gray-400">{{ formatDate(pub.publishedAt || pub.createdAt) }}</span>
+                       <span class="text-sm font-bold text-[#27628C] capitalize">{{ pub.category }}</span>
+                       <span class="text-sm font-medium text-gray-400">{{ formatDate(pub.publishedAt || pub.createdAt) }}</span>
                     </div>
                     <NuxtLink :to="`/convostack/${pub.slug}`">
                       <h4 class="text-xl md:text-lg font-bold text-gray-900 group-hover:text-[#27628C] transition-colors leading-snug">
@@ -112,8 +112,8 @@
                       {{ pub.excerpt }}
                     </p>
                     <div class="flex items-center gap-4 pt-4 opacity-70">
-                       <span class="text-[10px] font-bold text-gray-900">{{ pub.authorName || 'MedLabConvo Team' }}</span>
-                       <span class="text-[10px] text-gray-400">{{ pub.readTime || 4 }} min read</span>
+                       <span class="text-sm font-bold text-gray-900">{{ pub.authorName || 'MedLabConvo Team' }}</span>
+                       <span class="text-sm text-gray-400">{{ pub.readTime || 4 }} min read</span>
                     </div>
                   </div>
                   <NuxtLink :to="`/convostack/${pub.slug}`" class="w-full md:w-40 aspect-[4/3] rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 shadow-sm group-hover:shadow-md transition-all">
@@ -145,7 +145,7 @@
 
             <!-- Recommendations -->
             <div class="space-y-8">
-               <h3 class="text-[10px] font-bold text-gray-400 border-b border-gray-100 pb-3">Recommendations</h3>
+               <h3 class="text-sm font-bold text-gray-400 border-b border-gray-100 pb-3">Recommendations</h3>
                <div class="space-y-8">
                   <div v-for="rec in filteredPublications.slice(0, 4)" :key="rec._id" class="flex items-start gap-4 group">
                      <span class="text-lg font-bold text-gray-200 mt-1  group-hover:text-[#27628C]/20 transition-colors">0{{ filteredPublications.indexOf(rec) + 1 }}</span>
@@ -153,7 +153,7 @@
                         <NuxtLink :to="`/convostack/${rec.slug}`" class="text-sm font-bold text-gray-900 hover:text-[#27628C] transition-colors leading-tight block">
                            {{ rec.title }}
                         </NuxtLink>
-                        <span class="text-[10px] font-bold text-[#27628C]/60 capitalize">{{ rec.authorName || 'MedLabConvo' }}</span>
+                        <span class="text-sm font-bold text-[#27628C]/60 capitalize">{{ rec.authorName || 'MedLabConvo' }}</span>
                      </div>
                   </div>
                </div>

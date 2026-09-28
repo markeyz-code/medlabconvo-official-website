@@ -98,7 +98,7 @@
                 <button 
                   type="submit" 
                   :disabled="loading || !email"
-                  class="w-full py-4 bg-[#27628C] text-white rounded-2xl text-[11px] font-bold tracking-normal hover:bg-white hover:text-black transition-all shadow-sm border border-slate-200 active:scale-[0.98] disabled:opacity-30 flex items-center justify-center gap-2"
+                  class="w-full py-4 bg-[#27628C] text-white rounded-2xl text-sm font-bold tracking-normal hover:bg-white hover:text-black transition-all shadow-sm border border-slate-200 active:scale-[0.98] disabled:opacity-30 flex items-center justify-center gap-2"
                 >
                   <span v-if="loading" class="w-3 h-3 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
                   {{ loading ? 'Transmitting...' : 'Join the Substack' }}
@@ -114,7 +114,7 @@
       </div>
       
       <!-- Bottom Bar -->
-      <div class="mt-24 border-t border-white/5 pt-12 flex flex-col md:flex-row items-center justify-between gap-8 text-[11px] font-medium text-gray-500 tracking-normal">
+      <div class="mt-24 border-t border-white/5 pt-12 flex flex-col md:flex-row items-center justify-between gap-8 text-sm font-medium text-gray-500 tracking-normal">
         <div class="flex items-center gap-6">
           <p>&copy; {{ new Date().getFullYear() }} MedLabConvo. All rights reserved.</p>
           <span class="hidden md:block w-px h-4 bg-white/10"></span>

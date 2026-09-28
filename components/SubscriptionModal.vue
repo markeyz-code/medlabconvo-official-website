@@ -25,7 +25,7 @@
           </button>
 
           <div class="p-8 sm:p-10 text-center">
-            <h3 class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight mb-3">Join Convo Stack</h3>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight mb-3">For Newsletters</h3>
             <p class="text-gray-500 font-medium mb-8">Subscribe to receive exclusive insights, medical journalism, and ecosystem pulses directly in your inbox.</p>
             
             <form @submit.prevent="handleSubscribe" class="space-y-4">
@@ -50,7 +50,7 @@
                 <span v-else>Subscribe Now</span>
               </button>
             </form>
-            <p class="text-[10px] text-gray-400 mt-6 font-semibold tracking-wider">No spam. Unsubscribe at any time.</p>
+            <p class="text-sm text-gray-400 mt-6 font-semibold tracking-wider">No spam. Unsubscribe at any time.</p>
           </div>
         </div>
       </div>

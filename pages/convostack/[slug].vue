@@ -12,10 +12,10 @@
       <div class="max-w-7xl mx-auto px-6 mb-16 md:mb-24">
         <div class="flex flex-col items-center text-center mb-12 animate-fade-in">
           <div class="flex items-center gap-4 mb-8">
-            <span class="bg-[#27628C] text-white px-5 py-2 rounded-full text-[10px] font-bold shadow-sm border border-slate-200 capitalize tracking-normal">
+            <span class="bg-[#27628C] text-white px-5 py-2 rounded-full text-sm font-bold shadow-sm border border-slate-200 capitalize tracking-normal">
               {{ publication.category || 'Opinion' }}
             </span>
-            <span class="text-gray-400 text-[10px] font-bold">
+            <span class="text-gray-400 text-sm font-bold">
               {{ publication.readTime || 5 }} min read
             </span>
           </div>
@@ -54,7 +54,7 @@
                   <span v-else class="text-xl font-bold">{{ (publication.authorName || 'M').charAt(0) }}</span>
                 </div>
                 <div>
-                  <p class="text-[10px] font-bold text-[#27628C] mb-2  tracking-normal">Author</p>
+                  <p class="text-sm font-bold text-[#27628C] mb-2  tracking-normal">Author</p>
                   <h3 class="text-xl font-bold text-gray-900 leading-tight mb-2">
                     {{ publication.authors?.join(', ') || publication.authorName || 'MedLabConvo Team' }}
                   </h3>
@@ -64,11 +64,11 @@
 
               <!-- High-Level Actions -->
               <div class="flex flex-col gap-4">
-                <button @click="handleLike" :class="['flex items-center justify-center gap-3 px-8 py-4 rounded-2xl transition-all font-bold text-[11px]', isLiked ? 'bg-red-50 text-red-600' : 'bg-gray-50 text-gray-900 hover:bg-gray-100 shadow-sm border border-gray-100']">
+                <button @click="handleLike" :class="['flex items-center justify-center gap-3 px-8 py-4 rounded-2xl transition-all font-bold text-sm', isLiked ? 'bg-red-50 text-red-600' : 'bg-gray-50 text-gray-900 hover:bg-gray-100 shadow-sm border border-gray-100']">
                   <svg class="w-5 h-5" :fill="isLiked ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                   {{ localLikeCount }} Likes
                 </button>
-                <button @click="sharePublication" class="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gray-900 text-white font-bold text-[11px] shadow-sm border border-slate-200 hover:bg-black transition-all">
+                <button @click="sharePublication" class="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gray-900 text-white font-bold text-sm shadow-sm border border-slate-200 hover:bg-black transition-all">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
                   Share Story
                 </button>
@@ -161,8 +161,8 @@
                 <input v-model="commentForm.userEmail" type="email" class="w-full px-6 py-4 text-sm font-bold text-gray-900 focus:outline-none placeholder:text-gray-300 bg-transparent" />
               </div>
               <div v-else class="px-6 py-3 bg-gray-50/50 border-b border-gray-50 flex items-center justify-between">
-                <span class="text-[10px] font-bold text-[#27628C]  tracking-normal">Posting as @{{ userProfile.userHandle }}</span>
-                <button @click="userProfile = null" class="text-[10px] font-bold text-gray-400 hover:text-red-500 transition-colors">Switch Profile</button>
+                <span class="text-sm font-bold text-[#27628C]  tracking-normal">Posting as @{{ userProfile.userHandle }}</span>
+                <button @click="userProfile = null" class="text-sm font-bold text-gray-400 hover:text-red-500 transition-colors">Switch Profile</button>
               </div>
               <textarea
                 v-model="commentForm.content"
@@ -172,11 +172,11 @@
                 @focus="replyTo = null"
               ></textarea>
               <div class="bg-gray-50/50 px-6 py-4 flex justify-between items-center border-t border-gray-50">
-                <p class="text-[10px] font-bold text-gray-400">Share insights responsibly.</p>
+                <p class="text-sm font-bold text-gray-400">Share insights responsibly.</p>
                 <button
                   @click="submitComment"
                   :disabled="(!userProfile && !commentForm.userName) || !commentForm.content || submittingComment"
-                  class="bg-[#27628C] text-white px-8 py-3 rounded-2xl text-[11px] font-bold hover:bg-black transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-sm border border-slate-200 active:scale-95"
+                  class="bg-[#27628C] text-white px-8 py-3 rounded-2xl text-sm font-bold hover:bg-black transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-sm border border-slate-200 active:scale-95"
                 >
                   {{ submittingComment ? 'Transmitting...' : 'Post Insight' }}
                 </button>
@@ -203,17 +203,17 @@
               <div class="flex-1 pb-6">
                 <div class="flex items-center gap-3 mb-2">
                   <h4 class="text-sm font-bold text-gray-900 capitalize">{{ comment.userName }}</h4>
-                  <span v-if="comment.userHandle" class="text-[10px] font-bold text-[#27628C] bg-[#27628C]/5 px-2 py-0.5 rounded-full">@{{ comment.userHandle }}</span>
-                  <span class="text-[10px] font-bold text-gray-400 ml-auto">{{ timeAgo(comment.createdAt) }}</span>
+                  <span v-if="comment.userHandle" class="text-sm font-bold text-[#27628C] bg-[#27628C]/5 px-2 py-0.5 rounded-full">@{{ comment.userHandle }}</span>
+                  <span class="text-sm font-bold text-gray-400 ml-auto">{{ timeAgo(comment.createdAt) }}</span>
                 </div>
                 <p class="text-gray-600 text-base leading-relaxed mb-4 font-medium">{{ comment.content }}</p>
                 
                 <div class="flex items-center gap-8">
-                  <button @click="handleReply(comment)" class="text-[10px] font-bold text-gray-400 hover:text-[#27628C] transition-all flex items-center gap-2">
+                  <button @click="handleReply(comment)" class="text-sm font-bold text-gray-400 hover:text-[#27628C] transition-all flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
                     Reply Thread
                   </button>
-                  <button @click="handleCommentLike(comment)" :class="['text-[10px] font-bold transition-all flex items-center gap-2', comment.isLikedByMe ? 'text-red-500' : 'text-gray-400 hover:text-red-500']">
+                  <button @click="handleCommentLike(comment)" :class="['text-sm font-bold transition-all flex items-center gap-2', comment.isLikedByMe ? 'text-red-500' : 'text-gray-400 hover:text-red-500']">
                     <svg class="w-4 h-4" :fill="comment.isLikedByMe ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     {{ comment.likesCount || 0 }} Applause
                   </button>
@@ -228,8 +228,8 @@
                 <div class="px-6 py-3 flex justify-between items-center border-t border-gray-50 bg-gray-50/30">
                   <span class="text-[9px] font-bold text-gray-400 ">Reply Mode</span>
                   <div class="flex gap-3">
-                    <button @click="cancelReply" class="text-[10px] font-bold text-gray-400 hover:text-gray-900 px-4 py-2 rounded-xl hover:bg-gray-100 transition-all">Dismiss</button>
-                    <button @click="submitComment" :disabled="!commentForm.content" class="bg-gray-900 text-white px-5 py-2 rounded-xl text-[10px] font-bold hover:bg-black disabled:opacity-30 transition-all shadow-sm border border-slate-100">Post Reply</button>
+                    <button @click="cancelReply" class="text-sm font-bold text-gray-400 hover:text-gray-900 px-4 py-2 rounded-xl hover:bg-gray-100 transition-all">Dismiss</button>
+                    <button @click="submitComment" :disabled="!commentForm.content" class="bg-gray-900 text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-black disabled:opacity-30 transition-all shadow-sm border border-slate-100">Post Reply</button>
                   </div>
                 </div>
               </div>
@@ -246,10 +246,10 @@
                   <div class="flex items-center gap-3 mb-1.5">
                     <h4 class="text-[13px] font-bold text-gray-900 capitalize">{{ reply.userName }}</h4>
                     <span v-if="reply.userHandle" class="text-[9px] font-bold text-[#27628C] bg-[#27628C]/5 px-1.5 py-0.5 rounded-full">@{{ reply.userHandle }}</span>
-                    <span class="text-[10px] font-bold text-gray-400 ml-auto">{{ timeAgo(reply.createdAt) }}</span>
+                    <span class="text-sm font-bold text-gray-400 ml-auto">{{ timeAgo(reply.createdAt) }}</span>
                   </div>
                   <p class="text-gray-600 text-[14px] leading-relaxed font-medium mb-3">{{ reply.content }}</p>
-                  <button @click="handleCommentLike(reply)" :class="['text-[10px] font-bold transition-all flex items-center gap-2', reply.isLikedByMe ? 'text-red-500' : 'text-gray-400 hover:text-red-500']">
+                  <button @click="handleCommentLike(reply)" :class="['text-sm font-bold transition-all flex items-center gap-2', reply.isLikedByMe ? 'text-red-500' : 'text-gray-400 hover:text-red-500']">
                     <svg class="w-3.5 h-3.5" :fill="reply.isLikedByMe ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     {{ reply.likesCount || 0 }}
                   </button>

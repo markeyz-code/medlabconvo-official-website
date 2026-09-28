@@ -8,7 +8,7 @@
         <h2 class="text-2xl font-bold text-blue-200 mb-8 animate-fade-in tracking-normal">
           Elevating Clinical Excellence
         </h2>
-        <h1 class="text-6xl sm:text-8xl lg:text-9xl font-bold text-white leading-tight tracking-normal animate-fade-in-up">
+        <h1 class="text-4xl sm:text-6xl font-bold text-white leading-tight tracking-normal animate-fade-in-up">
           Programs
         </h1>
         <p class="mt-8 text-2xl text-blue-50 font-medium max-w-3xl leading-relaxed animate-fade-in-up delay-200">
@@ -22,7 +22,7 @@
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 animate-fade-in">
           <div>
-            <h2 class="text-[10px] font-bold text-[#27628C] tracking-normal mb-4">Opportunities</h2>
+            <h2 class="text-sm font-bold text-[#27628C] tracking-normal mb-4">Opportunities</h2>
             <h3 class="text-4xl md:text-5xl font-bold text-gray-900  tracking-tight">Current Initiatives</h3>
           </div>
           <p class="text-gray-400 text-sm font-medium  tracking-normal" v-if="!loading">
@@ -83,7 +83,7 @@
             
             <!-- Meta & Content -->
             <div class="space-y-6 px-4">
-              <div class="flex items-center gap-4 text-[10px] font-black text-gray-300  tracking-normal">
+              <div class="flex items-center gap-4 text-sm font-black text-gray-300  tracking-normal">
                 <span class="flex items-center gap-2">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   {{ program.duration || 'Flexible' }}
@@ -104,7 +104,7 @@
               <div class="flex items-center gap-3 pt-6 border-t border-gray-50">
                 <button 
                   @click="navigateToProgram(program)"
-                  class="flex-1 bg-gray-50 text-gray-900 px-6 py-4 rounded-xl text-[10px] font-black  tracking-normal hover:bg-gray-100 transition-all text-center"
+                  class="flex-1 bg-gray-50 text-gray-900 px-6 py-4 rounded-xl text-sm font-black  tracking-normal hover:bg-gray-100 transition-all text-center"
                 >
                   Learn More
                 </button>
@@ -113,7 +113,7 @@
                     v-if="program.externalFormLink"
                     :href="program.externalFormLink"
                     target="_blank"
-                    class="flex-1 bg-gray-900 text-white px-6 py-4 rounded-xl text-[10px] font-black  tracking-normal hover:bg-[#27628C] transition-all text-center shadow-sm border border-slate-200 hover:shadow-sm border border-slate-200 flex items-center justify-center gap-2"
+                    class="flex-1 bg-gray-900 text-white px-6 py-4 rounded-xl text-sm font-black  tracking-normal hover:bg-[#27628C] transition-all text-center shadow-sm border border-slate-200 hover:shadow-sm border border-slate-200 flex items-center justify-center gap-2"
                   >
                     Apply Now
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -121,7 +121,7 @@
                   <button 
                     v-else
                     @click="applyToProgram(program)"
-                    class="flex-1 bg-gray-900 text-white px-6 py-4 rounded-xl text-[10px] font-black  tracking-normal hover:bg-[#27628C] transition-all text-center shadow-sm border border-slate-200 hover:shadow-sm border border-slate-200"
+                    class="flex-1 bg-gray-900 text-white px-6 py-4 rounded-xl text-sm font-black  tracking-normal hover:bg-[#27628C] transition-all text-center shadow-sm border border-slate-200 hover:shadow-sm border border-slate-200"
                   >
                     Enroll Now
                   </button>
@@ -145,10 +145,10 @@
           Whether you're a student starting your journey or a veteran professional seeking leadership roles, our programs provide the roadmap to excellence.
         </p>
         <div class="pt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
-          <NuxtLink to="/products" class="w-full sm:w-auto bg-white text-[#27628C] px-12 py-5 rounded-2xl text-[11px] font-bold tracking-normal hover:bg-blue-50 transition-all shadow-sm border border-slate-200">
+          <NuxtLink to="/products" class="w-full sm:w-auto bg-white text-[#27628C] px-12 py-5 rounded-2xl text-sm font-bold tracking-normal hover:bg-blue-50 transition-all shadow-sm border border-slate-200">
             Explore Shop
           </NuxtLink>
-          <NuxtLink to="/resources" class="w-full sm:w-auto border border-white/20 text-white px-12 py-5 rounded-2xl text-[11px] font-bold tracking-normal hover:bg-white/5 transition-all">
+          <NuxtLink to="/resources" class="w-full sm:w-auto border border-white/20 text-white px-12 py-5 rounded-2xl text-sm font-bold tracking-normal hover:bg-white/5 transition-all">
             Browse Resources
           </NuxtLink>
         </div>

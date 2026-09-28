@@ -3,7 +3,7 @@
     <!-- Subscription Banner -->
     <div class="bg-[#27628C] py-2 px-4 shadow-inner">
       <div class="max-w-7xl mx-auto flex items-center justify-center gap-4 text-center">
-        <p class="text-[10px] sm:text-xs font-bold text-white drop-shadow-sm">
+        <p class="text-sm sm:text-xs font-bold text-white drop-shadow-sm">
           Stay Ahead — Join the Convo Substack for exclusive insights
         </p>
         <button 

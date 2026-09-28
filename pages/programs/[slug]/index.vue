@@ -42,10 +42,10 @@
                 </NuxtLink>
                 
                 <div class="flex items-center gap-3">
-                  <span class="px-4 py-1.5 bg-[#27628C] text-white text-[10px] font-black  tracking-normal rounded-full">
+                  <span class="px-4 py-1.5 bg-[#27628C] text-white text-sm font-black  tracking-normal rounded-full">
                     {{ program.category }}
                   </span>
-                  <span v-if="program.duration" class="px-4 py-1.5 bg-gray-100 text-gray-900 text-[10px] font-black  tracking-normal rounded-full flex items-center gap-2 border border-gray-200/50">
+                  <span v-if="program.duration" class="px-4 py-1.5 bg-gray-100 text-gray-900 text-sm font-black  tracking-normal rounded-full flex items-center gap-2 border border-gray-200/50">
                     <Icon name="lucide:clock" class="w-4 h-4" />
                     {{ program.duration }}
                   </span>
@@ -128,7 +128,7 @@
                   </div> -->
                   <p class="text-xs font-black text-gray-900 ">Interactive learning</p>
                 </div>
-                <p class="text-[10px] text-gray-500 font-bold leading-relaxed">Certified curriculum designed by clinical diagnostic experts.</p>
+                <p class="text-sm text-gray-500 font-bold leading-relaxed">Certified curriculum designed by clinical diagnostic experts.</p>
               </div>
             </div>
 
@@ -174,7 +174,7 @@
                     {{ speaker.bio }}
                   </p>
                   
-                  <button class="text-[10px] font-black  tracking-normal text-[#27628C] hover:text-[#DE6129] transition-colors pt-2">
+                  <button class="text-sm font-black  tracking-normal text-[#27628C] hover:text-[#DE6129] transition-colors pt-2">
                     Read Biography
                   </button>
                 </div>
@@ -231,7 +231,7 @@
                     :key="i"
                     class="p-6 bg-slate-50 border border-slate-100 rounded-2xl flex items-center gap-6 group hover:bg-[#27628C] transition-all duration-300"
                   >
-                    <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[10px] font-black text-slate-900 group-hover:scale-90 transition-transform">
+                    <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-sm font-black text-slate-900 group-hover:scale-90 transition-transform">
                       {{ i + 1 }}
                     </div>
                     <span class="text-sm font-bold text-slate-700 group-hover:text-white transition-colors">{{ area }}</span>
@@ -307,7 +307,7 @@
             >
               <img :src="img" class="w-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex items-end">
-                <p class="text-white text-[10px] font-black  tracking-normal">{{ program.title }} / View {{ i + 1 }}</p>
+                <p class="text-white text-sm font-black  tracking-normal">{{ program.title }} / View {{ i + 1 }}</p>
               </div>
             </div>
           </div>

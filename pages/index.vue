@@ -15,7 +15,7 @@
 
     <div class="relative mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
       <div class="text-center">
-        <h1 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-6 animate-fade-in">
+        <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in">
           <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
             MedLabConvo
           </span>
@@ -43,7 +43,7 @@
             <p class="text-blue-100 text-sm font-medium  leading-relaxed text-center px-4">
               "{{ testimonial.testimonial.length > 120 ? testimonial.testimonial.substring(0, 117) + '...' : testimonial.testimonial }}"
             </p>
-            <p class="text-[10px] font-bold text-white mt-2  tracking-normal">— {{ testimonial.name }}</p>
+            <p class="text-sm font-bold text-white mt-2  tracking-normal">— {{ testimonial.name }}</p>
           </div>
         </div>
       </div>
@@ -191,7 +191,7 @@
             <img :src="program.image || '/placeholder-program.jpg'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Program Image">
             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
             <div class="absolute bottom-6 left-6 right-6">
-              <span class="inline-block px-3 py-1 bg-[#DE6129] text-white text-[10px] font-black  tracking-normal rounded-full mb-3">{{ program.category || 'Program' }}</span>
+              <span class="inline-block px-3 py-1 bg-[#DE6129] text-white text-sm font-black  tracking-normal rounded-full mb-3">{{ program.category || 'Program' }}</span>
               <h4 class="text-xl font-bold text-white">{{ program.title }}</h4>
             </div>
           </div>

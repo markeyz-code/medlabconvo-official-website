@@ -147,12 +147,12 @@ definePageMeta({ layout: "empty" })
         <div class="bg-white border border-gray-100 shadow-sm rounded-2xl p-7 space-y-4">
           <!-- Badges -->
           <div class="flex flex-wrap items-center gap-2">
-            <span class="px-2.5 py-1 text-[10px] font-bold tracking-normal  bg-gray-100 text-gray-500 rounded-full">
+            <span class="px-2.5 py-1 text-sm font-bold tracking-normal  bg-gray-100 text-gray-500 rounded-full">
               Registration form
             </span>
             <span
               v-if="form.programTitle"
-              class="px-2.5 py-1 text-[10px] font-bold tracking-normal  bg-blue-50 text-blue-600 rounded-full"
+              class="px-2.5 py-1 text-sm font-bold tracking-normal  bg-blue-50 text-blue-600 rounded-full"
             >
               {{ form.programTitle }}
             </span>

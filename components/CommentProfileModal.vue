@@ -21,7 +21,7 @@
 
             <form @submit.prevent="handleSubmit" class="space-y-4">
               <div>
-                <label class="block text-[10px] font-black text-gray-400 mb-2 px-1">Full Name</label>
+                <label class="block text-sm font-black text-gray-400 mb-2 px-1">Full Name</label>
                 <input 
                   type="text" 
                   v-model="form.name" 
@@ -31,7 +31,7 @@
                 />
               </div>
               <div>
-                <label class="block text-[10px] font-black text-gray-400 mb-2 px-1">Handle (@Username)</label>
+                <label class="block text-sm font-black text-gray-400 mb-2 px-1">Handle (@Username)</label>
                 <div class="relative">
                   <span class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm">@</span>
                   <input 
@@ -44,7 +44,7 @@
                 </div>
               </div>
               <div>
-                <label class="block text-[10px] font-black text-gray-400 mb-2 px-1">Email Address</label>
+                <label class="block text-sm font-black text-gray-400 mb-2 px-1">Email Address</label>
                 <input 
                   type="email" 
                   v-model="form.email" 

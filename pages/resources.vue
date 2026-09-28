@@ -84,7 +84,7 @@
             </div>
             
             <div class="absolute top-4 left-4">
-              <span class="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-[10px] font-black  tracking-normal text-[#27628C] shadow-sm">
+              <span class="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-sm font-black  tracking-normal text-[#27628C] shadow-sm">
                 {{ pub.category || 'General' }}
               </span>
             </div>
@@ -92,7 +92,7 @@
 
           <!-- Content -->
           <div class="p-8 flex flex-col flex-1">
-            <div class="flex items-center gap-3 text-[10px] font-bold text-gray-400 mb-4">
+            <div class="flex items-center gap-3 text-sm font-bold text-gray-400 mb-4">
               <span>{{ pub.year || '2024' }}</span>
               <span class="w-1 h-1 bg-gray-200 rounded-full"></span>
               <span class="text-[#27628C]">{{ pub.journal || 'MedLabConvo' }}</span>
@@ -108,10 +108,10 @@
 
             <div class="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[#27628C] font-bold text-[10px]">
+                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[#27628C] font-bold text-sm">
                   {{ (pub.authors || 'M').charAt(0) }}
                 </div>
-                <span class="text-[10px] font-bold text-gray-400 truncate max-w-[120px]">
+                <span class="text-sm font-bold text-gray-400 truncate max-w-[120px]">
                   {{ pub.authors || 'MedLabConvo' }}
                 </span>
               </div>
@@ -119,7 +119,7 @@
               <NuxtLink 
                 :to="pub.link || pub.pubLink || '#'" 
                 target="_blank"
-                class="flex items-center gap-2 text-[10px] font-bold text-[#27628C] group/btn"
+                class="flex items-center gap-2 text-sm font-bold text-[#27628C] group/btn"
               >
                 Access
                 <svg class="w-4 h-4 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

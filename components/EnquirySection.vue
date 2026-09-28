@@ -5,7 +5,7 @@
         
         <!-- Narratives & Brand Presence -->
         <div class="space-y-12 animate-fade-in-left">
-          <div class="inline-block px-4 py-1.5 bg-[#27628C]/10 text-[#27628C] text-[10px] font-bold rounded-full">
+          <div class="inline-block px-4 py-1.5 bg-[#27628C]/10 text-[#27628C] text-sm font-bold rounded-full">
              Initiate Dialogue
           </div>
           <h2 class="text-lg md:text-xl font-bold text-gray-900 leading-tight tracking-normal ">
@@ -53,7 +53,7 @@
                   </div>
                   <h3 class="text-lg font-bold text-gray-900 tracking-normal  mb-4">Transmission Received</h3>
                   <p class="text-gray-500 font-medium mb-10 max-w-xs">Your enquiry has been successfully logged into our governance system. An expert will be in touch shortly.</p>
-                  <button @click="resetForm" class="px-10 py-4 bg-gray-900 text-white rounded-2xl font-bold text-[10px] tracking-normal hover:bg-black transition-all active:scale-95">
+                  <button @click="resetForm" class="px-10 py-4 bg-gray-900 text-white rounded-2xl font-bold text-sm tracking-normal hover:bg-black transition-all active:scale-95">
                      Log Another
                   </button>
                </div>
@@ -62,7 +62,7 @@
              <form @submit.prevent="handleSubmit" class="space-y-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 px-1">First Name</label>
+                    <label class="text-sm font-bold text-gray-400 px-1">First Name</label>
                     <input 
                       v-model="form.firstName" 
                       type="text" 
@@ -72,7 +72,7 @@
                     />
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 px-1">Last Name</label>
+                    <label class="text-sm font-bold text-gray-400 px-1">Last Name</label>
                     <input 
                       v-model="form.lastName" 
                       type="text" 
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="space-y-2">
-                  <label class="text-[10px] font-bold text-gray-400 px-1">Email Dimension</label>
+                  <label class="text-sm font-bold text-gray-400 px-1">Email Dimension</label>
                   <input 
                     v-model="form.email" 
                     type="email" 
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="space-y-2">
-                  <label class="text-[10px] font-bold text-gray-400 px-1">Phone Protocol</label>
+                  <label class="text-sm font-bold text-gray-400 px-1">Phone Protocol</label>
                   <input 
                     v-model="form.phoneNumber" 
                     type="tel" 
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="space-y-2">
-                  <label class="text-[10px] font-bold text-gray-400 px-1">Core Context (Message)</label>
+                  <label class="text-sm font-bold text-gray-400 px-1">Core Context (Message)</label>
                   <textarea 
                     v-model="form.message" 
                     required 
@@ -119,7 +119,7 @@
                 <button 
                   type="submit" 
                   :disabled="loading"
-                  class="w-full py-5 bg-[#27628C] text-white rounded-2xl font-bold text-[11px] tracking-normal hover:bg-gray-900 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(39,98,140,0.2)]"
+                  class="w-full py-5 bg-[#27628C] text-white rounded-2xl font-bold text-sm tracking-normal hover:bg-gray-900 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(39,98,140,0.2)]"
                 >
                   <div v-if="loading" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                   <span>Transmit Query</span>

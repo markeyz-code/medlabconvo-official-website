@@ -49,7 +49,7 @@
         <section class="max-w-7xl mx-auto px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="order-2 lg:order-1 space-y-8">
-              <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-[10px] font-bold">
+              <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-sm font-bold">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#27628C] animate-pulse"></span>
                 Active Community
               </div> -->
@@ -95,7 +95,7 @@
               </div>
 
               <div class="space-y-8">
-                <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-[10px] font-bold">
+                <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-sm font-bold">
                   <span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
                   
                 </div> -->
