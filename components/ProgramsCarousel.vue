@@ -2,7 +2,7 @@
     <section class="relative py-16 lg:px-20 bg-gradient-to-b from-slate-50 via-blue-50 to-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-10">
-                <h2 class="text-lg lg:text-lg font-bold text-[#27628C] mb-2">
+                <h2 class="text-lg lg:text-4xl font-bold text-[#27628C] mb-2">
                     Our Past Programs
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">

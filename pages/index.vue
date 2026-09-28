@@ -295,7 +295,7 @@
         <div class="grid grid-cols-2 gap-6">
           <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
             <div class="text-lg font-bold text-white mb-2">5000+</div>
-            <div class="text-slate-500 text-sm font-bold">Members</div>
+            <div class="text-slate-500 text-sm font-bold">Beneficiaries</div>
           </div>
           <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
             <div class="text-lg font-bold text-white mb-2">50+</div>

@@ -92,7 +92,7 @@ const isScrolled = ref(false)
 
 const navigation = [
   { name: 'Journo', href: '/journo' },
-  { name: 'Short Reads', href: '/short-reads' },
+  // { name: 'Short Reads', href: '/short-reads' },
   { name: 'LabCast', href: '/lab-cast' },
   { name: 'Programs', href: '/programs' },
   { name: 'Community', href: '/community' },

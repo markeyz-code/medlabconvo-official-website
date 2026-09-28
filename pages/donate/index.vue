@@ -4,7 +4,7 @@
       <div class="relative isolate overflow-hidden pt-14">
         <div class="mx-auto max-w-2xl lg:py-32 lg:mt-10 mt-36">
           <div class="text-center space-y-5">
-            <h1 class="font-bold tracking-tight text-gray-900 text-6xl sm:text-8xl lg:text-9xl mb-6">
+            <h1 class="font-bold tracking-tight text-gray-900 text-6xl mb-6">
               Support MedLabConvo
             </h1>
             <p class="text-2xl sm:text-3xl text-gray-600 font-light animate-fade-in-delay">
@@ -225,14 +225,14 @@
 
     <div class="flex justify-center items-center px-4 mt-20">
       <div class="max-w-[900px] w-full flex flex-col justify-center items-center">
-        <h2 class="text-lg font-bold text-gray-900 text-center">
+        <h2 class="text-4xl font-bold text-gray-900 text-center">
           Join Us in Making an Impact
         </h2>
         <p class="text-xl max-w-[800px] w-full text-gray-600 text-center mt-6 leading-relaxed">
           By supporting MedLabConvo, you are investing in a future where healthcare professionals are better
           equipped, more connected, and more empowered to drive change in healthcare.
         </p>
-        <p class="text-lg font-bold text-gray-900 text-center mt-14">
+        <p class="text-3xl font-bold text-gray-900 text-center mt-14">
           Donate Today and Be Part of the Change!
         </p>
       </div>

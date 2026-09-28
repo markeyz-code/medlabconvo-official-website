@@ -8,7 +8,7 @@
       <div class="relative max-w-6xl mx-auto">
         <div v-if="title" class="text-center mb-12">
           <h2 class="text-lg font-bold text-gray-900 mb-4 leading-tight">
-            <span class="bg-gradient-to-r from-[#27628C] via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <span class="bg-gradient-to-r text-4xl from-[#27628C] via-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {{ title }}
             </span>
           </h2>

@@ -49,10 +49,10 @@
         <section class="max-w-7xl mx-auto px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="order-2 lg:order-1 space-y-8">
-              <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-[10px] font-bold">
+              <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-[10px] font-bold">
                 <span class="w-1.5 h-1.5 rounded-full bg-[#27628C] animate-pulse"></span>
                 Active Community
-              </div>
+              </div> -->
               <h2 class="text-4xl md:text-5xl font-bold text-gray-900  tracking-tight">Interntional</h2>
               <div class="h-1.5 w-20 bg-[#27628C] rounded-full"></div>
               
@@ -66,13 +66,13 @@
               </div>
 
               <div class="pt-6">
-                <NuxtLink 
-                  to="/interntional" 
-                  class="inline-flex items-center gap-3 px-10 py-5 bg-[#27628C] text-white rounded-2xl text-[11px] font-bold hover:bg-gray-900 transition-all shadow-sm border border-slate-200 shadow-blue-900/20 active:scale-95"
+                <a 
+                  href="https://interntional.medlabconvo.com/" target="_blank"
+                  class="inline-flex items-center gap-3 px-10 py-2.5 bg-[#27628C] text-white rounded-2xl text-sm font-bold hover:bg-gray-900 transition-all shadow-sm border border-slate-200 shadow-blue-900/20 active:scale-95"
                 >
                   Learn More About Interntional
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </NuxtLink>
+                </a>
               </div>
             </div>
             
@@ -95,10 +95,10 @@
               </div>
 
               <div class="space-y-8">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-[10px] font-bold">
+                <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-[10px] font-bold">
                   <span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
-                  Opening Soon
-                </div>
+                  
+                </div> -->
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900  tracking-tight">UniVerse</h2>
                 <div class="h-1.5 w-20 bg-[#27628C] rounded-full"></div>
                 
@@ -111,14 +111,23 @@
                   </p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                  <button disabled class="flex-1 px-8 py-5 bg-gray-100 text-gray-400 rounded-2xl text-[11px] font-bold cursor-not-allowed border border-gray-200">
+                <!-- <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                  <button disabled class="flex-1 px-8 py-5 bg-gray-100 text-gray-400 rounded-2xl text-sm font-bold cursor-not-allowed border border-gray-200">
                     Download Handbook
                   </button>
-                  <button disabled class="flex-1 px-8 py-5 bg-white text-[#27628C] border-2 border-[#27628C]/10 rounded-2xl text-[11px] font-bold cursor-not-allowed opacity-50">
-                    Become a Campus Luminary
-                  </button>
-                </div>
+                  <a href="https://universe.medlabconvo.com/" target="_blank" class="flex-1 px-8 py-5 bg-white text-[#27628C] border-2 border-[#27628C]/10 rounded-2xl text-sm font-bold cursor-not-allowed opacity-50">
+                    Learn more about UniVerse
+                  </a>
+                </div> -->
+                    <div class="pt-6">
+                <a 
+                  href="https://universe.medlabconvo.com/" target="_blank"
+                  class="inline-flex items-center gap-3 px-10 py-2.5 bg-[#27628C] text-white rounded-2xl text-sm font-bold hover:bg-gray-900 transition-all shadow-sm border border-slate-200 shadow-blue-900/20 active:scale-95"
+                >
+                  Learn more about UniVerse
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+              </div>
               </div>
             </div>
           </div>
