@@ -2,8 +2,8 @@
   <main class="min-h-screen bg-[#F8FAFC] py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h1 class="text-lg font-bold text-gray-900 mb-4">Short Reads</h1>
-        <p class="text-xl text-gray-600">Quick, engaging stories designed for a fast read.</p>
+        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold text-gray-900 mb-6">Short Reads</h1>
+        <p class="text-2xl text-gray-600">Quick, engaging stories designed for a fast read.</p>
       </div>
 
       <div v-if="loading" class="text-center py-20 text-gray-500">

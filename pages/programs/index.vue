@@ -5,13 +5,13 @@
       <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
       
       <div class="relative mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center text-center">
-        <h2 class="text-sm font-bold text-blue-200 mb-8 animate-fade-in tracking-normal">
+        <h2 class="text-2xl font-bold text-blue-200 mb-8 animate-fade-in tracking-normal">
           Elevating Clinical Excellence
         </h2>
-        <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight  tracking-normal animate-fade-in-up">
+        <h1 class="text-6xl sm:text-8xl lg:text-9xl font-bold text-white leading-tight tracking-normal animate-fade-in-up">
           Programs
         </h1>
-        <p class="mt-8 text-xl md:text-lg text-blue-50 font-medium max-w-3xl leading-relaxed animate-fade-in-up delay-200">
+        <p class="mt-8 text-2xl text-blue-50 font-medium max-w-3xl leading-relaxed animate-fade-in-up delay-200">
           Dedicated initiatives designed to empower medical laboratory professionals and students through mentorship, skill acquisition, and career acceleration.
         </p>
       </div>

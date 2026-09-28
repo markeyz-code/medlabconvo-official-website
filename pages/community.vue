@@ -8,10 +8,10 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
           <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
             <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
-              <h1 class="text-lg md:text-xl font-bold text-white leading-tight tracking-normal  mb-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+              <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-tight tracking-normal mb-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
                 A Global Network <br /> of Excellence
               </h1>
-              <p class="text-lg md:text-xl leading-8 text-blue-50 font-medium max-w-xl animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
+              <p class="text-2xl md:text-3xl leading-8 text-blue-50 font-medium max-w-xl animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
                 Connecting laboratory professionals, researchers, and innovators to transform the future of clinical diagnostics through collaboration.
               </p>
             </div>

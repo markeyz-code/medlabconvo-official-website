@@ -6,9 +6,9 @@
       
       <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center pt-16 text-center">
         <div class="max-w-3xl">
-          <h1 class="text-sm font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Audio & Visual Insights</h1>
-          <h2 class="text-lg font-bold tracking-tight text-white sm:text-lg mb-8 animate-fade-in-up ">LabCast</h2>
-          <p class="text-xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
+          <h1 class="text-2xl font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Audio & Visual Insights</h1>
+          <h2 class="text-6xl sm:text-8xl lg:text-9xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">LabCast</h2>
+          <p class="text-2xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
             Conversations with laboratory scientists, public health experts, health innovators, and policy leaders shaping the future of healthcare.
           </p>
         </div>
