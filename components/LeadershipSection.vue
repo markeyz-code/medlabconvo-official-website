@@ -25,14 +25,14 @@
              <div class="h-px flex-1 bg-gray-100"></div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 lg:gap-10">
             <div 
               v-for="member in category.members" 
               :key="member._id"
               class="group relative flex flex-col h-full bg-white transition-all duration-700"
             >
               <!-- Portrait Layer -->
-              <div class="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-gray-50 border border-gray-100 mb-8">
+              <div class="relative aspect-square max-w-[280px] mx-auto rounded-[3rem] overflow-hidden bg-gray-50 border border-gray-100 mb-8">
                 <img 
                   v-if="member.image" 
                   :src="member.image" 
