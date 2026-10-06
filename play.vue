@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Form, FormField, FormResponse } from '@/types/form'
 import { FormFieldType } from '@/types/form'
+import { useSingleUploadFile } from '@/composables/core/useSingleUpload'
 
 const props = defineProps<{
   form: Form
@@ -13,6 +14,9 @@ const emit = defineEmits<{
 const formData = ref<Record<string, any>>({})
 const submitterEmail = ref('')
 const errors = ref<Record<string, string>>({})
+const uploadingFields = ref<Record<string, boolean>>({})
+
+const { singleUploadFile } = useSingleUploadFile()
 
 // Initialize form data
 const initializeFormData = () => {
@@ -117,6 +121,29 @@ const handleCheckboxChange = (fieldId: string, option: string, checked: boolean)
     formData.value[fieldId] = formData.value[fieldId].filter((item: string) => item !== option)
   }
 }
+
+// Handle file upload
+const handleFileUpload = async (fieldId: string, event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  uploadingFields.value[fieldId] = true
+  errors.value[fieldId] = ''
+  try {
+    const response = await singleUploadFile(file)
+    const url = response?.url || response?.secure_url || response?.fileUrl || ''
+    if (url) {
+      formData.value[fieldId] = url
+    } else {
+      errors.value[fieldId] = 'Failed to get file URL'
+    }
+  } catch (error) {
+    errors.value[fieldId] = 'Upload failed'
+  } finally {
+    uploadingFields.value[fieldId] = false
+  }
+}
 </script>
 
 <template>
@@ -147,7 +174,7 @@ const handleCheckboxChange = (fieldId: string, option: string, checked: boolean)
           <span v-if="field.required" class="text-red-500">*</span>
         </label>
         <UiAnimatedInput
-          v-if="field.type !== FormFieldType.TEXTAREA"
+          v-if="field.type !== FormFieldType.TEXTAREA && field.type !== FormFieldType.FILE"
           :id="field.id"
           v-model="formData[field.id]"
           :type="field.type.toLowerCase()"
@@ -243,6 +270,22 @@ const handleCheckboxChange = (fieldId: string, option: string, checked: boolean)
           :rows="4"
           :class="{ 'border-red-500': errors[field.id] }"
         />
+
+        <!-- File Upload -->
+        <div v-else-if="field.type === FormFieldType.FILE" class="mt-2">
+          <label 
+            class="block w-full px-4 py-2 border border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 text-sm"
+            :class="{'opacity-50 pointer-events-none': uploadingFields[field.id]}"
+          >
+            <span v-if="uploadingFields[field.id]" class="text-blue-500 font-medium">Uploading...</span>
+            <span v-else-if="formData[field.id]" class="text-blue-500 font-medium truncate">Change File</span>
+            <span v-else class="text-gray-500">Choose File</span>
+            <input type="file" class="hidden" @change="(e) => handleFileUpload(field.id, e)" />
+          </label>
+          <div v-if="formData[field.id]" class="mt-1 text-sm text-blue-500 truncate">
+            <a :href="formData[field.id]" target="_blank" class="hover:underline">View Uploaded File</a>
+          </div>
+        </div>
 
         <!-- Select Dropdown -->
         <select

@@ -152,6 +152,22 @@
                         </label>
                      </div>
 
+                     <!-- File Upload -->
+                     <div v-else-if="field.type === 'file'" class="w-full">
+                        <label 
+                          class="flex items-center justify-center w-full h-16 bg-gray-50 border-2 border-gray-100 border-dashed rounded-2xl cursor-pointer hover:bg-gray-100 hover:border-[#27628C] transition-all"
+                          :class="{'opacity-50 pointer-events-none': uploadingFields[field.id]}"
+                        >
+                          <span v-if="uploadingFields[field.id]" class="text-sm font-bold text-[#27628C]">Uploading...</span>
+                          <span v-else-if="formData[field.id]" class="text-sm font-bold text-[#27628C] truncate px-4">Change File</span>
+                          <span v-else class="text-sm font-bold text-gray-500">Choose File</span>
+                          <input type="file" class="hidden" @change="(e) => handleFileUpload(field.id, e)" />
+                        </label>
+                        <div v-if="formData[field.id]" class="mt-2 text-sm text-[#27628C] truncate">
+                          <a :href="formData[field.id]" target="_blank" class="hover:underline">View Uploaded File</a>
+                        </div>
+                     </div>
+
                      <!-- Standard Input -->
                      <input
                        v-else
@@ -159,7 +175,7 @@
                        v-model="formData[field.id]"
                        :id="field.id"
 
-                       :required="field.required"
+                       :required="field.required && field.type !== 'file'"
                        class="h-16 w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-6 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#27628C] focus:ring-0 transition-all outline-none"
                      />
                      
@@ -230,13 +246,16 @@ import { useRoute } from 'vue-router'
 import { useGetProgram } from '@/composables/modules/programs/useGetProgram'
 import { useSubmitApplication } from '@/composables/modules/programs/useSubmitApplication'
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { useSingleUploadFile } from '@/composables/core/useSingleUpload'
 
 const route = useRoute()
 const { showToast } = useCustomToast()
 const { program, loading: loadingProgram, getProgram } = useGetProgram()
 const { loading: submitting, error: submitError, success, submitApplication } = useSubmitApplication()
+const { singleUploadFile } = useSingleUploadFile()
 
 const formData = ref<Record<string, any>>({})
+const uploadingFields = ref<Record<string, boolean>>({})
 
 // Initialize form data on mount
 onMounted(async () => {
@@ -255,6 +274,27 @@ const hasWhatsappLink = computed(() => {
   return program.value.slug === 'biomedical-science-conference-2026' || 
          program.value.formFields?.some(f => f.description?.includes('chat.whatsapp.com'))
 })
+
+const handleFileUpload = async (fieldId: string, event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  uploadingFields.value[fieldId] = true
+  try {
+    const response = await singleUploadFile(file)
+    const url = response?.url || response?.secure_url || response?.fileUrl || ''
+    if (url) {
+      formData.value[fieldId] = url
+    } else {
+      showToast({ title: 'Upload Failed', message: 'Failed to get file URL', toastType: 'error' })
+    }
+  } catch (error) {
+    showToast({ title: 'Upload Failed', message: 'An error occurred during upload', toastType: 'error' })
+  } finally {
+    uploadingFields.value[fieldId] = false
+  }
+}
 
 const handleSubmit = async () => {
   if (!program.value?.registrationToken) {

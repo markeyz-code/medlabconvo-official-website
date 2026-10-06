@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Form, FormField, FormResponse } from '@/types/form'
 import { FormFieldType } from '@/types/form'
+import { useSingleUploadFile } from '@/composables/core/useSingleUpload'
 
 const props = defineProps<{
   form: Form
@@ -13,8 +14,11 @@ const emit = defineEmits<{
 const formData = ref<Record<string, any>>({})
 const submitterEmail = ref('')
 const errors = ref<Record<string, string>>({})
+const uploadingFields = ref<Record<string, boolean>>({})
 
 const otherValues = ref<Record<string, string>>({})
+
+const { singleUploadFile } = useSingleUploadFile()
 
 // Initialize form data
 const initializeFormData = () => {
@@ -139,6 +143,30 @@ const handleCheckboxChange = (fieldId: string, option: string, checked: boolean)
     formData.value[fieldId] = formData.value[fieldId].filter((item: string) => item !== option)
   }
 }
+
+// Handle file upload
+const handleFileUpload = async (fieldId: string, event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
+
+  uploadingFields.value[fieldId] = true
+  errors.value[fieldId] = ''
+  try {
+    const response = await singleUploadFile(file)
+    const url = response?.url || response?.secure_url || response?.fileUrl || ''
+    if (url) {
+      formData.value[fieldId] = url
+    } else {
+      errors.value[fieldId] = 'Failed to get file URL after upload.'
+    }
+  } catch (error) {
+    errors.value[fieldId] = 'Upload failed. Please try again.'
+    console.error('File upload error:', error)
+  } finally {
+    uploadingFields.value[fieldId] = false
+  }
+}
 </script>
 
 <template>
@@ -217,6 +245,30 @@ const handleCheckboxChange = (fieldId: string, option: string, checked: boolean)
                 class="w-full px-4 py-4 bg-white border border-gray-200 rounded-2xl text-sm font-medium outline-none focus:border-[#27628C] focus:ring-4 focus:ring-[#27628C]/5 transition-all placeholder:text-gray-300 resize-none"
                 :class="{ '!border-red-200 !bg-red-50/30': errors[field.id] }"
               ></textarea>
+            </div>
+
+            <!-- File Upload -->
+            <div v-else-if="field.type === FormFieldType.FILE" class="relative">
+              <div class="flex items-center space-x-4">
+                <label 
+                  :for="field.id" 
+                  class="cursor-pointer px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium hover:border-[#27628C] transition-all"
+                  :class="{ '!border-red-200 !bg-red-50/30': errors[field.id], 'opacity-50 pointer-events-none': uploadingFields[field.id] }"
+                >
+                  <span v-if="uploadingFields[field.id]">Uploading...</span>
+                  <span v-else-if="formData[field.id]">Change File</span>
+                  <span v-else>Choose File</span>
+                  <input
+                    :id="field.id"
+                    type="file"
+                    class="hidden"
+                    @change="(e) => handleFileUpload(field.id, e)"
+                  />
+                </label>
+                <div v-if="formData[field.id]" class="text-sm text-[#27628C] truncate max-w-[200px]">
+                  <a :href="formData[field.id]" target="_blank" class="hover:underline">View Uploaded File</a>
+                </div>
+              </div>
             </div>
 
             <!-- Select Input -->
