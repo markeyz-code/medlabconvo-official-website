@@ -273,7 +273,45 @@ onMounted(async () => {
   }
 })
 
+const getCheckoutUrl = (product: any): string | null => {
+  if (!product) return null
+  
+  // Prioritize direct checkout / Selar / download URLs
+  const candidate = product.downloadUrl || product.buyUrl || product.purchaseUrl || product.selarUrl
+  if (candidate && typeof candidate === 'string') {
+    const trimmed = candidate.trim()
+    if (trimmed) {
+      if (/^https?:\/\//i.test(trimmed)) return trimmed
+      if (trimmed.includes('.')) return `https://${trimmed}`
+      return trimmed
+    }
+  }
+
+  // Fallback to previewUrl if it's a known checkout or Selar link
+  if (product.previewUrl && typeof product.previewUrl === 'string') {
+    const trimmed = product.previewUrl.trim()
+    if (trimmed && (trimmed.includes('selar.') || trimmed.includes('paystack.') || trimmed.includes('flutterwave.'))) {
+      if (/^https?:\/\//i.test(trimmed)) return trimmed
+      if (trimmed.includes('.')) return `https://${trimmed}`
+      return trimmed
+    }
+  }
+
+  return null
+}
+
 const triggerCheckout = (product: any) => {
+  const checkoutUrl = getCheckoutUrl(product)
+  if (checkoutUrl) {
+    // Open Selar / external purchase gateway directly without showing email prompt or Paystack
+    const newTab = window.open(checkoutUrl, '_blank', 'noopener,noreferrer')
+    if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+      window.location.href = checkoutUrl
+    }
+    return
+  }
+
+  // Fallback to Paystack inline checkout if no external link was configured
   selectedProduct.value = product
   isEmailPromptOpen.value = true
 }
