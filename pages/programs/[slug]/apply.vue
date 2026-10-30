@@ -1,241 +1,133 @@
 <template>
-  <main class="min-h-screen bg-[#F8FAFC]">
-    <!-- Application Hero Section -->
-    <section class="bg-gray-900 pt-32 pb-48 relative overflow-hidden">
-      <!-- Abstract Decors -->
-      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#27628C]/10 rounded-full blur-[120px]"></div>
-      <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#DE6129]/5 rounded-full blur-[100px]"></div>
+  <main class="bg-white">
+    <div v-if="loadingProgram" class="site-container py-20">
+      <div class="grid gap-6 lg:grid-cols-2"><div class="site-skeleton h-[28rem]" /><div class="site-skeleton h-64" /></div>
+    </div>
 
-      <div class="container mx-auto px-6 lg:px-12 relative z-10">
-        <div class="max-w-4xl mx-auto space-y-8">
-          <NuxtLink 
-            :to="`/programs/${route.params.slug}`" 
-            class="inline-flex items-center gap-3 text-white/60 hover:text-white font-black text-xs  tracking-normal transition-all group"
-          >
-            <Icon name="lucide:arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to program
-          </NuxtLink>
-
-          <div class="space-y-4">
-             <div class="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-md">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-sm font-black text-white  tracking-normal">Enrolment Portal</span>
-             </div>
-             <h1 class="text-lg md:text-xl font-black text-white tracking-tight leading-tight">
-               {{ program?.title || 'Program Registration' }}
-             </h1>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Form Container -->
-    <div class="container mx-auto px-6 lg:px-8 -mt-32 pb-32 relative z-20">
-      <div class="mx-auto max-w-4xl">
-        <div class="bg-white/80 backdrop-blur-2xl rounded-[3rem] shadow-sm border border-slate-200 shadow-gray-900/10 border border-white overflow-hidden animate-in fade-in slide-in-from-bottom-10 duration-1000">
-          
-          <!-- Banner Image if available -->
-          <div v-if="program?.image || program?.images?.[0]" class="h-64 w-full overflow-hidden border-b border-gray-100 group bg-slate-50">
-             <img :src="program?.image || program?.images?.[0]" @error="(e) => e.target.style.display = 'none'" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" :alt="program?.title" />
-          </div>
-
-          <div class="p-10 lg:p-16">
-            <!-- Loading State -->
-            <div v-if="loadingProgram" class="flex flex-col items-center justify-center py-20">
-               <div class="relative w-16 h-16">
-                  <div class="absolute inset-0 border-4 border-[#27628C]/10 rounded-full"></div>
-                  <div class="absolute inset-0 border-4 border-[#27628C] rounded-full border-t-transparent animate-spin"></div>
-              </div>
-              <p class="mt-8 text-sm font-black text-[#27628C]  tracking-normal">Initialising Portal...</p>
-            </div>
-
-            <!-- Success State -->
-            <div v-else-if="success" class="text-center py-12 space-y-10 animate-in fade-in zoom-in duration-700">
-              <div class="relative inline-block">
-                 <div class="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full scale-150"></div>
-                 <div class="relative w-24 h-24 bg-emerald-500 text-white rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-sm border border-slate-200">
-                    <Icon name="lucide:sparkles" class="w-12 h-12" />
-                 </div>
-              </div>
-              
-              <div class="space-y-4 max-w-md mx-auto">
-                <h2 class="text-xl font-black text-gray-900 tracking-tight">Experience Unlocked!</h2>
-                <p class="text-gray-500 font-medium leading-relaxed">
-                  Your application for <span class="text-[#27628C] font-black">{{ program?.title }}</span> has been submitted. 
-                  Check your inbox for the welcome pack.
-                </p>
-              </div>
-
-              <div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
-                <NuxtLink 
-                  to="/programs" 
-                  class="h-14 px-10 bg-gray-900 text-white rounded-2xl font-black text-sm hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
-                >
-                  <Icon name="lucide:search" class="w-5 h-5" />
-                  Explore Directory
-                </NuxtLink>
-                
-                <a 
-                  v-if="hasWhatsappLink"
-                  href="https://chat.whatsapp.com/GnxsIILq4TbFTQ3W8WxbWQ" 
-                  target="_blank"
-                  class="h-14 px-10 bg-[#25D366] text-white rounded-2xl font-black text-sm hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
-                >
-                  <Icon name="bi:whatsapp" class="w-5 h-5" />
-                  Join Commmunity
-                </a>
-              </div>
-            </div>
-
-            <!-- Form Body -->
-            <div v-else-if="program?.status === 'active'" class="space-y-12">
-               <div class="space-y-2">
-                  <h3 class="text-xs font-black text-[#DE6129]  tracking-normal">Section 01</h3>
-                  <h2 class="text-lg font-black text-gray-900 tracking-tight">{{ program?.formTitle || 'Registration Form' }}</h2>
-                  <p class="text-gray-500 font-medium text-sm leading-relaxed">{{ program?.formInstructions || 'Please provide your details below' }}</p>
-               </div>
-
-               <form @submit.prevent="handleSubmit" class="space-y-10">
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                   <div 
-                     v-for="field in program?.formFields" 
-                     :key="field.id"
-                     :class="field.type === 'textarea' || field.id === 'expectations' ? 'md:col-span-2' : ''"
-                     class="group space-y-4"
-                   >
-                     <label :for="field.id" class="flex items-center justify-between">
-                       <span class="text-xs font-black text-gray-900  tracking-normal group-focus-within:text-[#27628C] transition-colors">
-                         {{ field.label }}
-                       </span>
-                       <span v-if="field.required" class="text-sm font-black text-[#DE6129] ">Required</span>
-                     </label>
-
-                     <!-- Dynamic Input Types -->
-                     <!-- Textarea -->
-                     <textarea
-                       v-if="field.type === 'textarea'"
-                       v-model="formData[field.id]"
-                       :id="field.id"
-
-                       :required="field.required"
-                       rows="4"
-                       class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-6 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#27628C] focus:ring-0 transition-all outline-none"
-                     ></textarea>
-
-                     <!-- Select -->
-                     <select
-                       v-else-if="field.type === 'select'"
-                       v-model="formData[field.id]"
-                       :id="field.id"
-                       :required="field.required"
-                       class="h-16 w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-6 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#27628C] focus:ring-0 transition-all outline-none appearance-none"
-                     >
-                       <option value="" disabled>Choose an option</option>
-                       <option v-for="opt in field.options" :key="opt" :value="opt">{{ opt }}</option>
-                     </select>
-
-                     <!-- Radio Grid -->
-                     <div v-else-if="field.type === 'radio'" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <label 
-                          v-for="opt in field.options" 
-                          :key="opt"
-                          class="relative flex items-center p-5 bg-gray-50 border-2 border-gray-100 rounded-2xl cursor-pointer transition-all hover:bg-gray-100 group/opt"
-                          :class="formData[field.id] === opt ? 'border-[#27628C] bg-white ring-4 ring-[#27628C]/5' : ''"
-                        >
-                          <input type="radio" v-model="formData[field.id]" :value="opt" :required="field.required" class="sr-only" />
-                          <div class="flex items-center gap-4">
-                             <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center" :class="formData[field.id] === opt ? 'border-[#27628C]' : ''">
-                                <div v-if="formData[field.id] === opt" class="w-2.5 h-2.5 bg-[#27628C] rounded-full scale-100 transition-transform"></div>
-                             </div>
-                             <span class="text-sm font-black text-gray-900">{{ opt }}</span>
-                          </div>
-                        </label>
-                     </div>
-
-                     <!-- File Upload -->
-                     <div v-else-if="field.type === 'file'" class="w-full">
-                        <label 
-                          class="flex items-center justify-center w-full h-16 bg-gray-50 border-2 border-gray-100 border-dashed rounded-2xl cursor-pointer hover:bg-gray-100 hover:border-[#27628C] transition-all"
-                          :class="{'opacity-50 pointer-events-none': uploadingFields[field.id]}"
-                        >
-                          <span v-if="uploadingFields[field.id]" class="text-sm font-bold text-[#27628C]">Uploading...</span>
-                          <span v-else-if="formData[field.id]" class="text-sm font-bold text-[#27628C] truncate px-4">Change File</span>
-                          <span v-else class="text-sm font-bold text-gray-500">Choose File</span>
-                          <input type="file" class="hidden" @change="(e) => handleFileUpload(field.id, e)" />
-                        </label>
-                        <div v-if="formData[field.id]" class="mt-2 text-sm text-[#27628C] truncate">
-                          <a :href="formData[field.id]" target="_blank" class="hover:underline">View Uploaded File</a>
-                        </div>
-                     </div>
-
-                     <!-- Standard Input -->
-                     <input
-                       v-else
-                       :type="field.type === 'email' ? 'email' : 'text'"
-                       v-model="formData[field.id]"
-                       :id="field.id"
-
-                       :required="field.required && field.type !== 'file'"
-                       class="h-16 w-full bg-gray-50 border-2 border-gray-100 rounded-2xl px-6 text-sm font-bold text-gray-900 focus:bg-white focus:border-[#27628C] focus:ring-0 transition-all outline-none"
-                     />
-                     
-                     <p v-if="field.description" class="text-sm text-gray-400 font-bold italic">{{ field.description }}</p>
-                   </div>
-                 </div>
-
-                 <!-- Error Feedback -->
-                 <div v-if="formError || submitError" class="p-6 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4">
-                    <Icon name="lucide:alert-triangle" class="w-6 h-6 text-rose-500" />
-                    <p class="text-sm font-bold text-rose-600">{{ formError || `Failed to submit: ${submitError}` }}</p>
-                 </div>
-
-                 <!-- Footer -->
-                 <div class="pt-12 border-t border-gray-100 flex flex-col items-center gap-6">
-                   <button
-                     type="submit"
-                     :disabled="submitting || isUploadingAny || !isApplicationValid"
-                     class="w-full h-16 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm tracking-normal  hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-3 shadow-sm border border-slate-200 shadow-blue-900/20 disabled:opacity-50"
-                   >
-                     <div v-if="submitting" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                     <span>{{ submitting ? 'Finalising Enrolment...' : 'Register Now' }}</span>
-                   </button>
-                    <p class="text-sm text-gray-400 font-bold  tracking-normal text-center leading-relaxed">
-                      By registering, you confirm that the information provided is accurate and agree to our Terms and Conditions and Privacy Policy.
-                    </p>
-                 </div>
-               </form>
-            </div>
-
-            <!-- Closed / Paused State -->
-            <div v-else class="text-center py-16 space-y-10 animate-in fade-in zoom-in duration-700">
-              <div class="relative inline-block">
-                 <div class="absolute inset-0 bg-rose-500/10 blur-2xl rounded-full scale-150"></div>
-                 <div class="relative w-24 h-24 bg-rose-50 text-rose-500 rounded-[2.5rem] flex items-center justify-center border-4 border-white shadow-sm border border-slate-200">
-                    <Icon name="lucide:lock" class="w-10 h-10" />
-                 </div>
-              </div>
-              
-              <div class="space-y-4 max-w-md mx-auto">
-                <h2 class="text-xl font-black text-gray-900 tracking-tight">Registration Closed</h2>
-                <p class="text-gray-500 font-medium leading-relaxed">
-                  The application window for <span class="text-[#27628C] font-black">{{ program?.title }}</span> has elapsed or the program is currently paused. 
-                  Stay tuned for future cohorts!
-                </p>
-              </div>
-
-              <div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
-                <NuxtLink 
-                  to="/programs" 
-                  class="h-14 px-10 bg-gray-900 text-white rounded-2xl font-black text-sm hover:scale-105 active:scale-95 transition-all flex items-center gap-3 shadow-sm border border-slate-200 shadow-gray-900/10"
-                >
-                  <Icon name="lucide:arrow-left" class="w-5 h-5" />
-                  Explore Other Programs
-                </NuxtLink>
-              </div>
+    <template v-else-if="program">
+      <template v-if="success">
+        <section class="site-container py-16 sm:py-24">
+          <div class="site-card mx-auto max-w-xl p-7 text-center sm:p-10">
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Icon name="lucide:check" class="h-8 w-8" /></div>
+            <p class="mt-5 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-600">Application received</p>
+            <h1 class="mt-2 text-2xl font-bold tracking-[-0.03em] text-[#0a202b]">You are in the running.</h1>
+            <p class="mx-auto mt-2 max-w-sm text-[12px] leading-6 text-[#5f7482]">Your application for <span class="font-semibold text-[#0a202b]">{{ program.title }}</span> has been submitted. Check your inbox for the next steps.</p>
+            <div class="mt-6 flex flex-col justify-center gap-2 sm:flex-row">
+              <NuxtLink to="/programs" class="site-btn site-btn-primary">Explore more programmes</NuxtLink>
+              <a v-if="hasWhatsappLink" href="https://chat.whatsapp.com/GnxsIILq4TbFTQ3W8WxbWQ" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-ghost">Join the community</a>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </template>
+
+      <template v-else>
+        <SiteHero
+          eyebrow="Programme application"
+          :title="program.title"
+          :description="program.formTitle || 'A short application to help us understand where you are and what you want from the cohort.'"
+          theme="light"
+          compact
+        >
+          <template #visual>
+            <div class="site-card overflow-hidden p-2">
+              <div class="aspect-[4/3.1] overflow-hidden rounded-xl"><SiteMedia :src="program.image || program.images?.[0]" :alt="program.title" :label="program.category || 'Programme'" icon="lucide:graduation-cap" eager /></div>
+            </div>
+          </template>
+          <template #meta>
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
+              <span class="inline-flex items-center gap-1.5"><Icon name="lucide:clock-3" class="h-3.5 w-3.5 text-[#27628C]" />{{ program.duration || 'Flexible' }}</span>
+              <span class="inline-flex items-center gap-1.5"><Icon name="lucide:list-checks" class="h-3.5 w-3.5 text-[#27628C]" />{{ (program.formFields || []).length }} questions</span>
+            </div>
+          </template>
+        </SiteHero>
+
+        <section class="site-section">
+          <div class="site-container grid gap-7 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
+            <div class="min-w-0">
+              <div v-if="program.status !== 'active'" class="site-card p-7 text-center">
+                <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#fdf1eb] text-[#DE6129]"><Icon name="lucide:lock" class="h-6 w-6" /></span>
+                <h2 class="mt-4 text-lg font-bold text-[#0a202b]">Registration is closed.</h2>
+                <p class="mt-1 text-[12px] text-[#5f7482]">This cohort is not accepting applications right now.</p>
+                <NuxtLink to="/programs" class="site-btn site-btn-primary mt-5">Explore other programmes</NuxtLink>
+              </div>
+
+              <form v-else class="site-card p-5 sm:p-7" @submit.prevent="handleSubmit">
+                <div class="flex items-end justify-between gap-4 border-b border-[#eef2f5] pb-4">
+                  <div>
+                    <p class="site-eyebrow">Your application</p>
+                    <h2 class="mt-2 text-[1.35rem] font-bold tracking-[-0.03em] text-[#0a202b]">Tell us about you.</h2>
+                  </div>
+                  <span class="text-[10px] font-semibold text-[#8a9ba5]">{{ requiredFields.length }} required</span>
+                </div>
+
+                <div class="mt-5 space-y-6">
+                  <div v-for="(field, index) in (program.formFields || [])" :key="field.id" class="space-y-2">
+                    <label :for="field.id" class="flex items-baseline gap-2 text-[12.5px] font-semibold text-[#0a202b]">
+                      <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#eef5f9] text-[9px] font-bold text-[#27628C]">{{ index + 1 }}</span>
+                      {{ field.label }}
+                      <span v-if="field.required" class="text-[#DE6129]">*</span>
+                      <span v-else class="text-[9px] font-semibold uppercase tracking-[0.08em] text-[#a4b2ba]">Optional</span>
+                    </label>
+                    <p v-if="field.description" class="pl-7 text-[10.5px] leading-5 text-[#8a9ba5]">{{ field.description }}</p>
+
+                    <textarea v-if="field.type === 'textarea'" :id="field.id" v-model="formData[field.id]" rows="4" :required="field.required" class="mt-1.5 w-full resize-y rounded-lg border border-[#dfe7ee] bg-white px-3.5 py-3 text-[12px] leading-6 outline-none placeholder:text-[#b6c2cd] focus:border-[#27628C]/40" />
+                    <select v-else-if="field.type === 'select'" :id="field.id" v-model="formData[field.id]" :required="field.required" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none focus:border-[#27628C]/40">
+                      <option value="" disabled>Choose an option</option>
+                      <option v-for="option in field.options" :key="option" :value="option">{{ option }}</option>
+                    </select>
+                    <div v-else-if="field.type === 'radio'" class="mt-1.5 grid gap-2 sm:grid-cols-2">
+                      <label v-for="option in field.options" :key="option" class="flex cursor-pointer items-center gap-2.5 rounded-lg border px-3.5 py-2.5 transition" :class="formData[field.id] === option ? 'border-[#27628C] bg-[#27628C]/5' : 'border-[#e4ebf0] bg-white hover:border-[#27628C]/30'">
+                        <input v-model="formData[field.id]" type="radio" :value="option" :required="field.required" class="h-3.5 w-3.5 accent-[#27628C]" />
+                        <span class="text-[11.5px] font-medium text-[#3b5361]">{{ option }}</span>
+                      </label>
+                    </div>
+                    <div v-else-if="field.type === 'file'" class="mt-1.5">
+                      <label :for="`file-${field.id}`" class="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-[#d7e3ec] bg-[#fbfdff] px-4 py-3.5 transition hover:border-[#27628C]/40">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#eef5f9] text-[#27628C]"><Icon :name="uploadingFields[field.id] ? 'lucide:loader-2' : formData[field.id] ? 'lucide:file-check-2' : 'lucide:cloud-upload'" class="h-4 w-4" :class="uploadingFields[field.id] ? 'animate-spin' : ''" /></span>
+                        <span class="min-w-0">
+                          <span class="block text-[11.5px] font-semibold text-[#0a202b]">{{ uploadingFields[field.id] ? 'Uploading…' : formData[field.id] ? 'File attached — replace' : 'Choose a file' }}</span>
+                          <span class="mt-0.5 block text-[9.5px] text-[#8a9ba5]">PDF, DOC, DOCX or image · max 15 MB</span>
+                        </span>
+                      </label>
+                      <input :id="`file-${field.id}`" type="file" class="sr-only" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" @change="handleFileUpload(field.id, $event)" />
+                      <a v-if="formData[field.id]" :href="formData[field.id]" target="_blank" rel="noopener noreferrer" class="mt-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-[#27628C] hover:underline">View uploaded file <Icon name="lucide:arrow-up-right" class="h-3 w-3" /></a>
+                    </div>
+                    <input v-else :id="field.id" v-model="formData[field.id]" :type="field.type === 'email' ? 'email' : field.type === 'number' ? 'number' : 'text'" :required="field.required" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none placeholder:text-[#b6c2cd] focus:border-[#27628C]/40" :placeholder="field.placeholder || 'Type your answer'" />
+                  </div>
+                </div>
+
+                <p v-if="formError || submitError" class="mt-4 rounded-lg border border-red-200 bg-red-50 px-3.5 py-2.5 text-[10.5px] leading-5 text-red-600">{{ formError || submitError }}</p>
+
+                <button type="submit" :disabled="submitting || isUploadingAny || !isApplicationValid" class="site-btn site-btn-primary mt-5 w-full disabled:opacity-40">
+                  <span v-if="submitting" class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  {{ submitting ? 'Submitting application…' : isUploadingAny ? 'Waiting for uploads…' : 'Submit application' }}
+                  <Icon v-if="!submitting && !isUploadingAny" name="lucide:arrow-up-right" class="h-3.5 w-3.5" />
+                </button>
+              </form>
+            </div>
+
+            <aside class="space-y-4 lg:sticky lg:top-28">
+              <div class="rounded-2xl border border-[#e4ebf0] bg-[#fbfcfc] p-5">
+                <p class="site-eyebrow">Before you submit</p>
+                <ul class="mt-3 space-y-2.5 text-[10.5px] leading-5 text-[#5f7482]">
+                  <li class="flex gap-2"><Icon name="lucide:check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#27628C]" /> Complete every question marked with an asterisk.</li>
+                  <li class="flex gap-2"><Icon name="lucide:check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#27628C]" /> Wait for any file upload to finish.</li>
+                  <li class="flex gap-2"><Icon name="lucide:check" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#27628C]" /> Use an email you check regularly.</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl bg-[#033958] p-5 text-white">
+                <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Need help?</p>
+                <p class="mt-2 text-[11.5px] leading-6 text-white/55">If something is not working, contact the team before the deadline.</p>
+                <NuxtLink to="/enquiries" class="site-btn site-btn-light mt-3 w-full min-h-0 py-2.5 text-[10.5px]">Contact support</NuxtLink>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </template>
+    </template>
+
+    <div v-else class="site-container py-24">
+      <div class="site-card mx-auto max-w-xl p-8 text-center"><h1 class="text-xl font-bold text-[#0a202b]">This application could not be loaded.</h1><NuxtLink to="/programs" class="site-btn site-btn-primary mt-5">Back to programmes</NuxtLink></div>
     </div>
   </main>
 </template>
@@ -247,6 +139,9 @@ import { useGetProgram } from '@/composables/modules/programs/useGetProgram'
 import { useSubmitApplication } from '@/composables/modules/programs/useSubmitApplication'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 import { upload_api } from '@/api_factory/core/upload'
+import SiteHero from '@/components/site/SiteHero.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
 
 const route = useRoute()
 const { showToast } = useCustomToast()
