@@ -184,16 +184,16 @@
                  </div>
 
                  <!-- Error Feedback -->
-                 <div v-if="submitError" class="p-6 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4">
+                 <div v-if="formError || submitError" class="p-6 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-4">
                     <Icon name="lucide:alert-triangle" class="w-6 h-6 text-rose-500" />
-                    <p class="text-sm font-bold text-rose-600">Failed to submit: {{ submitError }}</p>
+                    <p class="text-sm font-bold text-rose-600">{{ formError || `Failed to submit: ${submitError}` }}</p>
                  </div>
 
                  <!-- Footer -->
                  <div class="pt-12 border-t border-gray-100 flex flex-col items-center gap-6">
                    <button
                      type="submit"
-                     :disabled="submitting"
+                     :disabled="submitting || isUploadingAny || !isApplicationValid"
                      class="w-full h-16 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm tracking-normal  hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center space-x-3 shadow-sm border border-slate-200 shadow-blue-900/20 disabled:opacity-50"
                    >
                      <div v-if="submitting" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -246,16 +246,29 @@ import { useRoute } from 'vue-router'
 import { useGetProgram } from '@/composables/modules/programs/useGetProgram'
 import { useSubmitApplication } from '@/composables/modules/programs/useSubmitApplication'
 import { useCustomToast } from '@/composables/core/useCustomToast'
-import { useSingleUploadFile } from '@/composables/core/useSingleUpload'
+import { upload_api } from '@/api_factory/core/upload'
 
 const route = useRoute()
 const { showToast } = useCustomToast()
 const { program, loading: loadingProgram, getProgram } = useGetProgram()
 const { loading: submitting, error: submitError, success, submitApplication } = useSubmitApplication()
-const { singleUploadFile } = useSingleUploadFile()
 
 const formData = ref<Record<string, any>>({})
 const uploadingFields = ref<Record<string, boolean>>({})
+const formError = ref('')
+
+const requiredFields = computed(() =>
+  (program.value?.formFields || []).filter((field: any) => field.required),
+)
+
+const isUploadingAny = computed(() => Object.values(uploadingFields.value).some(Boolean))
+
+const isApplicationValid = computed(() =>
+  requiredFields.value.every((field: any) => {
+    const value = formData.value[field.id]
+    return Array.isArray(value) ? value.length > 0 : String(value ?? '').trim().length > 0
+  }),
+)
 
 // Initialize form data on mount
 onMounted(async () => {
@@ -280,23 +293,51 @@ const handleFileUpload = async (fieldId: string, event: Event) => {
   const file = target.files?.[0]
   if (!file) return
 
+  const token = program.value?.registrationToken
+  if (!token) {
+    showToast({ title: 'Upload Failed', message: 'Registration token is missing', toastType: 'error' })
+    return
+  }
+
+  if (file.size > 15 * 1024 * 1024) {
+    showToast({ title: 'Upload Failed', message: 'File must be 15 MB or smaller', toastType: 'error' })
+    return
+  }
+
   uploadingFields.value[fieldId] = true
+  formError.value = ''
   try {
-    const response = await singleUploadFile(file)
-    const url = response?.url || response?.secure_url || response?.fileUrl || ''
+    const payload = new FormData()
+    payload.append('file', file)
+    const response: any = await upload_api.$_program_upload(token, payload)
+
+    if (response?.type === 'ERROR') {
+      throw new Error(response?.data?.message || 'Upload failed')
+    }
+
+    const url = response?.data?.url || ''
     if (url) {
       formData.value[fieldId] = url
     } else {
-      showToast({ title: 'Upload Failed', message: 'Failed to get file URL', toastType: 'error' })
+      throw new Error('The server did not return a file URL')
     }
-  } catch (error) {
-    showToast({ title: 'Upload Failed', message: 'An error occurred during upload', toastType: 'error' })
+  } catch (error: any) {
+    formError.value = error?.message || 'Upload failed. Please try again.'
+    showToast({ title: 'Upload Failed', message: formError.value, toastType: 'error' })
   } finally {
     uploadingFields.value[fieldId] = false
   }
 }
 
 const handleSubmit = async () => {
+  formError.value = ''
+
+  if (!isApplicationValid.value) {
+    formError.value = 'Please complete every required field before submitting.'
+    showToast({ title: 'Incomplete form', message: formError.value, toastType: 'error' })
+    return
+  }
+
   if (!program.value?.registrationToken) {
     showToast({
       title: 'Error',
@@ -307,14 +348,16 @@ const handleSubmit = async () => {
   }
 
   // Format responses for backend
-  const responses = Object.keys(formData.value).map(key => {
-    const field = program.value?.formFields?.find(f => f.id === key)
-    return {
-      fieldId: key,
-      fieldLabel: field?.label || key,
-      value: String(formData.value[key])
-    }
-  })
+  const responses = Object.keys(formData.value)
+    .map(key => {
+      const field = program.value?.formFields?.find(f => f.id === key)
+      return {
+        fieldId: key,
+        fieldLabel: field?.label || key,
+        value: String(formData.value[key] ?? '').trim()
+      }
+    })
+    .filter(response => response.value.length > 0)
 
   // Get email for backend tracking
   let emailField = program.value.formFields?.find(f => f.type === 'email')

@@ -6,5 +6,11 @@ export const upload_api = {
   },
   $_batch_upload(data: any) {
     return GATEWAY_ENDPOINT.post("/images/batch", data);
+  },
+  $_form_upload(token: string, data: any) {
+    return GATEWAY_ENDPOINT.post(`/forms/upload/${token}`, data);
+  },
+  $_program_upload(token: string, data: any) {
+    return GATEWAY_ENDPOINT.post(`/programs/upload/${token}`, data);
   }
 };

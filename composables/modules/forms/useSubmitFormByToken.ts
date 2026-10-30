@@ -13,7 +13,16 @@ export const useSubmitFormByToken = () => {
     success.value = false
 
     try {
-      const response = await forms_api.$_submit_form_by_token(token, submissionPayload)
+      const response: any = await forms_api.$_submit_form_by_token(token, submissionPayload)
+
+      if (response?.type === 'ERROR' || !response?.data) {
+        throw new Error(
+          response?.data?.message ||
+          response?.message ||
+          'Failed to submit form',
+        )
+      }
+
       success.value = true
       submissionData.value = response.data
       return response.data

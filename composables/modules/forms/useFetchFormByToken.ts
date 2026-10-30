@@ -11,7 +11,16 @@ export const useFetchFormByToken = () => {
     error.value = null
 
     try {
-      const response = await forms_api.$_get_form_by_token(token)
+      const response: any = await forms_api.$_get_form_by_token(token)
+
+      if (response?.type === 'ERROR' || !response?.data) {
+        throw new Error(
+          response?.data?.message ||
+          response?.message ||
+          'Failed to fetch form',
+        )
+      }
+
       form.value = response.data
       return response.data
     } catch (err: any) {
