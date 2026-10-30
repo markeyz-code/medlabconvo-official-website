@@ -4,6 +4,7 @@ import SiteHero from '@/components/site/SiteHero.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import ArticleCard from '@/components/site/ArticleCard.vue'
 import SiteCta from '@/components/site/SiteCta.vue'
+import ConvoSubscribe from '@/components/site/ConvoSubscribe.vue'
 
 const publications = ref<any[]>([])
 const loading = ref(true)
@@ -56,7 +57,7 @@ useHead({
       primary-label="Read the latest"
       primary-to="#feed"
       secondary-label="Subscribe to the Stack"
-      secondary-to="/journo"
+      secondary-to="/subscribe"
       theme="light"
     >
       <template #visual>
@@ -155,12 +156,7 @@ useHead({
             </div>
 
             <aside class="space-y-4">
-              <div class="rounded-2xl bg-[#27628C] p-5 text-white">
-                <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-white/50">The Convo Stack</p>
-                <h3 class="mt-2 text-[1.2rem] font-bold leading-tight tracking-[-0.03em]">Get the good stuff in your inbox.</h3>
-                <p class="mt-2 text-[10.5px] leading-5 text-white/60">Join professionals receiving curated diagnostics, career and research pulses.</p>
-                <NuxtLink to="/journo" class="site-btn site-btn-light mt-4 w-full">Subscribe free</NuxtLink>
-              </div>
+              <ConvoSubscribe dark title="Get the good stuff in your inbox." description="Join professionals receiving curated diagnostics, career and research pulses." />
               <div class="rounded-2xl border border-[#e4ebf0] bg-white p-5">
                 <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-[#8a9ba5]">Recommendations</p>
                 <div class="mt-3 space-y-3">
@@ -183,6 +179,6 @@ useHead({
       </div>
     </section>
 
-    <SiteCta eyebrow="Keep the conversation going" title="A sharper feed starts with better questions." description="Subscribe to the Convo Stack for editorial that treats laboratory professionals as the main audience, not an afterthought." primary-label="Subscribe to the Stack" primary-to="/journo" secondary-label="Read Journo" secondary-to="/journo" />
+    <SiteCta eyebrow="Keep the conversation going" title="A sharper feed starts with better questions." description="Subscribe to the Convo Stack for editorial that treats laboratory professionals as the main audience, not an afterthought." primary-label="Subscribe to the Stack" primary-to="/subscribe" secondary-label="Read Journo" secondary-to="/journo" />
   </main>
 </template>

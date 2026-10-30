@@ -83,10 +83,6 @@
                   {{ item.name }}
                   <Icon name="lucide:arrow-up-right" class="h-4 w-4 text-[#8a9ba5]" />
                 </NuxtLink>
-                <NuxtLink to="/about-us" class="flex items-center justify-between rounded-xl px-3 py-3 text-[15px] font-semibold text-[#0a202b] hover:bg-[#f2f7fa]" @click="isOpen = false">
-                  About us
-                  <Icon name="lucide:arrow-up-right" class="h-4 w-4 text-[#8a9ba5]" />
-                </NuxtLink>
                 <NuxtLink to="/enquiries" class="flex items-center justify-between rounded-xl px-3 py-3 text-[15px] font-semibold text-[#0a202b] hover:bg-[#f2f7fa]" @click="isOpen = false">
                   Contact
                   <Icon name="lucide:arrow-up-right" class="h-4 w-4 text-[#8a9ba5]" />
@@ -117,11 +113,11 @@ const isOpen = ref(false)
 
 const navigation = [
   { name: 'Journo', href: '/journo' },
-  { name: 'Convo Stack', href: '/convostack' },
   { name: 'LabCast', href: '/lab-cast' },
   { name: 'Programs', href: '/programs' },
   { name: 'Community', href: '/community' },
   { name: 'Shop', href: '/products' },
+  { name: 'About us', href: '/about-us' },
 ]
 
 const isActive = (href: string) => route.path === href || (href !== '/' && route.path.startsWith(`${href}/`))

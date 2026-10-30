@@ -1,11 +1,22 @@
 <script setup lang="ts">
-import { useGetPublishedPublications } from '@/composables/modules/publications/useGetPublishedPublications'
+import { convostack_api } from '@/api_factory/modules/convostack'
 import SiteHero from '@/components/site/SiteHero.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
 import SiteCta from '@/components/site/SiteCta.vue'
 
-const { getPublishedPublications, publications, loading } = useGetPublishedPublications()
+const publications = ref<any[]>([])
+const loading = ref(true)
+
+const getPublishedPublications = async () => {
+  loading.value = true
+  try {
+    const response = await convostack_api.$_get_publications()
+    publications.value = response.data || []
+  } finally {
+    loading.value = false
+  }
+}
 const activeCategory = ref('all')
 const search = ref('')
 
@@ -18,7 +29,7 @@ const filteredPublications = computed(() => {
   if (activeCategory.value !== 'all') list = list.filter((p: any) => p.category === activeCategory.value)
   if (search.value.trim()) {
     const q = search.value.toLowerCase()
-    list = list.filter((p: any) => p.title?.toLowerCase().includes(q) || p.abstract?.toLowerCase().includes(q))
+    list = list.filter((p: any) => p.title?.toLowerCase().includes(q) || p.excerpt?.toLowerCase().includes(q))
   }
   return list
 })
@@ -46,8 +57,8 @@ useHead({
       <template #visual>
         <div class="relative mx-auto max-w-md">
           <div class="grid grid-cols-2 gap-3">
-            <div class="site-card p-2"><div class="aspect-[3/4] overflow-hidden rounded-xl"><SiteMedia :src="filteredPublications[0]?.images?.[0]" label="Research paper" icon="lucide:file-text" eager /></div></div>
-            <div class="mt-8 site-card p-2"><div class="aspect-[3/4] overflow-hidden rounded-xl"><SiteMedia :src="filteredPublications[1]?.images?.[0]" label="Policy brief" icon="lucide:book-open" /></div></div>
+            <div class="site-card p-2"><div class="aspect-[3/4] overflow-hidden rounded-xl"><SiteMedia :src="filteredPublications[0]?.coverImage" label="Research paper" icon="lucide:file-text" eager /></div></div>
+            <div class="mt-8 site-card p-2"><div class="aspect-[3/4] overflow-hidden rounded-xl"><SiteMedia :src="filteredPublications[1]?.coverImage" label="Policy brief" icon="lucide:book-open" /></div></div>
           </div>
           <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-[#e4ebf0] bg-white px-4 py-2 shadow-lg">
             <p class="text-[10px] font-bold text-[#0a202b]">{{ filteredPublications.length }} resources <span class="font-medium text-[#8a9ba5]">ready to explore</span></p>
@@ -82,16 +93,16 @@ useHead({
         <div v-else-if="filteredPublications.length" class="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <article v-for="pub in paginatedPublications" :key="pub.id || pub._id" class="site-card site-card-hover group flex h-full flex-col overflow-hidden">
             <div class="relative aspect-[4/3] overflow-hidden bg-[#eef5f9]">
-              <SiteMedia :src="pub.images?.[0]" :alt="pub.title" :label="pub.category || 'Resource'" icon="lucide:file-text" />
+              <SiteMedia :src="pub.coverImage" :alt="pub.title" :label="pub.category || 'Resource'" icon="lucide:file-text" />
               <span class="absolute left-3 top-3 rounded-full bg-white/95 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-[#27628C]">{{ pub.category || 'Resource' }}</span>
             </div>
             <div class="flex flex-1 flex-col p-5">
-              <p class="text-[9.5px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">{{ pub.year || '2026' }} · {{ pub.journal || 'MedLabConvo' }}</p>
+              <p class="text-[9.5px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">{{ pub.category || 'Convo Stack' }} · {{ pub.readTime || 5 }} min read</p>
               <h3 class="mt-2 line-clamp-2 text-[1rem] font-bold leading-snug tracking-[-0.02em] text-[#0a202b] transition group-hover:text-[#27628C]">{{ pub.title }}</h3>
-              <p class="mt-2 line-clamp-3 text-[11px] leading-6 text-[#5f7482]">{{ pub.abstract || 'A professional resource from the MedLabConvo knowledge hub.' }}</p>
+              <p class="mt-2 line-clamp-3 text-[11px] leading-6 text-[#5f7482]">{{ pub.excerpt || 'A professional resource from the MedLabConvo knowledge hub.' }}</p>
               <div class="mt-auto flex items-center justify-between gap-3 border-t border-[#eef2f5] pt-4">
-                <span class="text-[9.5px] text-[#8a9ba5]">{{ pub.authors || 'MedLabConvo' }}</span>
-                <NuxtLink :to="pub.link || pub.pubLink || '#'" target="_blank" class="site-link-arrow">Access <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+                <span class="text-[9.5px] text-[#8a9ba5]">{{ pub.authors?.join(', ') || 'MedLabConvo' }}</span>
+                <NuxtLink :to="`/convostack/${pub.slug}`" target="_blank" class="site-link-arrow">Access <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
               </div>
             </div>
           </article>

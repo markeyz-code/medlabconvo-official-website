@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { useGetPublications } from '@/composables/modules/publications/useGetPublications'
+import { convostack_api } from '@/api_factory/modules/convostack'
 import SiteHero from '@/components/site/SiteHero.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
 import ArticleCard from '@/components/site/ArticleCard.vue'
 import SiteCta from '@/components/site/SiteCta.vue'
+import ConvoSubscribe from '@/components/site/ConvoSubscribe.vue'
 
-const { publications, loading } = useGetPublications()
+const publications = ref<any[]>([])
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const response = await convostack_api.$_get_publications()
+    publications.value = response.data || []
+  } catch (error) {
+    console.error('Failed to load Journo posts', error)
+  } finally {
+    loading.value = false
+  }
+})
 const activeFilter = ref('All')
 
 const published = computed(() => (publications.value || [])
-  .filter((pub: any) => pub.status === 'published')
-  .sort((a: any, b: any) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()))
+  .sort((a: any, b: any) => new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime()))
 const featured = computed(() => published.value[0])
 const archive = computed(() => published.value.slice(1))
 const filters = computed(() => ['All', ...new Set(published.value.map((pub: any) => pub.category).filter(Boolean))])
@@ -21,7 +33,7 @@ const paginatedArchive = computed(() => filteredArchive.value.slice(0, visibleCo
 watch(activeFilter, () => { visibleCount.value = 9 })
 
 const formatDate = (value?: string) => value ? new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'
-const articleLink = (article: any) => article.link || article.pubLink || '/journo'
+const articleLink = (article: any) => `/convostack/${article.slug}`
 
 useHead({
   title: 'Journo | Research, articles and insights | MedLabConvo',
@@ -38,19 +50,19 @@ useHead({
       primary-label="Read the latest"
       primary-to="/journo#latest"
       secondary-label="Subscribe to the Stack"
-      secondary-to="/convostack"
+      secondary-to="/subscribe"
     >
       <template #visual>
         <div class="relative mx-auto max-w-lg">
           <div class="site-card overflow-hidden !border-white/10 !bg-white/[0.06] p-2">
             <div class="aspect-[4/4.4] overflow-hidden rounded-[1.15rem]">
-              <SiteMedia :src="featured?.images?.[0]" :alt="featured?.title || 'Journo'" :label="featured?.category || 'The editorial desk'" icon="lucide:newspaper" eager />
+              <SiteMedia :src="featured?.coverImage" :alt="featured?.title || 'Journo'" :label="featured?.category || 'The editorial desk'" icon="lucide:newspaper" eager />
             </div>
           </div>
           <div class="absolute -bottom-5 -left-4 max-w-[15rem] rounded-2xl border border-white/15 bg-[#0a2f42] p-4 shadow-xl sm:-left-8">
             <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Latest dispatch</p>
             <p class="mt-1 line-clamp-2 text-[11px] font-semibold leading-5 text-white">{{ featured?.title || 'A new perspective on the laboratory' }}</p>
-            <p class="mt-1 text-[9px] text-white/40">{{ formatDate(featured?.createdAt) }}</p>
+            <p class="mt-1 text-[9px] text-white/40">{{ formatDate(featured?.publishedAt || featured?.createdAt) }}</p>
           </div>
           <div class="absolute -right-3 top-8 rounded-xl bg-[#DE6129] px-3.5 py-2.5 shadow-lg">
             <p class="text-[8px] font-bold uppercase tracking-[0.12em] text-white/70">The archive</p>
@@ -71,27 +83,27 @@ useHead({
           <div class="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
             <article class="site-card group overflow-hidden">
               <NuxtLink :to="articleLink(featured)" class="relative block aspect-[16/9] overflow-hidden">
-                <SiteMedia :src="featured.images?.[0]" :alt="featured.title" :label="featured.category || 'Journo'" icon="lucide:newspaper" />
+                <SiteMedia :src="featured.coverImage" :alt="featured.title" :label="featured.category || 'Journo'" icon="lucide:newspaper" />
                 <span class="absolute left-4 top-4 rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#27628C]">Featured</span>
               </NuxtLink>
               <div class="p-6 sm:p-7">
                 <div class="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
                   <span class="text-[#27628C]">{{ featured.category || 'Insight' }}</span>
                   <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
-                  <span>{{ formatDate(featured.createdAt) }}</span>
+                  <span>{{ formatDate(featured.publishedAt || featured.createdAt) }}</span>
                   <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
-                  <span>{{ featured.journal || 'Journo' }}</span>
+                  <span>{{ featured.category || 'Journo' }}</span>
                 </div>
                 <NuxtLink :to="articleLink(featured)">
                   <h2 class="mt-3 text-[1.7rem] font-bold leading-tight tracking-[-0.04em] text-[#0a202b] transition group-hover:text-[#27628C] sm:text-[2.1rem]">{{ featured.title }}</h2>
                 </NuxtLink>
-                <p class="mt-3 line-clamp-3 text-[0.86rem] leading-7 text-[#5f7482]">{{ featured.abstract }}</p>
+                <p class="mt-3 line-clamp-3 text-[0.86rem] leading-7 text-[#5f7482]">{{ featured.excerpt }}</p>
                 <div class="mt-5 flex items-center justify-between gap-4 border-t border-[#eef2f5] pt-4">
                   <div class="flex items-center gap-2.5">
-                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5f9] text-[11px] font-bold text-[#27628C]">{{ (featured.authors || 'M').charAt(0) }}</span>
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5f9] text-[11px] font-bold text-[#27628C]">{{ (featured.authors?.[0] || 'M').charAt(0) }}</span>
                     <div>
-                      <p class="text-[10.5px] font-bold text-[#0a202b]">{{ featured.authors || 'MedLabConvo' }}</p>
-                      <p class="text-[9px] text-[#8a9ba5]">{{ featured.year || '2026' }}</p>
+                      <p class="text-[10.5px] font-bold text-[#0a202b]">{{ featured.authors?.join(', ') || 'MedLabConvo' }}</p>
+                      <p class="text-[9px] text-[#8a9ba5]">{{ formatDate(featured.publishedAt || featured.createdAt) }}</p>
                     </div>
                   </div>
                   <NuxtLink :to="articleLink(featured)" class="site-link-arrow">Read the piece <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
@@ -104,10 +116,10 @@ useHead({
                 v-for="article in archive.slice(0, 2)"
                 :key="article._id || article.id"
                 :title="article.title"
-                :excerpt="article.abstract"
-                :image="article.images?.[0]"
+                :excerpt="article.excerpt"
+                :image="article.coverImage"
                 :category="article.category || 'Insight'"
-                :meta="`${formatDate(article.createdAt)} · ${article.journal || 'Journo'}`"
+                :meta="`${formatDate(article.publishedAt || article.createdAt)} · ${article.category || 'Journo'}`"
                 :to="articleLink(article)"
                 label="Read piece"
               />
@@ -147,10 +159,10 @@ useHead({
             v-for="article in paginatedArchive"
             :key="article._id || article.id"
             :title="article.title"
-            :excerpt="article.abstract"
-            :image="article.images?.[0]"
+            :excerpt="article.excerpt"
+            :image="article.coverImage"
             :category="article.category || 'Insight'"
-            :meta="`${formatDate(article.createdAt)} · ${article.journal || 'Journo'}`"
+            :meta="`${formatDate(article.publishedAt || article.createdAt)} · ${article.category || 'Journo'}`"
             :to="articleLink(article)"
             label="Read piece"
           />
@@ -175,9 +187,7 @@ useHead({
             <p class="mt-2 max-w-md text-[12.5px] leading-6 text-[#5f7482]">Research, career notes and ecosystem pulses, written for people who work in and around the laboratory.</p>
             <NuxtLink to="/convostack" class="site-link-arrow mt-4">Explore the Convo Stack <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
           </div>
-          <div class="overflow-hidden rounded-xl border border-[#e4ebf0] bg-[#f7f9f8]">
-            <iframe src="https://mlcjourno.substack.com/embed" width="100%" height="320" frameborder="0" scrolling="no" class="w-full" />
-          </div>
+          <ConvoSubscribe title="The Convo Stack, in your inbox." description="New essays, research notes and ecosystem pulses. Written by the MedLabConvo team, delivered from our own platform." button-label="Subscribe to the Convo Stack" />
         </div>
       </div>
     </section>

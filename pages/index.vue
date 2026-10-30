@@ -3,7 +3,7 @@ import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteCta from '@/components/site/SiteCta.vue'
 import { useGetPrograms } from '@/composables/modules/programs/useGetPrograms'
-import { useGetPublications } from '@/composables/modules/publications/useGetPublications'
+import { convostack_api } from '@/api_factory/modules/convostack'
 import { useGetLabCasts } from '@/composables/modules/labcast/useGetLabCasts'
 import heroImage from '@/assets/img/community1.png'
 import ProgramCard from '@/components/site/ProgramCard.vue'
@@ -11,13 +11,24 @@ import ArticleCard from '@/components/site/ArticleCard.vue'
 import SiteCarousel from '@/components/site/SiteCarousel.vue'
 
 const { programs, loading: programsLoading } = useGetPrograms()
-const { publications, loading: publicationsLoading } = useGetPublications()
+const publications = ref<any[]>([])
+const publicationsLoading = ref(true)
+
+onMounted(async () => {
+  try {
+    const response = await convostack_api.$_get_publications()
+    publications.value = response.data || []
+  } catch (error) {
+    console.error('Failed to load Convo Stack posts', error)
+  } finally {
+    publicationsLoading.value = false
+  }
+})
 const { labcasts, loading: labcastsLoading } = useGetLabCasts()
 
 const activePrograms = computed(() => (programs.value || []).filter((p: any) => p.status === 'active').slice(0, 6))
 const publishedArticles = computed(() => (publications.value || [])
-  .filter((item: any) => item.status === 'published')
-  .sort((a: any, b: any) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()))
+  .sort((a: any, b: any) => new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime()))
 const featuredArticle = computed(() => publishedArticles.value[0])
 const latestEpisodes = computed(() => (labcasts.value || [])
   .filter((episode: any) => episode.isActive)
@@ -254,11 +265,11 @@ useHead({
           <ArticleCard
             v-if="featuredArticle"
             :title="featuredArticle.title"
-            :excerpt="featuredArticle.abstract"
-            :image="featuredArticle.images?.[0] || featuredArticle.coverImage"
+            :excerpt="featuredArticle.excerpt"
+            :image="featuredArticle.coverImage"
             :category="featuredArticle.category || 'Featured'"
-            :meta="`${formatDate(featuredArticle.createdAt)} · ${featuredArticle.authors || 'MedLabConvo'}`"
-            :to="featuredArticle.link || featuredArticle.pubLink || '/journo'"
+            :meta="`${formatDate(featuredArticle.publishedAt || featuredArticle.createdAt)} · ${featuredArticle.authors?.join(', ') || 'MedLabConvo'}`"
+            :to="`/convostack/${featuredArticle.slug}`"
             label="Read the feature"
             featured
           />
@@ -267,11 +278,11 @@ useHead({
               v-for="article in publishedArticles.slice(1, 3)"
               :key="article._id || article.id"
               :title="article.title"
-              :excerpt="article.abstract"
-              :image="article.images?.[0] || article.coverImage"
+              :excerpt="article.excerpt"
+              :image="article.coverImage"
               :category="article.category || 'Insight'"
-              :meta="formatDate(article.createdAt)"
-              :to="article.link || article.pubLink || '/journo'"
+              :meta="formatDate(article.publishedAt || article.createdAt)"
+              :to="`/convostack/${article.slug}`"
               label="Read story"
             />
           </div>
