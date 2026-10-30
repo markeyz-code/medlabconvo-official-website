@@ -28,9 +28,7 @@ const featured = computed(() => published.value[0])
 const archive = computed(() => published.value.slice(1))
 const filters = computed(() => ['All', ...new Set(published.value.map((pub: any) => pub.category).filter(Boolean))])
 const filteredArchive = computed(() => activeFilter.value === 'All' ? archive.value : archive.value.filter((pub: any) => pub.category === activeFilter.value))
-const visibleCount = ref(9)
-const paginatedArchive = computed(() => filteredArchive.value.slice(0, visibleCount.value))
-watch(activeFilter, () => { visibleCount.value = 9 })
+const paginatedArchive = computed(() => filteredArchive.value)
 
 const formatDate = (value?: string) => value ? new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'
 const articleLink = (article: any) => `/convostack/${article.slug}`
@@ -172,9 +170,6 @@ useHead({
           <button type="button" class="site-link-arrow mt-3" @click="activeFilter = 'All'">View all dispatches</button>
         </div>
 
-        <div v-if="visibleCount < filteredArchive.length" class="mt-7 flex justify-center">
-          <button type="button" class="site-btn site-btn-ghost" @click="visibleCount += 9">Load more dispatches</button>
-        </div>
       </div>
     </section>
 
