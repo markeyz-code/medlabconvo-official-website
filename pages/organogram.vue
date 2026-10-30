@@ -1,7 +1,5 @@
 <template>
   <div class="min-h-screen bg-white pb-32">
-    <Header />
-
     <!-- Hero Section -->
     <div class="relative bg-[#0F172A] pt-40 pb-32 overflow-hidden">
       <!-- Animated Background Pattern -->
@@ -68,7 +66,6 @@
         <p class="text-slate-400">No team members found. Check your database settings.</p>
     </div>
 
-    <Footer />
   </div>
 </template>
 
