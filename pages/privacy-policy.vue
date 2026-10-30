@@ -1,22 +1,15 @@
 <template>
   <div class="min-h-screen bg-white">
-    <!-- Hero Standard -->
-    <div class="bg-[#27628C] py-24 md:py-32 px-6 lg:px-8 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
-        <div class="mx-auto max-w-7xl relative z-10">
-           <div class="max-w-2xl">
-              <h1 class="text-lg md:text-xl font-bold text-white leading-tight tracking-normal  mb-4 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                 Privacy Policy
-              </h1>
-              <p class="text-lg text-blue-100 font-medium leading-relaxed max-w-lg animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-                 Your trust is our priority. Learn how we handle and protect your personal data at MedLabConvo.
-              </p>
-           </div>
-        </div>
-    </div>
+    <section class="border-b border-[#e4ebf0] bg-[#faf8f3]">
+      <div class="site-container py-12 sm:py-16">
+        <p class="site-eyebrow">Legal & trust</p>
+        <h1 class="site-display mt-4 text-[clamp(2.3rem,4.5vw,4rem)]">Privacy policy</h1>
+        <p class="site-lead mt-3 max-w-2xl">How MedLabConvo collects, uses and protects your information.</p>
+      </div>
+    </section>
 
     <!-- Content -->
-    <main class="max-w-7xl mx-auto px-6 py-24 sm:py-32">
+    <main class="site-container py-12 sm:py-16">
       <div class="max-w-3xl">
         <div class="prose prose-lg sm:prose-xl prose-slate max-w-none 
           prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-gray-900 

@@ -1,92 +1,104 @@
-<template>
-  <div class="min-h-screen bg-white">
-    <!-- Hero Standardized -->
-    <div class="bg-[#27628C] py-24 md:py-32 px-6 lg:px-8 relative overflow-hidden text-center">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
-        <div class="mx-auto max-w-7xl relative z-10">
-           <div class="max-w-2xl mx-auto">
-              <h1 class="text-lg md:text-xl font-bold text-white leading-tight tracking-normal  mb-4 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                 Join the Pulse
-              </h1>
-              <p class="text-lg text-blue-50 font-medium leading-relaxed max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-                 Subscribe to the MedLabConvo Substack for expert medical journalism, industry pulses, and community updates.
-              </p>
-           </div>
-        </div>
-    </div>
-
-    <!-- Subscription Form Section -->
-    <section class="py-24 bg-white relative">
-      <div class="max-w-xl mx-auto px-6">
-        <div class="p-10 md:p-16 bg-gray-50 rounded-[3rem] border border-gray-100 shadow-sm border border-slate-200 relative">
-          <div class="absolute -top-6 -left-6 w-12 h-12 bg-[#27628C] rounded-2xl flex items-center justify-center text-white shadow-sm border border-slate-200">
-             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          </div>
-          
-          <h2 class="text-xl font-bold text-gray-900 mb-8  tracking-tight">Weekly Ecosystem Insights</h2>
-          
-          <form @submit.prevent="handleSubscribe" class="space-y-6">
-            <div class="space-y-4">
-              <div>
-                <label class="block text-sm font-black text-gray-400  tracking-normal mb-3 ml-1">Full Name</label>
-                <input v-model="form.name" type="text" required class="w-full px-6 py-4 bg-white border border-gray-100 rounded-2xl text-sm focus:ring-2 focus:ring-[#27628C] focus:border-transparent outline-none transition-all shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-black text-gray-400  tracking-normal mb-3 ml-1">Email Address</label>
-                <input v-model="form.email" type="email" required class="w-full px-6 py-4 bg-white border border-gray-100 rounded-2xl text-sm focus:ring-2 focus:ring-[#27628C] focus:border-transparent outline-none transition-all shadow-sm" />
-              </div>
-              <div>
-                <label class="block text-sm font-black text-gray-400  tracking-normal mb-3 ml-1">Area of Interest</label>
-                <select v-model="form.interest" class="w-full px-6 py-4 bg-white border border-gray-100 rounded-2xl text-sm focus:ring-2 focus:ring-[#27628C] focus:border-transparent outline-none transition-all shadow-sm">
-                   <option value="journalism">Medical Journalism</option>
-                   <option value="innovation">Health Innovation</option>
-                   <option value="careers">Career Development</option>
-                   <option value="all">Ecosystem Updates</option>
-                </select>
-              </div>
-            </div>
-
-            <button type="submit" :disabled="loading" class="w-full py-5 bg-[#27628C] text-white rounded-2xl text-xs font-bold hover:bg-black transition-all shadow-sm border border-slate-200 active:scale-95 flex items-center justify-center gap-3">
-              <span v-if="loading" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
-              {{ loading ? 'Transmitting...' : 'Join the Substack' }}
-            </button>
-          </form>
-
-          <p class="text-center mt-10 text-[9px] font-bold text-gray-400  tracking-normal leading-relaxed">
-             By joining, you agree to our <a href="/privacy-policy" class="text-[#27628C] underline">Privacy Policy</a>. <br/> Zero spam. Pure professional value.
-          </p>
-        </div>
-      </div>
-    </section>
-
-  </div>
-</template>
-
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { useHead } from '#imports'
+import { reactive } from 'vue'
+import SiteHero from '@/components/site/SiteHero.vue'
 import { useSubscribe } from '@/composables/modules/subscriptions/useSubscribe'
 
 const { subscribe, loading } = useSubscribe()
-const form = reactive({
-  name: '',
-  email: '',
-  interest: 'journalism'
-})
+const form = reactive({ name: '', email: '', interest: 'journalism' })
 
 const handleSubscribe = async () => {
-    const success = await subscribe(form.email)
-    if (success) {
-        form.name = ''
-        form.email = ''
-        form.interest = 'journalism'
-    }
+  const success = await subscribe(form.email)
+  if (success) {
+    form.name = ''
+    form.email = ''
+    form.interest = 'journalism'
+  }
 }
 
 useHead({
   title: 'Subscribe | MedLabConvo',
-  meta: [
-    { name: 'description', content: 'Subscribe to MedLabConvo for professional medical journalism and insights.' }
-  ]
+  meta: [{ name: 'description', content: 'Subscribe to the MedLabConvo Convo Stack for professional medical journalism and ecosystem insight.' }],
 })
 </script>
+
+<template>
+  <main class="bg-white">
+    <SiteHero
+      eyebrow="The Convo Stack"
+      title="Stay close to what is changing."
+      description="Professional medical journalism, research pulses and career notes for people who work in and around the laboratory. One considered email at a time."
+      theme="light"
+      compact
+    >
+      <template #visual>
+        <div class="site-card p-6 sm:p-7">
+          <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-[#8a9ba5]">What lands in your inbox</p>
+          <div class="mt-4 space-y-3">
+            <div v-for="item in [
+              { title: 'Editorial', text: 'Reported pieces on the forces shaping laboratory medicine.', icon: 'lucide:newspaper' },
+              { title: 'Career notes', text: 'Practical thinking for the next step, not generic advice.', icon: 'lucide:compass' },
+              { title: 'Ecosystem pulses', text: 'Roles, programmes and opportunities worth knowing about.', icon: 'lucide:radar' },
+            ]" :key="item.title" class="flex items-start gap-3 rounded-xl border border-[#eef2f5] bg-[#fbfcfc] p-3.5">
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#eef5f9] text-[#27628C]"><Icon :name="item.icon" class="h-4 w-4" /></span>
+              <div>
+                <p class="text-[11px] font-bold text-[#0a202b]">{{ item.title }}</p>
+                <p class="mt-0.5 text-[10px] leading-5 text-[#5f7482]">{{ item.text }}</p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-4 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#8a9ba5]">No spam. Unsubscribe anytime.</p>
+        </div>
+      </template>
+    </SiteHero>
+
+    <section class="site-section">
+      <div class="site-container grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+        <div>
+          <p class="site-eyebrow">Join the list</p>
+          <h2 class="site-h2 mt-3">One good email is enough.</h2>
+          <p class="site-lead mt-3">We write for laboratory professionals, students and the people building around them. Expect signal, not noise.</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="site-chip">Editorial</span><span class="site-chip">Careers</span><span class="site-chip">Research</span><span class="site-chip">Opportunity</span>
+          </div>
+        </div>
+
+        <form class="site-card p-5 sm:p-7" @submit.prevent="handleSubscribe">
+          <div class="flex items-center justify-between border-b border-[#eef2f5] pb-4">
+            <div>
+              <p class="site-eyebrow">The Convo Stack</p>
+              <h2 class="mt-2 text-[1.35rem] font-bold tracking-[-0.03em] text-[#0a202b]">Subscribe for free</h2>
+            </div>
+            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef5f9] text-[#27628C]"><Icon name="lucide:mail" class="h-4 w-4" /></span>
+          </div>
+
+          <div class="mt-5 space-y-4">
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">Full name</span>
+              <input v-model="form.name" type="text" autocomplete="name" placeholder="Your name" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+            </label>
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">Email address <span class="text-[#DE6129]">*</span></span>
+              <input v-model="form.email" type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+            </label>
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">What interests you most?</span>
+              <select v-model="form.interest" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10">
+                <option value="journalism">Medical journalism</option>
+                <option value="innovation">Health innovation</option>
+                <option value="careers">Career development</option>
+                <option value="all">The whole ecosystem</option>
+              </select>
+            </label>
+          </div>
+
+          <button type="submit" :disabled="loading" class="site-btn site-btn-primary mt-5 w-full disabled:opacity-50">
+            <span v-if="loading" class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            {{ loading ? 'Subscribing…' : 'Join the Convo Stack' }}
+            <Icon v-if="!loading" name="lucide:arrow-up-right" class="h-3.5 w-3.5" />
+          </button>
+          <p class="mt-3 text-center text-[9.5px] leading-5 text-[#8a9ba5]">By subscribing you agree to our <NuxtLink to="/privacy-policy" class="font-semibold text-[#27628C]">Privacy Policy</NuxtLink>.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+</template>

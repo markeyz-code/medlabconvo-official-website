@@ -3,6 +3,7 @@ import type { Form, FormResponse, SubmitFormPayload } from '@/types/form'
 import { useSubmitFormByToken } from '@/composables/modules/forms/useSubmitFormByToken'
 import { useFetchFormByToken } from '@/composables/modules/forms/useFetchFormByToken'
 import { linkify } from '@/utils/linkify'
+import SiteMedia from '@/components/site/SiteMedia.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -196,9 +197,9 @@ definePageMeta({ layout: 'empty' })
         <div class="min-w-0 space-y-5">
           <!-- Hero -->
           <section class="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_50px_-34px_rgba(3,57,88,0.28)]">
-            <div v-if="form.bannerImage" class="relative h-44 overflow-hidden bg-slate-100 sm:h-56 lg:h-60">
-              <img :src="form.bannerImage" :alt="form.title" class="h-full w-full object-cover" />
-              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
+            <div v-if="form.bannerImage" class="relative h-44 overflow-hidden bg-[#eef5f9] sm:h-56 lg:h-60">
+              <SiteMedia :src="form.bannerImage" :alt="form.title" :label="form.title" icon="lucide:file-text" eager />
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
               <span class="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#27628C] shadow-sm backdrop-blur">
                 <Icon name="lucide:file-text" class="h-3 w-3" />
                 Application form

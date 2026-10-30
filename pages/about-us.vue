@@ -1,198 +1,138 @@
-<template>
-  <main class="min-h-screen bg-white">
-    <!-- Hero Standardized -->
-    <div class="bg-[#27628C] py-24 md:py-40 px-6 lg:px-8 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
-        <div class="mx-auto max-w-7xl relative z-10 text-center">
-           <div class="max-w-4xl mx-auto">
-              <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight tracking-normal  mb-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                 {{ getSectionContent('hero_title', 'Leading Change, Building Capacity, Inspiring Action') }}
-              </h1>
-              <p class="text-2xl md:text-3xl text-blue-50 font-medium leading-relaxed max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-                 {{ getSectionContent('hero_description', 'MedLabConvo is more than a platform—it’s a movement dedicated to shaping the future of medical laboratory science and healthcare.') }}
-              </p>
-           </div>
-        </div>
-    </div>
-
-    <!-- The Five Dimensions Section -->
-    <div class="py-24 bg-white sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center mb-16">
-          <h2 class="text-3xl font-bold text-gray-900 tracking-tight ">Our Five Dimensions</h2>
-          <div class="mt-4 h-1.5 w-20 bg-[#27628C] mx-auto rounded-full"></div>
-        </div>
-        
-        <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-          <!-- Knowledge -->
-          <div class="group relative flex flex-col items-center p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 transition-all duration-500 hover:shadow-sm border border-slate-200 hover:-translate-y-2">
-            <div class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm border border-slate-200 overflow-hidden group-hover:scale-110 transition-transform p-3">
-              <img src="@/assets/img/goals1.jpeg" class="h-full w-full object-cover rounded-xl" />
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Knowledge</h3>
-            <p class="text-gray-600 text-center text-sm leading-relaxed font-medium">
-              {{ getSectionContent('knowledge_desc', 'We bridge the gaps in medical laboratory science education by providing cutting-edge resources and training.') }}
-            </p>
-          </div>
-
-          <!-- Mindset -->
-          <div class="group relative flex flex-col items-center p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 transition-all duration-500 hover:shadow-sm border border-slate-200 hover:-translate-y-2">
-            <div class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm border border-slate-200 overflow-hidden group-hover:scale-110 transition-transform p-3">
-              <img src="@/assets/img/goals2.jpeg" class="h-full w-full object-cover rounded-xl" />
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Mindset</h3>
-            <p class="text-gray-600 text-center text-sm leading-relaxed font-medium">
-              {{ getSectionContent('mindset_desc', 'Fostering resilience, adaptability, and a proactive approach to challenges is at the heart of our mission.') }}
-            </p>
-          </div>
-
-          <!-- Skill -->
-          <div class="group relative flex flex-col items-center p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 transition-all duration-500 hover:shadow-sm border border-slate-200 hover:-translate-y-2">
-            <div class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm border border-slate-200 overflow-hidden group-hover:scale-110 transition-transform p-3">
-              <img src="@/assets/img/goals3.jpeg" class="h-full w-full object-cover rounded-xl" />
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Skill</h3>
-            <p class="text-gray-600 text-center text-sm leading-relaxed font-medium">
-              {{ getSectionContent('skill_desc', 'MedLabConvo connects you with industry leaders and mentors to expand your professional toolkit.') }}
-            </p>
-          </div>
-
-          <!-- Network -->
-          <div class="group relative flex flex-col items-center p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 transition-all duration-500 hover:shadow-sm border border-slate-200 hover:-translate-y-2">
-            <div class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm border border-slate-200 overflow-hidden group-hover:scale-110 transition-transform p-3">
-              <img src="@/assets/img/goals4.jpeg" class="h-full w-full object-cover rounded-xl" />
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Network</h3>
-            <p class="text-gray-600 text-center text-sm leading-relaxed font-medium">
-              Building a strong professional network opens doors to new opportunities and collaborations across borders.
-            </p>
-          </div>
-
-          <!-- Identity -->
-          <div class="group relative flex flex-col items-center p-10 bg-slate-50 rounded-[2.5rem] border border-slate-100 transition-all duration-500 hover:shadow-sm border border-slate-200 hover:-translate-y-2 lg:col-start-2">
-            <div class="mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-sm border border-slate-200 overflow-hidden group-hover:scale-110 transition-transform p-3">
-              <img src="@/assets/img/goals5.jpeg" class="h-full w-full object-cover rounded-xl" />
-            </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">Identity</h3>
-            <p class="text-gray-600 text-center text-sm leading-relaxed font-medium">
-              Establishing a clear professional identity is key. We provide guidance on personal branding and leadership.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mission & Vision Section -->
-    <div class="bg-gray-50 py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-16">
-          <!-- Mission -->
-          <div class="relative bg-white p-12 rounded-[3.5rem] shadow-sm border border-slate-200 border border-gray-100 overflow-hidden group hover:shadow-sm border border-slate-200 transition-all duration-500">
-            <div class="flex items-center gap-6 mb-8">
-              <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-[#27628C] text-white shadow-sm border border-slate-100 shadow-blue-900/20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <h2 class="text-lg font-bold text-gray-900 ">Mission</h2>
-            </div>
-            <p class="text-gray-600 text-lg leading-relaxed font-medium">
-              To lead positive change in the mindset, attitude, and identity of stakeholders within medical laboratory science, while contributing to transformation across the broader healthcare system; build the capacity of future generations of world-class professionals in medical laboratory science and other health professions; and inspire action through purposeful engagement, education, and advocacy.
-            </p>
-          </div>
-
-          <!-- Vision -->
-          <div class="relative bg-white p-12 rounded-[3.5rem] shadow-sm border border-slate-200 border border-gray-100 overflow-hidden group hover:shadow-sm border border-slate-200 transition-all duration-500">
-            <div class="flex items-center gap-6 mb-8">
-              <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-[#27628C] text-white shadow-sm border border-slate-100 shadow-blue-900/20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.478 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </div>
-              <h2 class="text-lg font-bold text-gray-900 ">Vision</h2>
-            </div>
-            <p class="text-gray-600 text-lg leading-relaxed font-medium">
-              To become the household name of medical laboratory science in Africa and beyond — known, followed, and trusted by professionals and the public through our impact.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Core Values -->
-    <div class="py-24 bg-white sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-gray-900 mb-16 ">Core Values</h2>
-        
-        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <div v-for="(value, index) in coreValues" :key="index" class="p-10 border border-slate-100 rounded-[2.5rem] bg-slate-50 hover:bg-white hover:shadow-sm border border-slate-200 transition-all duration-500 group">
-            <div class="w-14 h-14 bg-white shadow-sm border border-slate-100 text-[#27628C] rounded-2xl flex items-center justify-center mx-auto mb-6 font-bold text-xl transition-all group-hover:bg-[#27628C] group-hover:text-white">{{ index + 1 }}</div>
-            <h3 class="text-lg font-bold text-gray-900 mb-3">{{ value.title }}</h3>
-            <p class="text-gray-500 text-sm leading-relaxed font-medium">{{ value.desc }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Leadership Team -->
-    <div class="py-24 bg-white sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-16">
-        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Our Leadership</h2>
-        <p class="text-gray-500 mt-4 font-medium leading-relaxed max-w-2xl mx-auto">Meet the visionary team driving clinical excellence and innovation at MedLabConvo.</p>
-        <div class="mt-4 h-1.5 w-20 bg-[#27628C] mx-auto rounded-full"></div>
-      </div>
-      <LeadershipSection />
-    </div>
-
-    <!-- Newsletter CTA -->
-    <section class="py-24 bg-gray-50 border-t border-gray-100">
-      <div class="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
-        <div class="max-w-xl">
-          <h2 class="text-xl font-bold text-gray-900 tracking-normal">Join the Conversation</h2>
-          <p class="text-gray-500 mt-4 font-medium leading-relaxed">Stay updated with our latest initiatives, research pulses, and community events directly in your inbox.</p>
-        </div>
-        <NuxtLink to="/journo" class="px-12 py-5 bg-[#27628C] text-white rounded-2xl font-bold text-sm tracking-normal hover:bg-black transition-all shadow-sm border border-slate-200 active:scale-95">
-          Explore Journo
-        </NuxtLink>
-      </div>
-    </section>
-  </main>
-</template>
-
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useGetCms } from '@/composables/modules/cms/useGetCms'
 import LeadershipSection from '@/components/LeadershipSection.vue'
-import { useHead } from '#imports'
+import SiteHero from '@/components/site/SiteHero.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
+import communityImage from '@/assets/img/community1.png'
 
 const { singleCms, getCmsByKey } = useGetCms()
 
-useHead({
-  title: 'About Us | MedLabConvo',
-  meta: [
-    { name: 'description', content: 'MedLabConvo is a movement dedicated to shaping the future of medical laboratory science and healthcare.' }
-  ]
-})
-
-onMounted(() => {
-  getCmsByKey('about_page')
-})
+onMounted(() => getCmsByKey('about_page'))
 
 const getSectionContent = (id: string, fallback: string) => {
   if (singleCms.value?.data?.sections) {
     const section = singleCms.value.data.sections.find((s: any) => s.id === id && s.isVisible)
-    if (section) return section.content
+    if (section?.content) return section.content
   }
   return fallback
 }
 
-const coreValues = [
-  { title: 'Empowerment & Capacity', desc: 'Investing in educating and training students and early-career professionals.' },
-  { title: 'Advocacy & Awareness', desc: 'Championing the laboratory profession and public health promotion.' },
-  { title: 'Collaboration', desc: 'Building partnerships across countries, institutions, and disciplines.' },
-  { title: 'Excellence & Quality', desc: 'Maintaining a standard of world-class professionalism in programming and content.' },
-  { title: 'Innovation & Tech-Focus', desc: 'Integrating technology in communications and education (e.g., Labcast, digital editorial).' },
-  { title: 'Community & Mentorship', desc: 'Creating supportive networks that bridge early-career individuals and experienced professionals.' }
+const dimensions = [
+  { title: 'Knowledge', description: 'We close gaps in laboratory science education with rigorous, accessible resources and training.', icon: 'lucide:book-open' },
+  { title: 'Mindset', description: 'We build the resilience, adaptability and professional confidence that complex careers demand.', icon: 'lucide:brain' },
+  { title: 'Skill', description: 'We connect emerging professionals to practitioners, mentors and the tools that sharpen practice.', icon: 'lucide:wrench' },
+  { title: 'Network', description: 'We create the rooms, relationships and cross-border collaborations that open doors.', icon: 'lucide:network' },
+  { title: 'Identity', description: 'We help laboratory professionals articulate their value and lead with a clear professional identity.', icon: 'lucide:fingerprint' },
 ]
+
+const coreValues = [
+  { title: 'Empowerment & capacity', description: 'Investing in students and early-career professionals through education, mentorship and access.' },
+  { title: 'Advocacy & awareness', description: 'Championing the laboratory profession and the public health contribution it makes.' },
+  { title: 'Collaboration', description: 'Building partnerships across countries, institutions and disciplines.' },
+  { title: 'Excellence & quality', description: 'Holding a world-class standard in our programming, content and community experience.' },
+  { title: 'Innovation & technology', description: 'Using digital platforms to make knowledge more useful, more reachable and more human.' },
+  { title: 'Community & mentorship', description: 'Creating supportive networks that connect early-career and experienced professionals.' },
+]
+
+useHead({
+  title: 'About | MedLabConvo',
+  meta: [{ name: 'description', content: 'MedLabConvo is a movement shaping the future of medical laboratory science across Africa and beyond.' }],
+})
 </script>
+
+<template>
+  <main class="bg-white">
+    <SiteHero
+      eyebrow="About MedLabConvo"
+      title="A movement for the people behind the science."
+      :description="getSectionContent('hero_description', 'MedLabConvo is more than a platform. It is a movement dedicated to shaping the future of medical laboratory science, the professionals who carry it and the healthcare systems it serves.')"
+      primary-label="Meet the team"
+      primary-to="#leadership"
+      secondary-label="Our programmes"
+      secondary-to="/programs"
+    >
+      <template #visual>
+        <div class="relative mx-auto max-w-lg">
+          <div class="site-card overflow-hidden !border-white/10 !bg-white/[0.06] p-2">
+            <div class="aspect-[4/4.5] overflow-hidden rounded-[1.15rem]"><SiteMedia :src="communityImage" alt="The MedLabConvo community" label="MedLabConvo" icon="lucide:users" eager /></div>
+          </div>
+          <div class="absolute -bottom-5 -left-4 rounded-2xl border border-white/15 bg-[#0a2f42] p-4 shadow-xl sm:-left-8">
+            <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Our ambition</p>
+            <p class="mt-1 text-[13px] font-bold text-white">The household name for laboratory science.</p>
+            <p class="mt-1 text-[9px] text-white/45">Africa and beyond</p>
+          </div>
+          <div class="absolute -right-3 top-8 rounded-xl bg-[#DE6129] px-3.5 py-2.5 shadow-lg">
+            <p class="text-[8px] font-bold uppercase tracking-[0.12em] text-white/70">The work</p>
+            <p class="text-[11px] font-bold text-white">Knowledge · network · identity</p>
+          </div>
+        </div>
+      </template>
+    </SiteHero>
+
+    <!-- Mission & vision -->
+    <section class="site-section">
+      <div class="site-container grid gap-4 lg:grid-cols-2">
+        <article class="rounded-[1.5rem] bg-[#033958] p-7 text-white sm:p-9">
+          <div class="flex items-center justify-between">
+            <p class="site-eyebrow !text-white/50">01 · Mission</p>
+            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white"><Icon name="lucide:compass" class="h-4 w-4" /></span>
+          </div>
+          <h2 class="mt-5 text-[1.55rem] font-bold leading-tight tracking-[-0.03em]">Lead positive change in the mindset, identity and capacity of laboratory professionals.</h2>
+          <p class="mt-4 text-[12.5px] leading-7 text-white/60">We contribute to transformation across the broader healthcare system by building future generations of world-class professionals and inspiring action through purposeful engagement, education and advocacy.</p>
+        </article>
+        <article class="rounded-[1.5rem] border border-[#e4ebf0] bg-[#faf8f3] p-7 sm:p-9">
+          <div class="flex items-center justify-between">
+            <p class="site-eyebrow">02 · Vision</p>
+            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#27628C]/10 text-[#27628C]"><Icon name="lucide:eye" class="h-4 w-4" /></span>
+          </div>
+          <h2 class="mt-5 text-[1.55rem] font-bold leading-tight tracking-[-0.03em] text-[#0a202b]">To become the household name of medical laboratory science in Africa and beyond.</h2>
+          <p class="mt-4 text-[12.5px] leading-7 text-[#5f7482]">Known, followed and trusted by professionals and the public through the quality and reach of our impact.</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="site-chip">Known</span><span class="site-chip">Followed</span><span class="site-chip">Trusted</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Five dimensions -->
+    <section class="bg-[#f7f9f8] py-14 sm:py-20">
+      <div class="site-container">
+        <SiteSectionHeader eyebrow="The five dimensions" title="What we actually build." description="Our work is not one thing. It moves across knowledge, mindset, skill, network and identity — because careers are not built in a single dimension." />
+        <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <article v-for="(item, index) in dimensions" :key="item.title" class="rounded-2xl border border-[#e4ebf0] bg-white p-5">
+            <div class="flex items-center justify-between">
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef5f9] text-[#27628C]"><Icon :name="item.icon" class="h-4 w-4" /></span>
+              <span class="text-[9px] font-bold tracking-[0.14em] text-[#c0ced7]">0{{ index + 1 }}</span>
+            </div>
+            <h3 class="mt-7 text-[1rem] font-bold tracking-[-0.02em] text-[#0a202b]">{{ item.title }}</h3>
+            <p class="mt-2 text-[11px] leading-6 text-[#5f7482]">{{ item.description }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="site-section">
+      <div class="site-container">
+        <SiteSectionHeader eyebrow="What we stand for" title="Six values, held in practice." description="These are not wall posters. They shape how we choose partners, build programmes and show up for the community." />
+        <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <article v-for="(value, index) in coreValues" :key="value.title" class="group rounded-2xl border border-[#e4ebf0] bg-white p-5 transition hover:border-[#27628C]/25">
+            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#faf8f3] text-[11px] font-bold text-[#DE6129]">{{ String(index + 1).padStart(2, '0') }}</span>
+            <h3 class="mt-6 text-[1rem] font-bold tracking-[-0.02em] text-[#0a202b]">{{ value.title }}</h3>
+            <p class="mt-2 text-[11px] leading-6 text-[#5f7482]">{{ value.description }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership -->
+    <div id="leadership">
+      <LeadershipSection />
+    </div>
+
+    <SiteCta eyebrow="Work with us" title="The future of the lab is a collaborative project." description="Partner with us, bring a programme to your institution, or join the community shaping what comes next." primary-label="Start a conversation" primary-to="/enquiries" secondary-label="Explore programmes" secondary-to="/programs" />
+  </main>
+</template>

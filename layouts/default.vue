@@ -70,8 +70,9 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: #1a1a1a;
+  font-family: 'Onest', system-ui, -apple-system, sans-serif;
+  color: #0a202b;
+  background: #fff;
 }
 
 /* Custom Selection Color */

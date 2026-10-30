@@ -1,285 +1,195 @@
-<template>
-  <main class="min-h-screen bg-white">
-    <!-- Hero Section -->
-    <div class="relative isolate overflow-hidden bg-[#27628C] py-24 sm:py-40">
-      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
-      
-      <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center pt-16 text-center">
-        <div class="max-w-3xl">
-          <h1 class="text-2xl font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Research, Articles & Insights</h1>
-          <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">Journo</h2>
-          <p class="text-2xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
-            Research publications, clinical perspectives, and curated articles at the intersection of laboratory science and global health.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== PUBLICATIONS (Journo) ==================== -->
-    <div>
-      <!-- Latest Publication: High Impact Feature -->
-      <div class="relative pt-12 pb-32 px-6">
-        <div class="max-w-7xl mx-auto">
-          <!-- Loading State -->
-          <div v-if="pubLoading" class="bg-gray-50 rounded-[3rem] h-[600px] animate-pulse flex items-center justify-center">
-             <div class="w-12 h-12 border-4 border-gray-200 border-t-[#27628C] rounded-full animate-spin"></div>
-          </div>
-
-          <!-- Latest Content -->
-          <div v-else-if="latestPublication" class="group relative bg-white rounded-[3rem] overflow-hidden border border-gray-100 transition-all duration-500 animate-fade-in-up">
-            <div class="flex flex-col lg:flex-row min-h-[600px]">
-              <!-- Visual Side -->
-              <div class="lg:w-1/2 relative bg-gray-50 flex items-center justify-center p-12 overflow-hidden">
-                 <img 
-                  v-if="latestPublication.images && latestPublication.images.length"
-                  :src="latestPublication.images[0]" 
-                  :alt="latestPublication.title"
-                  class="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-105"
-                >
-                <div v-else class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center text-xl">📄</div>
-                
-                <div class="absolute top-12 left-12">
-                  <span class="bg-gray-900 text-white px-6 py-2 rounded-full text-sm font-black  tracking-normal">
-                    FEATURED PUBLICATION
-                  </span>
-                </div>
-              </div>
-              
-              <!-- Information Side -->
-              <div class="lg:w-1/2 p-12 lg:p-20 flex flex-col justify-between">
-                <div class="space-y-12">
-                  <div class="flex items-center gap-6">
-                    <div class="flex flex-col">
-                      <span class="text-sm font-black text-gray-300  tracking-normal mb-1">Published</span>
-                      <span class="text-sm font-bold text-gray-900">{{ formatDate(latestPublication.createdAt) }}</span>
-                    </div>
-                    <div class="h-8 w-px bg-gray-100"></div>
-                    <div class="flex flex-col">
-                      <span class="text-sm font-black text-gray-300  tracking-normal mb-1">Author</span>
-                      <span class="text-sm font-bold text-gray-900">{{ latestPublication.authors }}</span>
-                    </div>
-                  </div>
-
-                  <h3 class="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1]  tracking-tight group-hover:text-[#27628C] transition-colors duration-300">
-                    {{ latestPublication.title }}
-                  </h3>
-                  
-                  <p class="text-gray-500 text-lg font-light leading-relaxed line-clamp-4">
-                    {{ latestPublication.abstract }}
-                  </p>
-                  
-                  <div class="flex flex-wrap items-center gap-3">
-                    <span class="bg-blue-50 text-[#27628C] px-4 py-1.5 rounded-xl text-sm font-black  tracking-normal border border-blue-100">
-                      {{ latestPublication.journal }}
-                    </span>
-                    <span class="bg-gray-50 text-gray-400 px-4 py-1.5 rounded-xl text-sm font-black  tracking-normal border border-gray-100">
-                      {{ latestPublication.category }}
-                    </span>
-                  </div>
-                </div>
-
-                <div class="pt-16">
-                  <NuxtLink 
-                    :to="latestPublication.link || latestPublication.pubLink"
-                    target="_blank"
-                    class="inline-flex items-center justify-center bg-gray-900 text-white px-12 py-5 rounded-2xl text-sm font-black  tracking-normal hover:bg-gray-800 transition-all"
-                  >
-                    Read Full Paper
-                    <svg class="w-4 h-4 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                  </NuxtLink>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- No Data State -->
-          <div v-else-if="!pubLoading" class="text-center py-32 bg-gray-50 rounded-[3rem] border border-dashed border-gray-200">
-             <p class="text-sm font-black text-gray-400  tracking-normal">No publications found</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Archive Section -->
-      <div class="py-32 px-6 bg-white">
-        <div class="max-center max-w-7xl mx-auto">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-            <div>
-              <h2 class="text-sm font-bold text-[#27628C] mb-4">The Archive</h2>
-              <h3 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-normal">All Publications</h3>
-            </div>
-            <p class="text-gray-400 text-sm font-medium">
-              Showing {{ otherPublications.length }} publications
-            </p>
-          </div>
-
-          <div v-if="pubLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-             <div v-for="n in 3" :key="n" class="space-y-8 animate-pulse">
-                <div class="aspect-square bg-gray-50 rounded-[2.5rem]"></div>
-                <div class="h-4 bg-gray-50 rounded w-1/4"></div>
-                <div class="h-8 bg-gray-50 rounded"></div>
-                <div class="h-20 bg-gray-50 rounded"></div>
-             </div>
-          </div>
-
-          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
-            <article 
-              v-for="(publication, index) in otherPublications" 
-              :key="publication.id || (publication as any)._id"
-              class="group space-y-8 animate-fade-in-up"
-              :style="{ animationDelay: `${index * 100}ms` }"
-            >
-              <NuxtLink :to="publication.link || publication.pubLink" target="_blank" class="block space-y-8 h-full">
-                <!-- Grid Thumbnail -->
-                <div class="relative aspect-square rounded-[2.5rem] bg-gray-50 border border-gray-100 overflow-hidden transition-all duration-700 group-hover:border-transparent">
-                   <img 
-                    v-if="publication.images && publication.images.length"
-                    :src="publication.images[0]" 
-                    :alt="publication.title"
-                    class="w-full h-full object-contain p-8 transition-transform duration-700 group-hover:scale-110"
-                  >
-                  <div v-else class="w-full h-full flex items-center justify-center text-lg grayscale opacity-20">📄</div>
-                  
-                  <div class="absolute top-8 left-8">
-                    <span class="bg-white/90 backdrop-blur-md text-gray-900 px-4 py-1.5 rounded-xl text-[9px] font-bold">
-                      {{ publication.category }}
-                    </span>
-                  </div>
-                </div>
-                
-                <!-- Meta & Content -->
-                <div class="space-y-4 px-4">
-                  <div class="flex items-center gap-4 text-sm font-bold text-gray-300">
-                    <span>{{ publication.year }}</span>
-                    <div class="w-1 h-1 rounded-full bg-gray-200"></div>
-                    <span class="truncate max-w-[150px]">{{ publication.journal }}</span>
-                  </div>
-                  
-                  <h3 class="text-lg font-bold text-gray-900 leading-tight group-hover:text-[#27628C] transition-colors tracking-tight">
-                    {{ publication.title }}
-                  </h3>
-                  
-                  <p class="text-gray-500 text-sm leading-relaxed line-clamp-3 font-light">
-                    {{ publication.abstract }}
-                  </p>
-                  
-                  <div class="flex items-center gap-3 pt-6 border-t border-gray-50">
-                     <div class="w-8 h-8 rounded-full bg-gray-900 flex items-center justify-center text-white text-sm font-bold">
-                       {{ (publication.authors || 'A').charAt(0) }}
-                     </div>
-                     <div class="flex flex-col">
-                       <span class="text-[9px] font-bold text-gray-900 tracking-normal">{{ publication.authors }}</span>
-                       <span class="text-[8px] font-bold text-gray-300">{{ formatDate(publication.createdAt) }}</span>
-                     </div>
-                  </div>
-                </div>
-              </NuxtLink>
-            </article>
-          </div>
-        </div>
-      </div>
-
-      <!-- Substack Newsletter -->
-      <div class="bg-gray-900 py-32 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div>
-             <h2 class="text-sm font-bold text-blue-400 mb-8">Stay Updated</h2>
-             <h3 class="text-lg md:text-xl font-bold text-white leading-tight tracking-normal mb-10">
-               Delivered to your<br><span class="text-blue-500">digital doorstep.</span>
-             </h3>
-             <p class="text-xl text-gray-400 font-light leading-relaxed max-w-lg">
-               Research, insights, and critical perspectives delivered directly to your inbox. No noise, just science.
-             </p>
-          </div>
-          <div class="relative overflow-hidden rounded-[3rem] bg-white p-2">
-             <iframe 
-                src="https://mlcjourno.substack.com/embed" 
-                width="100%" 
-                height="400"
-                frameborder="0" 
-                scrolling="no"
-                class="w-full"
-              ></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</template>
-
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useGetPublications } from "@/composables/modules/publications/useGetPublications"
+import { useGetPublications } from '@/composables/modules/publications/useGetPublications'
+import SiteHero from '@/components/site/SiteHero.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
+import ArticleCard from '@/components/site/ArticleCard.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
 
-// ==================== PUBLICATIONS (Journo) ====================
-const { publications, loading: pubLoading } = useGetPublications()
+const { publications, loading } = useGetPublications()
+const activeFilter = ref('All')
 
-const publishedPublications = computed(() => {
-  if (!publications.value) return []
-  return publications.value.filter((pub: any) => pub.status === 'published')
-})
+const published = computed(() => (publications.value || [])
+  .filter((pub: any) => pub.status === 'published')
+  .sort((a: any, b: any) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()))
+const featured = computed(() => published.value[0])
+const archive = computed(() => published.value.slice(1))
+const filters = computed(() => ['All', ...new Set(published.value.map((pub: any) => pub.category).filter(Boolean))])
+const filteredArchive = computed(() => activeFilter.value === 'All' ? archive.value : archive.value.filter((pub: any) => pub.category === activeFilter.value))
+const visibleCount = ref(9)
+const paginatedArchive = computed(() => filteredArchive.value.slice(0, visibleCount.value))
+watch(activeFilter, () => { visibleCount.value = 9 })
 
-const latestPublication = computed(() => {
-  if (publishedPublications.value.length === 0) return null
-  return [...publishedPublications.value].sort((a: any, b: any) => {
-    const aDate = new Date(a.createdAt || 0).getTime()
-    const bDate = new Date(b.createdAt || 0).getTime()
-    return bDate - aDate
-  })[0]
-})
+const formatDate = (value?: string) => value ? new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'
+const articleLink = (article: any) => article.link || article.pubLink || '/journo'
 
-const otherPublications = computed(() => {
-  if (!latestPublication.value) return publishedPublications.value
-  const latestId = (latestPublication.value as any).id || (latestPublication.value as any)._id
-  return publishedPublications.value.filter((pub: any) => {
-     const pubId = (pub as any).id || (pub as any)._id
-     return pubId !== latestId
-  })
-})
-
-// ==================== SHARED ====================
-const formatDate = (dateString: string | undefined): string => {
-  if (!dateString) return 'N/A'
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })
-}
-
-// SEO
 useHead({
-  title: 'Journo | Research, Articles & Insights | MedLabConvo',
-  meta: [
-    { name: 'description', content: 'Research publications, clinical perspectives, and curated articles at the intersection of laboratory science and global health.' },
-    { property: 'og:title', content: 'Journo - Research, Articles & Insights' },
-    { property: 'og:description', content: 'Explore premium articles, research publications, and insights in medical laboratory science.' },
-    { property: 'og:image', content: '/images/medlabconvo-og-image.jpg' },
-    { property: 'og:url', content: 'https://medlabconvo.com/journo' },
-    { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: 'Journo | MedLabConvo' },
-    { name: 'twitter:description', content: 'Research publications and clinical perspectives at the intersection of laboratory science and global health.' }
-  ]
+  title: 'Journo | Research, articles and insights | MedLabConvo',
+  meta: [{ name: 'description', content: 'Research, essays and critical perspectives at the intersection of laboratory science and global health.' }],
 })
 </script>
 
-<style scoped>
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
-.animate-fade-in { animation: fade-in 1s ease-out forwards; }
-.delay-200 { animation-delay: 200ms; }
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-</style>
+<template>
+  <main class="bg-white">
+    <SiteHero
+      eyebrow="Journo · The editorial desk"
+      title="Ideas that make the lab legible."
+      description="Research, reported features and sharp perspectives connecting laboratory science to healthcare, careers, policy and the wider world."
+      primary-label="Read the latest"
+      primary-to="/journo#latest"
+      secondary-label="Subscribe to the Stack"
+      secondary-to="/convostack"
+    >
+      <template #visual>
+        <div class="relative mx-auto max-w-lg">
+          <div class="site-card overflow-hidden !border-white/10 !bg-white/[0.06] p-2">
+            <div class="aspect-[4/4.4] overflow-hidden rounded-[1.15rem]">
+              <SiteMedia :src="featured?.images?.[0]" :alt="featured?.title || 'Journo'" :label="featured?.category || 'The editorial desk'" icon="lucide:newspaper" eager />
+            </div>
+          </div>
+          <div class="absolute -bottom-5 -left-4 max-w-[15rem] rounded-2xl border border-white/15 bg-[#0a2f42] p-4 shadow-xl sm:-left-8">
+            <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Latest dispatch</p>
+            <p class="mt-1 line-clamp-2 text-[11px] font-semibold leading-5 text-white">{{ featured?.title || 'A new perspective on the laboratory' }}</p>
+            <p class="mt-1 text-[9px] text-white/40">{{ formatDate(featured?.createdAt) }}</p>
+          </div>
+          <div class="absolute -right-3 top-8 rounded-xl bg-[#DE6129] px-3.5 py-2.5 shadow-lg">
+            <p class="text-[8px] font-bold uppercase tracking-[0.12em] text-white/70">The archive</p>
+            <p class="text-[11px] font-bold text-white">{{ published.length }} pieces</p>
+          </div>
+        </div>
+      </template>
+    </SiteHero>
+
+    <section id="latest" class="site-section">
+      <div class="site-container">
+        <div v-if="loading" class="grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
+          <div class="site-skeleton h-[32rem]" />
+          <div class="grid gap-5"><div class="site-skeleton h-52" /><div class="site-skeleton h-52" /></div>
+        </div>
+
+        <template v-else-if="featured">
+          <div class="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
+            <article class="site-card group overflow-hidden">
+              <NuxtLink :to="articleLink(featured)" class="relative block aspect-[16/9] overflow-hidden">
+                <SiteMedia :src="featured.images?.[0]" :alt="featured.title" :label="featured.category || 'Journo'" icon="lucide:newspaper" />
+                <span class="absolute left-4 top-4 rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#27628C]">Featured</span>
+              </NuxtLink>
+              <div class="p-6 sm:p-7">
+                <div class="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
+                  <span class="text-[#27628C]">{{ featured.category || 'Insight' }}</span>
+                  <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
+                  <span>{{ formatDate(featured.createdAt) }}</span>
+                  <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
+                  <span>{{ featured.journal || 'Journo' }}</span>
+                </div>
+                <NuxtLink :to="articleLink(featured)">
+                  <h2 class="mt-3 text-[1.7rem] font-bold leading-tight tracking-[-0.04em] text-[#0a202b] transition group-hover:text-[#27628C] sm:text-[2.1rem]">{{ featured.title }}</h2>
+                </NuxtLink>
+                <p class="mt-3 line-clamp-3 text-[0.86rem] leading-7 text-[#5f7482]">{{ featured.abstract }}</p>
+                <div class="mt-5 flex items-center justify-between gap-4 border-t border-[#eef2f5] pt-4">
+                  <div class="flex items-center gap-2.5">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5f9] text-[11px] font-bold text-[#27628C]">{{ (featured.authors || 'M').charAt(0) }}</span>
+                    <div>
+                      <p class="text-[10.5px] font-bold text-[#0a202b]">{{ featured.authors || 'MedLabConvo' }}</p>
+                      <p class="text-[9px] text-[#8a9ba5]">{{ featured.year || '2026' }}</p>
+                    </div>
+                  </div>
+                  <NuxtLink :to="articleLink(featured)" class="site-link-arrow">Read the piece <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+                </div>
+              </div>
+            </article>
+
+            <div class="grid gap-5">
+              <ArticleCard
+                v-for="article in archive.slice(0, 2)"
+                :key="article._id || article.id"
+                :title="article.title"
+                :excerpt="article.abstract"
+                :image="article.images?.[0]"
+                :category="article.category || 'Insight'"
+                :meta="`${formatDate(article.createdAt)} · ${article.journal || 'Journo'}`"
+                :to="articleLink(article)"
+                label="Read piece"
+              />
+            </div>
+          </div>
+        </template>
+
+        <div v-else class="site-card px-6 py-16 text-center">
+          <h2 class="text-xl font-bold text-[#0a202b]">The next issue is being written.</h2>
+          <p class="mt-2 text-[12px] text-[#5f7482]">New research and perspectives will appear here soon.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#f7f9f8] py-14 sm:py-20">
+      <div class="site-container">
+        <SiteSectionHeader
+          eyebrow="The archive"
+          title="All dispatches."
+          description="Browse by theme, or read straight through the archive."
+        />
+        <div class="mt-6 flex flex-wrap gap-2">
+          <button
+            v-for="filter in filters"
+            :key="filter"
+            type="button"
+            class="rounded-full border px-3.5 py-1.5 text-[10.5px] font-bold transition"
+            :class="activeFilter === filter ? 'border-[#27628C] bg-[#27628C] text-white' : 'border-[#e4ebf0] bg-white text-[#5f7482] hover:border-[#27628C]/30 hover:text-[#27628C]'"
+            @click="activeFilter = filter"
+          >
+            {{ filter }}
+          </button>
+        </div>
+
+        <div v-if="filteredArchive.length" class="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ArticleCard
+            v-for="article in paginatedArchive"
+            :key="article._id || article.id"
+            :title="article.title"
+            :excerpt="article.abstract"
+            :image="article.images?.[0]"
+            :category="article.category || 'Insight'"
+            :meta="`${formatDate(article.createdAt)} · ${article.journal || 'Journo'}`"
+            :to="articleLink(article)"
+            label="Read piece"
+          />
+        </div>
+        <div v-else class="site-card mt-7 px-6 py-14 text-center">
+          <p class="text-[13px] font-semibold text-[#0a202b]">No pieces in this theme yet.</p>
+          <button type="button" class="site-link-arrow mt-3" @click="activeFilter = 'All'">View all dispatches</button>
+        </div>
+
+        <div v-if="visibleCount < filteredArchive.length" class="mt-7 flex justify-center">
+          <button type="button" class="site-btn site-btn-ghost" @click="visibleCount += 9">Load more dispatches</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-container py-10 sm:py-14">
+      <div class="overflow-hidden rounded-[1.5rem] border border-[#e4ebf0] bg-white">
+        <div class="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_1.15fr] lg:items-center">
+          <div>
+            <p class="site-eyebrow">The Convo Stack</p>
+            <h2 class="mt-2 text-[1.8rem] font-bold tracking-[-0.04em] text-[#0a202b]">The conversation continues in your inbox.</h2>
+            <p class="mt-2 max-w-md text-[12.5px] leading-6 text-[#5f7482]">Research, career notes and ecosystem pulses, written for people who work in and around the laboratory.</p>
+            <NuxtLink to="/convostack" class="site-link-arrow mt-4">Explore the Convo Stack <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
+          </div>
+          <div class="overflow-hidden rounded-xl border border-[#e4ebf0] bg-[#f7f9f8]">
+            <iframe src="https://mlcjourno.substack.com/embed" width="100%" height="320" frameborder="0" scrolling="no" class="w-full" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <SiteCta
+      eyebrow="Write with us"
+      title="Have a perspective the field needs to hear?"
+      description="We publish rigorous, accessible work from people who know the laboratory from the inside."
+      primary-label="Pitch an idea"
+      primary-to="/enquiries"
+      secondary-label="Explore the community"
+      secondary-to="/community"
+    />
+  </main>
+</template>

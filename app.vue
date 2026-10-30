@@ -10,7 +10,7 @@
 
 <style>
 body {
-    font-family: 'Roobert PRO', sans-serif;
+    font-family: 'Onest', system-ui, sans-serif;
 }
 </style>
 

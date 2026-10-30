@@ -1,282 +1,37 @@
-<template>
-  <main class="min-h-screen bg-white">
-    <!-- Hero Section -->
-    <div class="relative isolate overflow-hidden bg-[#27628C] py-24 sm:py-40">
-      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
-      
-      <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 flex flex-col items-center justify-center pt-16 text-center">
-        <div class="max-w-3xl">
-          <h1 class="text-2xl font-bold text-blue-200 mb-6 animate-fade-in tracking-normal">Merchandise & Knowledge</h1>
-          <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-8 animate-fade-in-up">Professional Shop</h2>
-          <p class="text-2xl leading-8 text-blue-50 font-medium animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
-            Expertly curated resources, professional tools, and learning materials designed to support your journey in medical laboratory science.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Loading State -->
-    <div v-if="loading" class="container mx-auto py-24 px-6 lg:px-8">
-      <div v-for="i in 3" :key="i" class="mb-24">
-        <div class="h-8 w-48 bg-gray-100 rounded-full mb-12 animate-pulse mx-auto"></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          <div v-for="j in 3" :key="j" class="space-y-4">
-            <div class="aspect-[3/4] bg-gray-50 rounded-2xl animate-pulse"></div>
-            <div class="h-4 bg-gray-50 rounded w-3/4 animate-pulse"></div>
-            <div class="h-4 bg-gray-50 rounded w-1/2 animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Dynamic Content -->
-    <div v-else class="container mx-auto py-24 px-6 lg:px-8">
-      <div v-if="Object.keys(groupedProducts).length === 0" class="text-center py-32">
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 mb-6">
-          <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-        </div>
-        <h3 class="text-lg font-bold text-gray-900 mb-2">No products found</h3>
-        <p class="text-gray-500">We are currently updating our catalog. Please check back soon.</p>
-      </div>
-
-      <div v-else v-for="(products, category) in groupedProducts" :key="category" class="mb-32 last:mb-0">
-        <!-- Category Header -->
-        <div class="flex items-center justify-between mb-12 border-b border-gray-100 pb-8">
-          <div>
-            <h2 class="text-lg font-bold text-gray-900 tracking-tight ">{{ category }}</h2>
-            <div class="h-1.5 w-12 bg-[#27628C] mt-2 rounded-full"></div>
-          </div>
-          <div class="flex items-center gap-4">
-            <span class="text-sm font-bold text-gray-400 tracking-normal">{{ products.length }} items</span>
-            <div class="flex items-center bg-gray-100 rounded-lg p-1">
-              <button 
-                @click="viewMode = 'grid'" 
-                :class="['p-1.5 rounded-md transition-colors', viewMode === 'grid' ? 'bg-white shadow text-[#27628C]' : 'text-gray-500 hover:text-gray-900']"
-                title="Grid View"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
-              </button>
-              <button 
-                @click="viewMode = 'list'" 
-                :class="['p-1.5 rounded-md transition-colors', viewMode === 'list' ? 'bg-white shadow text-[#27628C]' : 'text-gray-500 hover:text-gray-900']"
-                title="List View"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Products Grid -->
-        <div v-if="viewMode === 'grid'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
-          <div v-for="product in products" :key="product.id" class="group relative flex flex-col">
-            <!-- Product Image -->
-            <div class="relative aspect-[3/4] overflow-hidden rounded-[2rem] bg-gray-100 transition-all duration-500 group-hover:shadow-sm border border-slate-200 group-hover:shadow-blue-900/10 mb-8">
-              <img 
-                :src="product.imageUrl || 'https://placehold.co/600x800/27628C/ffffff?text=Professional+Resource'" 
-                :alt="product.name"
-                class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-              >
-              
-              <!-- Badges -->
-              <div class="absolute top-6 left-6 flex flex-col gap-2">
-                <div v-if="product.isDigital" class="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-sm font-bold text-gray-900 shadow-sm border border-white/20">
-                  Digital
-                </div>
-                <div v-if="product.availability === 'out_of_stock'" class="bg-red-500/90 backdrop-blur-md px-4 py-1.5 rounded-xl text-sm font-bold text-white shadow-sm">
-                  Sold Out
-                </div>
-              </div>
-
-              <!-- Hover Action -->
-              <div class="absolute inset-0 bg-[#27628C]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center px-8 cursor-pointer" @click.prevent="triggerCheckout(product)">
-                <div class="w-full bg-white text-[#27628C] py-4 rounded-2xl text-xs font-bold text-center hover:bg-blue-50 transition-all transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-sm border border-slate-200">
-                  Buy Now
-                </div>
-              </div>
-            </div>
-
-            <!-- Product Info -->
-            <div class="flex flex-col flex-1 px-2">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="text-sm font-bold text-[#27628C] tracking-normal">{{ product.category }}</span>
-              </div>
-              <h3 class="text-xl font-bold text-gray-900 mb-2 tracking-tight line-clamp-2 min-h-[3.5rem] group-hover:text-[#27628C] transition-colors">
-                {{ product.name }}
-              </h3>
-              <p class="text-sm text-gray-500 font-medium mb-6 line-clamp-2">
-                by {{ product.author || product.instructor || 'MedLabConvo' }}
-              </p>
-              
-              <div class="mt-auto flex items-center justify-between">
-                <div class="flex flex-col">
-                  <span v-if="product.originalPrice" class="text-sm text-gray-400 line-through mb-1">
-                    ₦{{ formatNumber(product.originalPrice) }}
-                  </span>
-                  <span class="text-xl font-black text-gray-900">
-                    {{ product.price ? '₦' + formatNumber(product.price) : 'FREE' }}
-                  </span>
-                </div>
-                
-                <button 
-                  @click.prevent="triggerCheckout(product)"
-                  class="flex items-center gap-2 text-sm font-black text-[#27628C] hover:text-blue-800  tracking-normal transition-colors cursor-pointer"
-                >
-                  Purchase Securely
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Products List / Table -->
-        <div v-else class="overflow-x-auto bg-white rounded-2xl shadow-sm border border-gray-100">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="bg-gray-50 border-b border-gray-100 text-xs text-gray-500  tracking-wider">
-                <th class="p-4 font-bold rounded-tl-2xl w-16">Image</th>
-                <th class="p-4 font-bold">Product</th>
-                <th class="p-4 font-bold">Type</th>
-                <th class="p-4 font-bold">Price</th>
-                <th class="p-4 font-bold text-right rounded-tr-2xl">Action</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr v-for="product in products" :key="product.id" class="hover:bg-blue-50/50 transition-colors group">
-                <td class="p-4">
-                  <div class="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden relative shadow-sm">
-                    <img 
-                      :src="product.imageUrl || 'https://placehold.co/100x100/27628C/ffffff?text=Asset'" 
-                      :alt="product.name"
-                      class="w-full h-full object-cover"
-                    >
-                  </div>
-                </td>
-                <td class="p-4">
-                  <h3 class="text-sm font-bold text-gray-900 group-hover:text-[#27628C] transition-colors line-clamp-1">{{ product.name }}</h3>
-                  <p class="text-xs text-gray-500 mt-1">by {{ product.author || product.instructor || 'MedLabConvo' }}</p>
-                </td>
-                <td class="p-4">
-                  <span v-if="product.isDigital" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-bold bg-blue-100 text-blue-800">
-                    Digital
-                  </span>
-                  <span v-else class="inline-flex items-center px-2 py-0.5 rounded text-sm font-bold bg-gray-100 text-gray-800">
-                    Physical
-                  </span>
-                  <span v-if="product.availability === 'out_of_stock'" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-bold bg-red-100 text-red-800 ml-2">
-                    Sold Out
-                  </span>
-                </td>
-                <td class="p-4 whitespace-nowrap">
-                  <div class="flex flex-col">
-                    <span v-if="product.originalPrice" class="text-xs text-gray-400 line-through">
-                      ₦{{ formatNumber(product.originalPrice) }}
-                    </span>
-                    <span class="text-sm font-black text-gray-900">
-                      {{ product.price ? '₦' + formatNumber(product.price) : 'FREE' }}
-                    </span>
-                  </div>
-                </td>
-                <td class="p-4 text-right">
-                  <button 
-                    @click.prevent="triggerCheckout(product)"
-                    class="bg-[#27628C] text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-[#1e4d6f] transition-colors shadow-sm inline-flex items-center gap-2"
-                  >
-                    Buy Now
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Become a Vendor CTA -->
-    <section class="bg-gray-50 py-24 border-t border-gray-100">
-      <div class="container mx-auto px-6 lg:px-8 text-center">
-        <h2 class="text-lg font-bold text-gray-900 mb-6 ">Become a Vendor</h2>
-        <p class="text-xl text-gray-500 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-          Are you a creator in the medical laboratory science space? Partner with us to showcase your books, courses, and medical apparel to a global community.
-        </p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <a href="/enquiries?product=Vendor+Application" class="bg-[#27628C] text-white px-10 py-5 rounded-2xl text-xs font-bold hover:bg-[#1e4d6f] transition-all shadow-sm border border-slate-200 hover:shadow-sm border border-slate-200">
-            Partner With Us
-          </a>
-          <a href="mailto:admin@medlabconvo.com" class="bg-white text-[#27628C] border border-blue-50 px-10 py-5 rounded-2xl text-xs font-bold hover:bg-gray-50 transition-all shadow-sm">
-            Email Support
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Email Prompt Modal -->
-    <EmailPromptModal 
-      :isOpen="isEmailPromptOpen" 
-      @submit="handleEmailSubmit" 
-      @cancel="isEmailPromptOpen = false" 
-    />
-  </main>
-</template>
-
 <script setup lang="ts">
-import { useGetProducts } from "@/composables/modules/products/useGetProducts"
-import { useCheckout } from "@/composables/modules/products/useCheckout"
-import { useCustomToast } from "@/composables/core/useCustomToast"
-import EmailPromptModal from "@/components/core/EmailPromptModal.vue"
-import { computed, onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useGetProducts } from '@/composables/modules/products/useGetProducts'
+import { useCheckout } from '@/composables/modules/products/useCheckout'
+import { useCustomToast } from '@/composables/core/useCustomToast'
+import EmailPromptModal from '@/components/core/EmailPromptModal.vue'
+import SiteHero from '@/components/site/SiteHero.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
 
 const { getProducts, products, loading } = useGetProducts()
 const { initializePaystack, verifyPurchase } = useCheckout()
 const { showToast } = useCustomToast()
-const emailInput = ref('')
-const selectedProduct = ref(null)
-const viewMode = ref<'grid' | 'list'>('grid')
-const isEmailPromptOpen = ref(false)
 
+const selectedProduct = ref<any>(null)
+const isEmailPromptOpen = ref(false)
 const route = useRoute()
 const router = useRouter()
 
 onMounted(async () => {
   await getProducts()
-  
-  // Handle Paystack callback redirect
   if (route.query.verify === 'true' && route.query.reference && route.query.productId && route.query.email) {
     try {
-      await verifyPurchase(
-        route.query.reference as string, 
-        route.query.productId as string, 
-        route.query.email as string
-      )
-      
-      showToast({
-        title: 'Payment Successful',
-        message: `Your payment was verified. We've sent a confirmation email with further details.`,
-        toastType: 'success'
-      })
-      
-      // Clean up the URL
+      await verifyPurchase(route.query.reference as string, route.query.productId as string, route.query.email as string)
+      showToast({ title: 'Payment successful', message: 'Your payment was verified. A confirmation email is on its way.', toastType: 'success' })
       router.replace({ path: '/products' })
-    } catch (e) {
-      showToast({
-        title: 'Verification Failed',
-        message: 'Payment completed but verification failed. Please contact support.',
-        toastType: 'error'
-      })
+    } catch {
+      showToast({ title: 'Verification failed', message: 'Payment completed but verification failed. Please contact support.', toastType: 'error' })
     }
   }
 })
 
 const getCheckoutUrl = (product: any): string | null => {
   if (!product) return null
-  
-  // Prioritize direct checkout / Selar / download URLs
   const candidate = product.downloadUrl || product.buyUrl || product.purchaseUrl || product.selarUrl
   if (candidate && typeof candidate === 'string') {
     const trimmed = candidate.trim()
@@ -286,8 +41,6 @@ const getCheckoutUrl = (product: any): string | null => {
       return trimmed
     }
   }
-
-  // Fallback to previewUrl if it's a known checkout or Selar link
   if (product.previewUrl && typeof product.previewUrl === 'string') {
     const trimmed = product.previewUrl.trim()
     if (trimmed && (trimmed.includes('selar.') || trimmed.includes('paystack.') || trimmed.includes('flutterwave.'))) {
@@ -296,115 +49,186 @@ const getCheckoutUrl = (product: any): string | null => {
       return trimmed
     }
   }
-
   return null
 }
 
 const triggerCheckout = (product: any) => {
   const checkoutUrl = getCheckoutUrl(product)
   if (checkoutUrl) {
-    // Open Selar / external purchase gateway directly without showing email prompt or Paystack
     const newTab = window.open(checkoutUrl, '_blank', 'noopener,noreferrer')
-    if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
-      window.location.href = checkoutUrl
-    }
+    if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') window.location.href = checkoutUrl
     return
   }
-
-  // Fallback to Paystack inline checkout if no external link was configured
   selectedProduct.value = product
   isEmailPromptOpen.value = true
 }
 
 const handleEmailSubmit = (userEmail: string) => {
   isEmailPromptOpen.value = false
-  
   if (!selectedProduct.value) return
-
-  initializePaystack(
-    selectedProduct.value, 
-    userEmail, 
-    async (response) => {
-      try {
-        await verifyPurchase(response.reference, selectedProduct.value._id, userEmail)
-        showToast({
-          title: 'Payment Successful',
-          message: `Your payment was verified. We've sent a confirmation email with further details.`,
-          toastType: 'success'
-        })
-        const product: any = selectedProduct.value
-        if (product.isDigital && product.downloadUrl) {
-          setTimeout(() => {
-            window.location.href = product.downloadUrl
-          }, 3000)
-        }
-      } catch (e) {
-        showToast({
-          title: 'Verification Failed',
-          message: 'Payment completed but verification failed. Please contact support.',
-          toastType: 'error'
-        })
+  initializePaystack(selectedProduct.value, userEmail, async (response: any) => {
+    try {
+      await verifyPurchase(response.reference, selectedProduct.value._id, userEmail)
+      showToast({ title: 'Payment successful', message: 'Your payment was verified. A confirmation email is on its way.', toastType: 'success' })
+      const product: any = selectedProduct.value
+      if (product.isDigital && product.downloadUrl) {
+        setTimeout(() => { window.location.href = product.downloadUrl }, 3000)
       }
-    },
-    () => {
-      showToast({
-        title: 'Payment Incomplete',
-        message: 'Payment was not completed. Please try again.',
-        toastType: 'error'
-      })
+    } catch {
+      showToast({ title: 'Verification failed', message: 'Payment completed but verification failed. Please contact support.', toastType: 'error' })
     }
-  )
+  }, () => {
+    showToast({ title: 'Payment incomplete', message: 'Payment was not completed. Please try again.', toastType: 'error' })
+  })
 }
-
 
 const groupedProducts = computed(() => {
   if (!products.value) return {}
-  
-  // Only show active products on the frontend
-  const activeProducts = products.value.filter(p => p.status === 'active')
-  
-  return activeProducts.reduce((groups: any, product: any) => {
-    const category = product.category || 'Other Resources'
-    if (!groups[category]) {
-      groups[category] = []
-    }
+  const active = products.value.filter((p: any) => p.status === 'active')
+  return active.reduce((groups: any, product: any) => {
+    const category = product.category || 'Other resources'
+    if (!groups[category]) groups[category] = []
     groups[category].push(product)
     return groups
   }, {})
 })
 
-const formatNumber = (num: number) => {
-  return new Intl.NumberFormat().format(num)
-}
+const totalProducts = computed(() => Object.values(groupedProducts.value).reduce((sum: number, items: any) => sum + items.length, 0))
+const formatNumber = (num: number) => new Intl.NumberFormat().format(num)
+
+useHead({
+  title: 'The shop | MedLabConvo',
+  meta: [{ name: 'description', content: 'Books, courses and digital tools for medical laboratory professionals.' }],
+})
 </script>
 
-<style scoped>
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+<template>
+  <main class="bg-white">
+    <SiteHero
+      eyebrow="The MedLabConvo shop"
+      title="Tools for the work. Ideas for the next move."
+      description="Field-tested books, courses and digital resources made for laboratory professionals who want to think sharper and move further."
+      primary-label="Browse the shop"
+      primary-to="#shop"
+      secondary-label="Become a vendor"
+      secondary-to="/enquiries?product=Vendor+Application"
+      theme="light"
+    >
+      <template #visual>
+        <div class="relative mx-auto max-w-md">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="site-card overflow-hidden p-2">
+              <div class="aspect-[3/4] overflow-hidden rounded-xl"><SiteMedia :src="Object.values(groupedProducts)[0]?.[0]?.imageUrl" label="Digital book" icon="lucide:book-open" /></div>
+            </div>
+            <div class="mt-8 site-card overflow-hidden p-2">
+              <div class="aspect-[3/4] overflow-hidden rounded-xl"><SiteMedia :src="Object.values(groupedProducts)[1]?.[0]?.imageUrl" label="Course" icon="lucide:play-circle" /></div>
+            </div>
+          </div>
+          <div class="absolute -bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-[#e4ebf0] bg-white px-4 py-2 shadow-lg">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#eef5f9] text-[#27628C]"><Icon name="lucide:shield-check" class="h-3.5 w-3.5" /></span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.1em] text-[#5f7482]">Secure checkout</span>
+          </div>
+        </div>
+      </template>
+      <template #meta>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
+          <span class="inline-flex items-center gap-1.5"><Icon name="lucide:download" class="h-3.5 w-3.5 text-[#27628C]" /> Instant digital access</span>
+          <span class="inline-flex items-center gap-1.5"><Icon name="lucide:lock" class="h-3.5 w-3.5 text-[#27628C]" /> Secure payments</span>
+          <span class="inline-flex items-center gap-1.5"><Icon name="lucide:badge-check" class="h-3.5 w-3.5 text-[#27628C]" /> Built by practitioners</span>
+        </div>
+      </template>
+    </SiteHero>
 
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    <section id="shop" class="site-section">
+      <div class="site-container">
+        <SiteSectionHeader
+          eyebrow="The catalogue"
+          :title="totalProducts ? 'Made for the realities of the laboratory.' : 'The shop is being restocked.'"
+          :description="totalProducts ? `${totalProducts} resources across books, courses and professional toolkits.` : 'We are updating our catalogue. Check back soon for new resources.'"
+          link="/resources"
+          link-label="Free resources"
+        />
 
-.animate-fade-in {
-  animation: fade-in 1s ease-out forwards;
-}
+        <div v-if="loading" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div v-for="i in 6" :key="i" class="site-skeleton h-[28rem]" />
+        </div>
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
-}
+        <div v-else-if="totalProducts" class="mt-8 space-y-12">
+          <section v-for="(items, category) in groupedProducts" :key="category">
+            <div class="flex items-end justify-between border-b border-[#e4ebf0] pb-3">
+              <div>
+                <h2 class="text-[1.35rem] font-bold tracking-[-0.03em] text-[#0a202b]">{{ category }}</h2>
+                <p class="mt-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">{{ (items as any[]).length }} resource{{ (items as any[]).length === 1 ? '' : 's' }}</p>
+              </div>
+            </div>
 
-.animation-delay-200 {
-  animation-delay: 200ms;
-}
+            <div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <article v-for="product in items" :key="product._id || product.id" class="site-card site-card-hover group flex h-full flex-col overflow-hidden">
+                <button type="button" class="relative block aspect-[4/5] overflow-hidden text-left" @click="triggerCheckout(product)">
+                  <SiteMedia :src="product.imageUrl" :alt="product.name" :label="product.category || 'MedLabConvo shop'" icon="lucide:shopping-bag" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-[#031d29]/60 via-transparent to-transparent opacity-70" />
+                  <div class="absolute left-4 top-4 flex flex-wrap gap-2">
+                    <span v-if="product.isDigital" class="rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#27628C]">Digital</span>
+                    <span v-if="product.availability === 'out_of_stock'" class="rounded-full bg-[#DE6129] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">Sold out</span>
+                  </div>
+                  <div class="absolute inset-x-0 bottom-0 flex items-center justify-between p-4">
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/75">{{ product.category }}</span>
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#27628C]"><Icon name="lucide:arrow-up-right" class="h-4 w-4" /></span>
+                  </div>
+                </button>
 
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>
+                <div class="flex flex-1 flex-col p-5">
+                  <h3 class="text-[1.02rem] font-bold leading-snug tracking-[-0.02em] text-[#0a202b]">{{ product.name }}</h3>
+                  <p class="mt-1 text-[11px] text-[#8a9ba5]">by {{ product.author || product.instructor || 'MedLabConvo' }}</p>
+                  <div class="mt-auto flex items-end justify-between gap-3 border-t border-[#eef2f5] pt-4">
+                    <div>
+                      <p v-if="product.originalPrice" class="text-[10px] text-[#a4b2ba] line-through">₦{{ formatNumber(product.originalPrice) }}</p>
+                      <p class="text-[1.15rem] font-bold tracking-[-0.03em] text-[#0a202b]">{{ product.price ? `₦${formatNumber(product.price)}` : 'Free' }}</p>
+                    </div>
+                    <button type="button" class="site-btn site-btn-primary min-h-0 px-3.5 py-2.5 text-[10.5px]" @click="triggerCheckout(product)">
+                      {{ product.availability === 'out_of_stock' ? 'Sold out' : 'Buy securely' }}
+                    </button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div v-else class="site-card mt-8 flex flex-col items-center justify-center px-6 py-16 text-center">
+          <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eef5f9] text-[#27628C]"><Icon name="lucide:shopping-bag" class="h-6 w-6" /></span>
+          <h3 class="mt-4 text-lg font-bold text-[#0a202b]">The shelves are being restocked</h3>
+          <p class="mt-1 max-w-sm text-[12px] leading-6 text-[#5f7482]">We are updating the catalogue. In the meantime, explore our free resources.</p>
+          <NuxtLink to="/resources" class="site-btn site-btn-primary mt-5">Browse resources</NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#f7f9f8] py-12 sm:py-16">
+      <div class="site-container">
+        <div class="grid gap-6 rounded-[1.5rem] border border-[#e4ebf0] bg-white p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <p class="site-eyebrow">For creators</p>
+            <h2 class="mt-2 text-[1.5rem] font-bold tracking-[-0.03em] text-[#0a202b]">Build with MedLabConvo.</h2>
+            <p class="mt-2 max-w-xl text-[12.5px] leading-6 text-[#5f7482]">If you make books, courses or tools for laboratory professionals, we would love to help you reach the right people.</p>
+          </div>
+          <div class="flex flex-col gap-2 sm:flex-row">
+            <NuxtLink to="/enquiries?product=Vendor+Application" class="site-btn site-btn-primary">Partner with us</NuxtLink>
+            <a href="mailto:admin@medlabconvo.com" class="site-btn site-btn-ghost">Email support</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <EmailPromptModal :isOpen="isEmailPromptOpen" @submit="handleEmailSubmit" @cancel="isEmailPromptOpen = false" />
+    <SiteCta
+      eyebrow="Keep learning"
+      title="The best resource is a sharper question."
+      description="Explore free research, explainers and professional toolkits in the MedLabConvo knowledge hub."
+      primary-label="Open resources"
+      primary-to="/resources"
+      secondary-label="Read Journo"
+      secondary-to="/journo"
+    />
+  </main>
+</template>

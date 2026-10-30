@@ -1,569 +1,408 @@
-
-<template>
-  <!-- 1. UPDATED HERO SECTION - Replace the existing hero -->
-  <div class="relative isolate overflow-hidden bg-gradient-to-br from-[#27628C] via-[#1e4d6b] to-[#27628C]">
-    <div class="absolute inset-0 -z-10">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#27628C]/90 via-[#1e4d6b]/90 to-[#27628C]/90"></div>
-      <img src="@/assets/img/hero-background.jpeg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20">
-    </div>
-
-    <!-- Animated background elements -->
-    <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute -top-40 -left-20 w-80 h-80 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute -bottom-40 -right-20 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-    </div>
-
-    <div class="relative mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
-      <div class="text-center">
-        <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-6 animate-fade-in">
-          <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-            MedLabConvo
-          </span>
-        </h1>
-        <p class="text-xl sm:text-2xl lg:text-3xl text-blue-100 font-light mb-4 animate-fade-in-delay">
-          A Platform for Laboratory Science, Health Innovation,
-        </p>
-        <p class="text-xl sm:text-2xl lg:text-3xl text-blue-100 font-light mb-8 animate-fade-in-delay">
-          and Workforce Development
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
-          <a href="#what-we-do" class="bg-white text-[#27628C] px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 shadow-sm border border-slate-100 hover:shadow-sm border border-slate-200 transform hover:-translate-y-1">
-            Explore Our Services
-          </a>
-          <a href="#about" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#27628C] transition-all duration-300">
-            Learn More
-          </a>
-        </div>
-        <!-- Testimonial Carousel in Hero -->
-        <div class="mt-16 max-w-lg mx-auto relative h-24 overflow-hidden animate-fade-in-delay">
-          <div v-for="(testimonial, index) in testimonials" :key="index" 
-               v-show="activeTestimonial === index"
-               class="absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 transform"
-               :class="{ 'translate-y-0 opacity-100': activeTestimonial === index, 'translate-y-4 opacity-0': activeTestimonial !== index }">
-            <p class="text-blue-100 text-sm font-medium  leading-relaxed text-center px-4">
-              "{{ testimonial.testimonial.length > 120 ? testimonial.testimonial.substring(0, 117) + '...' : testimonial.testimonial }}"
-            </p>
-            <p class="text-sm font-bold text-white mt-2  tracking-normal">— {{ testimonial.name }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <VideoHero />
-
-  <!-- 2. NEW SECTION: Transforming Healthcare (Add after Mission Statement Video Section) -->
-  <!-- <section id="about" class="py-24 bg-gradient-to-br from-white via-blue-50/30 to-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-lg font-bold text-gray-900 mb-6">
-          <span class="bg-gradient-to-r from-[#27628C] to-blue-600 bg-clip-text text-transparent">
-            Transforming Healthcare
-          </span>
-        </h2>
-        <p class="text-lg font-light text-gray-700 mb-4">
-          Through Digital Services for Laboratory Professionals
-        </p>
-        <div class="w-24 h-1 bg-gradient-to-r from-[#27628C] to-blue-600 mx-auto rounded-full"></div>
-      </div>
-      <div class="max-w-4xl mx-auto">
-        <p class="text-lg text-gray-600 leading-relaxed mb-6">
-          MedLabConvo is a digital service organisation advancing medical laboratory science and healthcare through knowledge platforms, professional tools, data-driven programs, and innovation-focused services.
-        </p>
-        <p class="text-lg text-gray-600 leading-relaxed">
-          We design and deliver digital programs, content products, advocacy programs and professional development services that strengthen technical capacity, leadership, and innovation readiness across the healthcare workforce.
-        </p>
-      </div>
-    </div>
-  </section> -->
-
-  <!-- 3. NEW SECTION: What We Do (Professional Refresh) -->
-  <section id="what-we-do" class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-bold text-[#27628C] mb-4">Core Services</h2>
-        <h3 class="text-lg font-bold text-gray-900 mb-6">Advancing Healthcare through Innovation</h3>
-        <div class="w-16 h-1.5 bg-[#27628C] mx-auto rounded-full"></div>
-      </div>
- 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-        <!-- Service 1 -->
-        <div class="group relative bg-white rounded-2xl p-10 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-          <div class="relative">
-            <div class="flex items-center justify-center w-12 h-12 mb-8 rounded-xl bg-slate-50 border border-slate-100 text-[#27628C] group-hover:bg-[#27628C] group-hover:text-white transition-all duration-300">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">
-              Digital Programs and Capacity Building
-            </h3>
-            <p class="text-slate-500 leading-relaxed font-medium">
-              We design structured digital programs that support career development, leadership training, and workforce readiness in medical laboratory science and allied health fields.
-            </p>
-          </div>
-        </div>
- 
-        <!-- Service 2 -->
-        <div class="group relative bg-white rounded-2xl p-10 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-          <div class="relative">
-            <div class="flex items-center justify-center w-12 h-12 mb-8 rounded-xl bg-slate-50 border border-slate-100 text-[#27628C] group-hover:bg-[#27628C] group-hover:text-white transition-all duration-300">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">
-              Media and Knowledge Platforms
-            </h3>
-            <p class="text-slate-500 leading-relaxed font-medium">
-              Through LabCast and Journo, we produce high-quality digital content including expert conversations, industry analysis, research commentary, and professional insights.
-            </p>
-          </div>
-        </div>
- 
-        <!-- Service 3 -->
-        <div class="group relative bg-white rounded-2xl p-10 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-          <div class="relative">
-            <div class="flex items-center justify-center w-12 h-12 mb-8 rounded-xl bg-slate-50 border border-slate-100 text-[#27628C] group-hover:bg-[#27628C] group-hover:text-white transition-all duration-300">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">
-              Community and Professional Networks
-            </h3>
-            <p class="text-slate-500 leading-relaxed font-medium">
-              We operate a global digital community connecting laboratory professionals, researchers, innovators, and health leaders for peer learning and cross-border exchange.
-            </p>
-          </div>
-        </div>
- 
-        <!-- Service 4 -->
-        <div class="group relative bg-white rounded-2xl p-10 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-          <div class="relative">
-            <div class="flex items-center justify-center w-12 h-12 mb-8 rounded-xl bg-slate-50 border border-slate-100 text-[#27628C] group-hover:bg-[#27628C] group-hover:text-white transition-all duration-300">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
-            </div>
-            <h3 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">
-              Products and Resources
-            </h3>
-            <p class="text-slate-500 leading-relaxed font-medium">
-              We develop and curate digital resources, toolkits, guides, and learning materials that support evidence-based practice and career progression.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- 4. UPDATED Target Audience Section (Professional Style) -->
-  <section class="py-20 bg-slate-50 border-y border-slate-100">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-10">
-        <h2 class="text-lg font-bold text-gray-900 mb-4 tracking-tight">Who We Serve</h2>
-        <div class="w-12 h-1.5 bg-[#27628C] mx-auto rounded-full"></div>
-      </div>
-      <p class="text-xl text-slate-500 max-w-4xl mx-auto text-center leading-relaxed font-medium">
-        Our work supports students, early career professionals, institutions, and partners navigating the future of laboratory medicine and health technology.
-      </p>
-    </div>
-  </section>
-
-
-  <!-- 5. NEW SECTION: Featured Programs -->
-  <section class="py-24 bg-slate-50 border-t border-slate-100">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-bold text-[#27628C] mb-4">Our Programs</h2>
-        <h3 class="text-lg font-bold text-gray-900 mb-6">Transforming Your Career Journey</h3>
-        <div class="w-16 h-1.5 bg-[#27628C] mx-auto rounded-full"></div>
-      </div>
-      
-      <div v-if="fetchingPrograms" class="flex justify-center py-12">
-        <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-[#27628C] animate-spin"></div>
-      </div>
-      <div v-else-if="activePrograms?.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="program in activePrograms.slice(0, 3)" :key="program.id || program._id" class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-sm border border-slate-200 transition-all duration-300 border border-slate-100 group flex flex-col">
-          <div class="relative h-60 overflow-hidden">
-            <img :src="program.image || '/placeholder-program.jpg'" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Program Image">
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
-            <div class="absolute bottom-6 left-6 right-6">
-              <span class="inline-block px-3 py-1 bg-[#DE6129] text-white text-sm font-black  tracking-normal rounded-full mb-3">{{ program.category || 'Program' }}</span>
-              <h4 class="text-xl font-bold text-white">{{ program.title }}</h4>
-            </div>
-          </div>
-          <div class="p-6 flex flex-col flex-grow">
-            <p class="text-gray-500 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
-              {{ program.description }}
-            </p>
-            <NuxtLink :to="`/programs/${program.slug}`" class="text-xs font-black  tracking-normal text-[#27628C] group-hover:text-[#DE6129] transition-colors flex items-center gap-2">
-              Learn More
-              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-      
-      <div class="text-center mt-12" v-if="activePrograms?.length > 3">
-        <NuxtLink to="/programs" class="inline-flex items-center bg-white border-2 border-[#27628C] text-[#27628C] px-8 py-4 rounded-xl font-bold text-sm hover:bg-[#27628C] hover:text-white transition-all">
-          View All Programs
-        </NuxtLink>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. NEW SECTION: Featured Platforms (Clean Table/Grid Hybrid) -->
-  <section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-sm font-bold text-[#27628C] mb-4">Our Platforms</h2>
-        <h3 class="text-lg font-bold text-gray-900 mb-6">Expert Insights at Your Fingertips</h3>
-        <div class="w-16 h-1.5 bg-[#27628C] mx-auto rounded-full"></div>
-      </div>
- 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <!-- LabCast Platform -->
-        <div class="group relative bg-[#27628C] rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-200 transition-all duration-500 hover:scale-[1.02]">
-          <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
-          <div class="relative p-12 lg:p-16">
-            <div class="flex items-center mb-10">
-              <div class="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md mr-6">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-white tracking-tight ">LabCast</h3>
-            </div>
-            <p class="text-blue-50 text-xl leading-relaxed mb-12 font-medium opacity-90">
-              Conversations with laboratory scientists, public health experts, and health innovators shaping the future of healthcare.
-            </p>
-            <NuxtLink to="/lab-cast" class="inline-flex items-center bg-white text-[#27628C] px-10 py-5 rounded-2xl font-bold text-xs hover:bg-black hover:text-white transition-all shadow-sm border border-slate-200 active:scale-95 group">
-              Listen & Explore
-              <svg class="w-4 h-4 ml-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </NuxtLink>
-          </div>
-        </div>
- 
-        <!-- Journo Platform -->
-        <div class="group relative bg-[#13110F] rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-200 transition-all duration-500 hover:scale-[1.02]">
-          <div class="absolute -right-10 -top-10 w-40 h-40 bg-[#27628C]/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
-          <div class="relative p-12 lg:p-16">
-            <div class="flex items-center mb-10">
-              <div class="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md mr-6">
-                <svg class="w-8 h-8 text-[#27628C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold text-white tracking-tight ">Journo</h3>
-            </div>
-            <p class="text-gray-400 text-xl leading-relaxed mb-12 font-medium">
-              Insight-driven articles, opinion pieces, and explainers on medical laboratory science, careers, and global health systems.
-            </p>
-            <NuxtLink to="/journo" class="inline-flex items-center bg-[#27628C] text-white px-10 py-5 rounded-2xl font-bold text-xs hover:bg-white hover:text-black transition-all shadow-sm border border-slate-200 active:scale-95 group">
-              Read Journalism
-              <svg class="w-4 h-4 ml-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- 6. NEW SECTION: Impact Stats (Professional Dark Mode) -->
-  <section class="py-24 bg-[#0a192f] relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#27628C_1px,transparent_1px)] [background-size:20px_20px]"></div>
-    
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <h2 class="text-lg font-bold text-white mb-8 tracking-tight leading-tight">
-            Transforming Professional <br/> Growth at Scale
-          </h2>
-          <p class="text-xl text-slate-400 leading-relaxed max-w-xl font-medium">
-            MedLabConvo has supported thousands of laboratory professionals through digital engagement, education, and community-driven learning.
-          </p>
-        </div>
- 
-        <div class="grid grid-cols-2 gap-6">
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-            <div class="text-lg font-bold text-white mb-2">5000+</div>
-            <div class="text-slate-500 text-sm font-bold">Beneficiaries</div>
-          </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-            <div class="text-lg font-bold text-white mb-2">50+</div>
-            <div class="text-slate-500 text-sm font-bold">Programs</div>
-          </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-            <div class="text-lg font-bold text-white mb-2">100+</div>
-            <div class="text-slate-500 text-sm font-bold">Episodes</div>
-          </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-            <div class="text-lg font-bold text-white mb-2">30+</div>
-            <div class="text-slate-500 text-sm font-bold">Countries</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-<!-- Testimonials removed from bottom (moved to Hero) -->
-
-
-  <!-- 8. UPDATED Partnership Section (Standard Grid) -->
-  <section class="py-24 bg-slate-50 border-t border-slate-100">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-lg font-bold text-gray-900 mb-6 tracking-tight">Partner With Us</h2>
-        <div class="w-12 h-1.5 bg-[#27628C] mx-auto rounded-full mb-10"></div>
-        <p class="text-xl text-slate-500 max-w-4xl mx-auto mb-16 font-medium leading-relaxed">
-          We collaborate with academic institutions and partners to deliver impactful digital programs and workforce development initiatives.
-        </p>
-      </div>
- 
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center mb-16">
-        <div v-for="i in [partner1, partner2, partner3, partner4, partner5, partner6]" :key="i" class="flex items-center justify-center p-6 bg-white border border-slate-100 rounded-xl transition-all duration-300">
-           <img class="h-10 w-auto object-contain grayscale opacity-50" :src="i" :alt="`Partner ${i}`">
-        </div>
-      </div>
- 
-      <div class="text-center">
-        <a href="mailto:admin@medlabconvo.com" class="inline-flex items-center bg-[#27628C] text-white px-10 py-4 rounded-xl font-bold text-sm hover:bg-[#1e4d6f] transition-all">
-          Partner With MedLabConvo
-          <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- 9. UPDATED Donation CTA (Professional Bordered) -->
-  <section class="py-24 bg-[#0a192f] border-t border-white/5 relative overflow-hidden">
-    <div class="relative max-w-4xl mx-auto text-center px-6 lg:px-8">
-      <h2 class="text-lg font-bold text-white mb-6 tracking-tight">Support Our Work</h2>
-      <p class="text-xl text-slate-400 mb-12 leading-relaxed font-medium">
-        Help us sustain and expand our digital services for healthcare professionals.
-      </p>
-      <router-link to="/donate" class="inline-flex items-center bg-white text-[#27628C] px-10 py-5 rounded-xl font-bold text-sm hover:bg-blue-50 transition-all duration-300">
-        Donate Now
-        <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-        </svg>
-      </router-link>
-    </div>
-  </section>
-
-
-  <!-- 10. UPDATED Newsletter Section -->
-  <div class="bg-gradient-to-br from-gray-50 to-blue-50 py-20">
-    <div class="max-w-4xl mx-auto text-center px-6 lg:px-8">
-      <h2 class="text-lg font-bold text-[#27628C] mb-6">Stay Informed</h2>
-      <p class="text-xl text-gray-700 mb-10 leading-relaxed">
-        Subscribe to our newsletter for insights, programs, and opportunities in laboratory science and healthcare innovation.
-      </p>
-      <NuxtLink to="/subscribe" class="inline-flex items-center bg-gradient-to-r from-[#27628C] to-blue-600 text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-sm border border-slate-200 transition-all duration-300 transform hover:-translate-y-1 group">
-        Subscribe for Updates
-        <svg class="w-5 h-5 ml-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-        </svg>
-      </NuxtLink>
-
-      <div class="mt-16">
-        <p class="font-semibold text-gray-800 text-lg mb-6">Let's Talk Medical Laboratory Science</p>
-        <div class="flex justify-center space-x-5">
-          <a href="https://x.com/medlabconvo" class="group" aria-label="X (Twitter)">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center group-hover:bg-gray-900 group-hover:scale-110 transition-all duration-300">
-              <img src="@/assets/img/logo1.png" class="h-6 w-6 group-hover:brightness-0 group-hover:invert transition-all" alt="X"/>
-            </div>
-          </a>
-          <a href="https://www.instagram.com/medlabconvo/" class="group" aria-label="Instagram">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-purple-600 group-hover:to-pink-600 group-hover:scale-110 transition-all duration-300">
-              <img src="@/assets/img/logo4.svg" class="h-6 w-6 group-hover:brightness-0 group-hover:invert transition-all" alt="Instagram"/>
-            </div>
-          </a>
-          <a href="https://web.facebook.com/medlabconvo" class="group" aria-label="Facebook">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:scale-110 transition-all duration-300">
-              <img src="@/assets/img/logo3.svg" class="h-6 w-6 group-hover:brightness-0 group-hover:invert transition-all" alt="Facebook"/>
-            </div>
-          </a>
-          <a href="https://www.linkedin.com/company/medlabconvo/" class="group" aria-label="LinkedIn">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center group-hover:bg-blue-700 group-hover:scale-110 transition-all duration-300">
-              <img src="@/assets/img/logo5.svg" class="h-6 w-6 group-hover:brightness-0 group-hover:invert transition-all" alt="LinkedIn"/>
-            </div>
-          </a>
-          <a href="https://mlcjourno.substack.com/" class="group" aria-label="Substack">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center group-hover:bg-orange-500 group-hover:scale-110 transition-all duration-300">
-              <img src="@/assets/img/substack.png" class="h-6 w-6 group-hover:brightness-0 group-hover:invert transition-all" alt="Substack"/>
-            </div>
-          </a>
-          <a href="https://open.spotify.com/show/04S2XZGd6gczoCXStIrh8e" class="group" aria-label="Spotify">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center group-hover:bg-green-500 group-hover:scale-110 transition-all duration-300">
-              <img src="@/assets/img/logo2.png" class="h-6 w-6 group-hover:brightness-0 group-hover:invert transition-all" alt="Spotify"/>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <div class="w-full flex justify-center items-center flex-col pt-12 border-t border-gray-200 mt-12">
-        <p class="text-center text-sm text-gray-600 mb-2">
-          MedLabConvo is a trademark of LabiHealth Ambassadors Initiative, a registered non-profit organisation.
-        </p>
-        <p class="text-sm text-gray-600">
-          © LabiHealth Ambassadors Initiative 2025. All Rights Reserved
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
-
-
 <script setup lang="ts">
-import { useHead } from '#imports'
+import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
+import { useGetPrograms } from '@/composables/modules/programs/useGetPrograms'
+import { useGetPublications } from '@/composables/modules/publications/useGetPublications'
+import { useGetLabCasts } from '@/composables/modules/labcast/useGetLabCasts'
+import heroImage from '@/assets/img/community1.png'
+import ProgramCard from '@/components/site/ProgramCard.vue'
+import ArticleCard from '@/components/site/ArticleCard.vue'
+import SiteCarousel from '@/components/site/SiteCarousel.vue'
 
-// Set SEO Meta Tags
-useHead({
-  title: 'MedLabConvo | Leading Change in Medical Laboratory Science & Healthcare',
-  meta: [
-    { name: 'description', content: 'MedLabConvo is a digital service organisation advancing medical laboratory science and healthcare through knowledge platforms, professional tools, and workforce development.' },
-    { property: 'og:title', content: 'MedLabConvo - Transforming Healthcare One Lab Professional at a Time' },
-    { property: 'og:description', content: 'Advancing medical laboratory science through digital programs, community networks, and expert-led publications like LabCast and Journo.' },
-    { property: 'og:image', content: '/images/medlabconvo-og-image.jpg' },
-    { property: 'og:url', content: 'https://medlabconvo.com' },
-    { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: 'MedLabConvo | Advancing Healthcare Innovation' },
-    { name: 'twitter:description', content: 'Join the global community of laboratory professionals and health leaders shaping the future of healthcare.' },
-    { name: 'twitter:image', content: '/images/medlabconvo-twitter-image.jpg' }
-  ]
-})
-// import AnniversaryPopup from "@/components/AnniversaryPopup.vue";
-import { useYoutubeVideo } from '@/composables/useYoutubeVideo';
-import labcast from '@/assets/img/latest-labcast.jpg'
-const isOpen = ref(false)
-import convo from "@/assets/img/forging-a-career-path.jpg"
-import { useGetPrograms } from "@/composables/modules/programs/useGetPrograms"
-import latestJourno from '@/assets/img/journals-dust.jpg'
-import { useGetPublications } from "@/composables/modules/publications/useGetPublications"
-import { useGetLabCasts } from "@/composables/modules/labcast/useGetLabCasts"
+const { programs, loading: programsLoading } = useGetPrograms()
+const { publications, loading: publicationsLoading } = useGetPublications()
+const { labcasts, loading: labcastsLoading } = useGetLabCasts()
 
-import partner1 from '@/assets/img/partner1.jpeg'
-import partner2 from '@/assets/img/partner2.jpeg'
-import partner3 from '@/assets/img/partner3.jpeg'
-import partner4 from '@/assets/img/partner4.jpeg'
-import partner5 from '@/assets/img/partner5.jpeg'
-import partner6 from '@/assets/img/partner6.jpeg'
+const activePrograms = computed(() => (programs.value || []).filter((p: any) => p.status === 'active').slice(0, 6))
+const publishedArticles = computed(() => (publications.value || [])
+  .filter((item: any) => item.status === 'published')
+  .sort((a: any, b: any) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()))
+const featuredArticle = computed(() => publishedArticles.value[0])
+const latestEpisodes = computed(() => (labcasts.value || [])
+  .filter((episode: any) => episode.isActive)
+  .sort((a: any, b: any) => (a.position || 0) - (b.position || 0))
+  .slice(0, 5))
+const spotlightEpisode = computed(() => latestEpisodes.value[0])
 
+const ecosystem = [
+  {
+    title: 'Journo',
+    description: 'Research, essays and sharp perspectives on the forces shaping laboratory medicine.',
+    href: '/journo',
+    icon: 'lucide:newspaper',
+    number: '01',
+    accent: false,
+  },
+  {
+    title: 'Convo Stack',
+    description: 'A living editorial feed on careers, diagnostics, research and the wider health ecosystem.',
+    href: '/convostack',
+    icon: 'lucide:messages-square',
+    number: '02',
+    accent: true,
+  },
+  {
+    title: 'LabCast',
+    description: 'Unfiltered conversations with the scientists, founders and policy leaders moving the field.',
+    href: '/lab-cast',
+    icon: 'lucide:mic',
+    number: '03',
+  },
+  {
+    title: 'Programs',
+    description: 'Cohort-based programmes that turn ambition into capability and career momentum.',
+    href: '/programs',
+    icon: 'lucide:graduation-cap',
+    number: '04',
+  },
+  {
+    title: 'Community',
+    description: 'Interntional and UniVerse — peer networks for interns, students and early-career professionals.',
+    href: '/community',
+    icon: 'lucide:users',
+    number: '05',
+  },
+  {
+    title: 'Shop',
+    description: 'Books, courses and field-tested digital tools built for the realities of the laboratory.',
+    href: '/products',
+    icon: 'lucide:shopping-bag',
+    number: '06',
+  },
+]
 
+const stats = [
+  { value: '5,000+', label: 'Professionals reached' },
+  { value: '50+', label: 'Programmes delivered' },
+  { value: '100+', label: 'Episodes & essays' },
+  { value: '30+', label: 'Countries represented' },
+]
+
+const testimonials = [
+  { name: 'Daniel Adekunle', role: 'Medical Laboratory Scientist', quote: 'MedLabConvo has been a game-changer for me. From knowledge gained through webinars to career mentorship, I now feel more confident about my future in medical laboratory science.' },
+  { name: 'Mabel Omoniwa', role: 'Early-career professional', quote: 'MedLabConvo gave me clarity about my career path. The mentorship and resources have transformed the way I approach learning and professional growth.' },
+  { name: 'Shedrack Etuk', role: 'Laboratory professional', quote: 'MedLabConvo has redefined professional development in medical laboratory science. The discussions, networking and mentorship have enriched my career.' },
+  { name: 'Paul Odeh', role: 'Medical Laboratory Scientist', quote: 'MedLabConvo fosters collaboration among medical lab scientists worldwide. It is a great place to connect, learn and contribute to the advancement of our profession.' },
+]
 
 const activeTestimonial = ref(0)
+let testimonialTimer: ReturnType<typeof setInterval> | undefined
+
 onMounted(() => {
-  setInterval(() => {
-    activeTestimonial.value = (activeTestimonial.value + 1) % testimonials.value.length
-  }, 5000)
+  testimonialTimer = setInterval(() => {
+    activeTestimonial.value = (activeTestimonial.value + 1) % testimonials.length
+  }, 6000)
 })
 
-const { labcasts, loading: loadingLabcasts } = useGetLabCasts()
-const { publications, loading: loadingPublications } = useGetPublications()
-const { programs, loading: fetchingPrograms } = useGetPrograms()
-
-const activePrograms = computed(() => {
-  if (!programs.value) return []
-  return programs?.value?.filter((p: any) => p.status === 'active')
+onUnmounted(() => {
+  if (testimonialTimer) clearInterval(testimonialTimer)
 })
-const journosList = ref([
-  {
-    title: 'FORGING A CAREER PATH 4.0',
-    image: convo,
-    desc: `The FACP program aims to expand the career horizons of young professionals and students in medical laboratory science by showcasing diverse opportunities beyond traditional clinical roles. In response to the evollving healthcare landscape. the program highlights various career paths within and outside the medical laboratory field, encouraging participants to explore their potential.`,
-    secondPart: `Through interactive workshops, mentorship sessions, and networking events, the FACP program fosters an environment that promotes innovative thinking and professional development. Participants are inspired to consider careers in research, healthcare technology, public health, education, and industry innovation, ultimately redefining what success looks like in medical laboratory science. By transforming challenges into opportunities, the program seeks to empower individuals to forge their unique paths in this dynamic field.`,
-    previousEditionUrl: '#',
-    status: 'latest',
-    registerUrl: '#'
-  },
-])
 
-const { videoUrl } = useYoutubeVideo('rhVkU6HAbn0'); // Example video ID
-console.log(videoUrl.value); // should log "https://www.youtube.com/embed/rhVkU6HAbn0"
+const formatDate = (value?: string) => {
+  if (!value) return 'Recently'
+  return new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
 
-const testimonials = ref([
-  {
-    name: 'Daniel Adekunle',
-    testimonial: `MedLabConvo has been a game-changer for me. From knowledge gained through webinars to career mentorship, MedLabConvo has helped me grow professionally and personally. I now feel more confident about my future in medical laboratory science.`
-  },
-  {
-    name: 'Mabel Omoniwa',
-    testimonial: `MedLabConvo gave me clarity about my career path. The mentorship and resources have transformed the way I approach learning and professional growth. I now feel equipped to excel in the health ecosystem.`
-  },
-  {
-    name: 'Shedrack Etuk',
-    testimonial: `MedLabConvo has redefined professional development in medical laboratory science. The discussions, networking, and mentorship opportunities have enriched my career.`
-  },
-  {
-    name: 'Paul Odeh',
-    testimonial: `MedLabConvo fosters collaboration among medical lab scientists worldwide. It’s a great place to connect, learn, and contribute to the advancement of our profession.`
-  },
-  {
-    name: 'Dolapo Moses',
-    testimonial: `MedLabConvo organized an excellent and quintessential masterclass on scholarships, which was totally free. They shared quality and useful information with. I am sincerely challenged and encouraged to keep it up and not to give up. Thank you so much!`
-  },
-  {
-    name: 'Jude Emeka',
-    testimonial: `Honestly, the experience was eye-opening. I'm grateful to the organizers and the presenters for the amazing work they've done, and I look forward to other such programs from MedLabConvo.`
-  }
-])
+useHead({
+  title: 'MedLabConvo | The home of laboratory science, insight and opportunity',
+  meta: [
+    { name: 'description', content: 'MedLabConvo advances medical laboratory science through editorial insight, podcasts, programmes, community and professional tools.' },
+    { property: 'og:title', content: 'MedLabConvo | Laboratory science, reimagined' },
+    { property: 'og:description', content: 'A global platform for the people, ideas and opportunities shaping laboratory medicine.' },
+    { property: 'og:image', content: '/images/medlabconvo-og-image.jpg' },
+    { property: 'og:url', content: 'https://www.medlabconvo.com' },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary_large_image' },
+  ],
+})
 </script>
 
+<template>
+  <main class="bg-white">
+    <!-- Hero -->
+    <section class="relative overflow-hidden bg-[#033958] text-white">
+      <div class="absolute inset-0 site-hero-grid opacity-60" />
+      <div class="absolute inset-0 site-hero-glow" />
+      <div class="site-container relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.06fr_.94fr] lg:py-24">
+        <div class="max-w-2xl">
+          <p class="site-eyebrow !text-white/70">Medical laboratory science, reimagined</p>
+          <h1 class="site-display mt-4 text-[clamp(2.8rem,6vw,5.6rem)] !text-white site-text-balance">
+            The people, ideas and opportunities moving the lab forward.
+          </h1>
+          <p class="mt-5 max-w-xl text-[0.98rem] leading-7 text-white/65">
+            MedLabConvo is a global platform connecting laboratory professionals, students and health innovators through intelligent journalism, honest conversation and career-defining programmes.
+          </p>
+          <div class="mt-7 flex flex-col gap-2.5 sm:flex-row">
+            <NuxtLink to="/programs" class="site-btn site-btn-light">
+              Explore programmes
+              <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+            </NuxtLink>
+            <NuxtLink to="/journo" class="site-btn site-btn-outline-light">
+              Read Journo
+            </NuxtLink>
+          </div>
+
+          <div class="mt-8 grid max-w-xl grid-cols-2 gap-x-6 gap-y-4 border-t border-white/15 pt-6 sm:grid-cols-4">
+            <div v-for="stat in stats" :key="stat.label">
+              <p class="text-lg font-bold tracking-[-0.03em] text-white">{{ stat.value }}</p>
+              <p class="mt-1 text-[9px] font-semibold uppercase tracking-[0.1em] text-white/40">{{ stat.label }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
+          <div class="relative overflow-hidden rounded-[1.65rem] border border-white/15 bg-white/5 p-2 shadow-2xl shadow-black/20">
+            <div class="relative aspect-[4/4.35] overflow-hidden rounded-[1.25rem]">
+              <SiteMedia :src="heroImage" alt="MedLabConvo community" label="The MedLabConvo community" icon="lucide:users" eager />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#031d29]/80 via-transparent to-transparent" />
+              <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                <span class="site-chip !border-white/15 !bg-white/10 !text-white/70">The network</span>
+                <p class="mt-3 max-w-xs text-[1.1rem] font-bold leading-tight tracking-[-0.02em] text-white">
+                  A global community built for the realities of the laboratory.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute -bottom-6 -left-2 w-[13.5rem] rounded-2xl border border-white/15 bg-[#0a2f42]/95 p-4 shadow-xl backdrop-blur sm:-left-5">
+            <div class="flex items-center gap-2">
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#DE6129] text-white"><Icon name="lucide:sparkles" class="h-3.5 w-3.5" /></span>
+              <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/55">Built for the next decade</p>
+            </div>
+            <p class="mt-2 text-[11px] leading-5 text-white/65">Editorial depth. Career momentum. A network that stays with you.</p>
+          </div>
+
+          <div class="absolute -right-3 -top-5 hidden rounded-2xl border border-[#DE6129]/30 bg-[#DE6129] px-4 py-3 shadow-xl sm:block">
+            <p class="text-[9px] font-bold uppercase tracking-[0.12em] text-white/70">Since 2019</p>
+            <p class="mt-1 text-[13px] font-bold text-white">Lead. Build. Inspire.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ecosystem -->
+    <section class="site-section">
+      <div class="site-container">
+        <SiteSectionHeader
+          eyebrow="The ecosystem"
+          title="One home. Six ways to grow."
+          description="Whether you are looking for a sharper perspective, a career move, a peer network or your next collaborator, there is a place for you here."
+        >
+          <template #actions>
+            <NuxtLink to="/community" class="site-btn site-btn-ghost hidden sm:inline-flex">Meet the community</NuxtLink>
+          </template>
+        </SiteSectionHeader>
+
+        <div class="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <NuxtLink
+            v-for="item in ecosystem"
+            :key="item.title"
+            :to="item.href"
+            class="site-card site-card-hover group relative overflow-hidden p-5 sm:p-6"
+            :class="item.accent ? '!border-[#27628C] !bg-[#27628C] text-white' : ''"
+          >
+            <div class="flex items-start justify-between gap-4">
+              <span class="flex h-10 w-10 items-center justify-center rounded-xl" :class="item.accent ? 'bg-white/10 text-white' : 'bg-[#eef5f9] text-[#27628C]'">
+                <Icon :name="item.icon" class="h-5 w-5" />
+              </span>
+              <span class="text-[10px] font-bold tracking-[0.14em]" :class="item.accent ? 'text-white/35' : 'text-[#c0ced7]'">{{ item.number }}</span>
+            </div>
+            <h3 class="mt-7 text-[1.1rem] font-bold tracking-[-0.02em]" :class="item.accent ? 'text-white' : 'text-[#0a202b]'">{{ item.title }}</h3>
+            <p class="mt-2 max-w-sm text-[0.8rem] leading-6" :class="item.accent ? 'text-white/65' : 'text-[#5f7482]'">{{ item.description }}</p>
+            <span class="mt-5 inline-flex items-center gap-1.5 text-[11px] font-bold" :class="item.accent ? 'text-white' : 'text-[#27628C]'">
+              Explore
+              <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <!-- Programmes carousel -->
+    <section class="bg-[#f7f9f8] py-14 sm:py-20">
+      <div class="site-container">
+        <template v-if="!programsLoading && activePrograms.length">
+          <SiteCarousel
+            eyebrow="Programmes"
+            title="Build the career your curiosity deserves."
+            description="Cohort-based learning, mentorship and practical exposure designed around the future of laboratory science."
+            link="/programs"
+            link-label="All programmes"
+          >
+            <ProgramCard v-for="program in activePrograms" :key="program.slug || program._id" :program="program" />
+          </SiteCarousel>
+        </template>
+        <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div v-for="i in 3" :key="i" class="site-skeleton h-[26rem]" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Editorial -->
+    <section class="site-section">
+      <div class="site-container">
+        <SiteSectionHeader
+          eyebrow="Journo & Convo Stack"
+          title="Ideas that make the lab legible."
+          description="Reported pieces, essays and conversations that connect laboratory science to the forces shaping healthcare, careers and policy."
+          link="/journo"
+          link-label="Enter Journo"
+        />
+
+        <div v-if="!publicationsLoading" class="mt-9 grid gap-4 lg:grid-cols-[1.18fr_.82fr]">
+          <ArticleCard
+            v-if="featuredArticle"
+            :title="featuredArticle.title"
+            :excerpt="featuredArticle.abstract"
+            :image="featuredArticle.images?.[0] || featuredArticle.coverImage"
+            :category="featuredArticle.category || 'Featured'"
+            :meta="`${formatDate(featuredArticle.createdAt)} · ${featuredArticle.authors || 'MedLabConvo'}`"
+            :to="featuredArticle.link || featuredArticle.pubLink || '/journo'"
+            label="Read the feature"
+            featured
+          />
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <ArticleCard
+              v-for="article in publishedArticles.slice(1, 3)"
+              :key="article._id || article.id"
+              :title="article.title"
+              :excerpt="article.abstract"
+              :image="article.images?.[0] || article.coverImage"
+              :category="article.category || 'Insight'"
+              :meta="formatDate(article.createdAt)"
+              :to="article.link || article.pubLink || '/journo'"
+              label="Read story"
+            />
+          </div>
+        </div>
+        <div v-else class="mt-9 grid gap-4 lg:grid-cols-3">
+          <div v-for="i in 3" :key="i" class="site-skeleton h-80" />
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 rounded-2xl border border-[#e4ebf0] bg-[#fbfcfc] p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-[12px] leading-6 text-[#5f7482]">
+            <span class="font-bold text-[#0a202b]">The Convo Stack</span> — a living feed of careers, diagnostics and ecosystem pulses, updated regularly.
+          </p>
+          <NuxtLink to="/convostack" class="site-link-arrow shrink-0">Explore the stack <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <!-- LabCast spotlight -->
+    <section class="site-container pb-14 sm:pb-20">
+      <div class="relative overflow-hidden rounded-[1.75rem] bg-[#0a2f42] text-white">
+        <div class="absolute inset-0 site-hero-grid opacity-50" />
+        <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#DE6129]/15 blur-3xl" />
+        <div class="relative grid gap-8 p-6 sm:p-9 lg:grid-cols-[.92fr_1.08fr] lg:items-center lg:p-12">
+          <div>
+            <p class="site-eyebrow !text-white/65">LabCast · Audio & video</p>
+            <h2 class="site-display mt-3 text-[clamp(1.9rem,4vw,3.4rem)] !text-white">The conversations the lab deserves.</h2>
+            <p class="mt-3 max-w-lg text-[0.9rem] leading-7 text-white/60">
+              Hear from the scientists, builders and policy leaders shaping diagnostics, research and the future of healthcare work.
+            </p>
+            <div class="mt-6 flex flex-col gap-2.5 sm:flex-row">
+              <NuxtLink to="/lab-cast" class="site-btn site-btn-light">Browse all episodes <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
+              <a v-if="spotlightEpisode?.spotifyUrl" :href="spotlightEpisode.spotifyUrl" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-outline-light">Listen on Spotify</a>
+            </div>
+            <div v-if="spotlightEpisode" class="mt-7 flex items-center gap-3 border-t border-white/10 pt-5">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#DE6129] text-white"><Icon name="lucide:play" class="h-4 w-4" /></span>
+              <div class="min-w-0">
+                <p class="truncate text-[11px] font-semibold text-white">{{ spotlightEpisode.title }}</p>
+                <p class="mt-0.5 text-[10px] text-white/45">Season {{ spotlightEpisode.season }} · Episode {{ spotlightEpisode.episode }} · {{ spotlightEpisode.duration }} min</p>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="spotlightEpisode" class="relative">
+            <div class="overflow-hidden rounded-[1.25rem] border border-white/15 bg-white/5 p-2">
+              <div class="aspect-[16/10] overflow-hidden rounded-xl">
+                <SiteMedia :src="spotlightEpisode.thumbnailUrl || spotlightEpisode.image" :alt="spotlightEpisode.title" label="LabCast episode" icon="lucide:mic" />
+              </div>
+            </div>
+            <div v-if="latestEpisodes.length > 1" class="mt-3 grid grid-cols-4 gap-2">
+              <NuxtLink v-for="episode in latestEpisodes.slice(1, 5)" :key="episode._id" to="/lab-cast" class="group overflow-hidden rounded-lg border border-white/10">
+                <div class="aspect-square">
+                  <SiteMedia :src="episode.thumbnailUrl || episode.image" :alt="episode.title" label="LabCast" icon="lucide:mic" />
+                </div>
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="bg-[#f7f9f8] py-14 sm:py-20">
+      <div class="site-container grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+        <div>
+          <p class="site-eyebrow">The bigger picture</p>
+          <h2 class="site-h2 mt-3 max-w-md">A stronger lab workforce is a stronger health system.</h2>
+          <p class="site-lead mt-3 max-w-lg">Our work sits at the intersection of professional development, public understanding and systems change.</p>
+          <NuxtLink to="/about-us" class="site-link-arrow mt-5">How we work <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
+        </div>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div v-for="stat in stats" :key="stat.label" class="rounded-2xl border border-[#e4ebf0] bg-white p-5">
+            <p class="text-[1.45rem] font-bold tracking-[-0.04em] text-[#27628C]">{{ stat.value }}</p>
+            <p class="mt-1 text-[9px] font-semibold uppercase leading-4 tracking-[0.1em] text-[#8a9ba5]">{{ stat.label }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="site-section">
+      <div class="site-container">
+        <div class="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-center">
+          <div>
+            <p class="site-eyebrow">From the community</p>
+            <h2 class="site-h2 mt-3">Built with people, not just for them.</h2>
+            <p class="site-lead mt-3">The best measure of our work is what it makes possible for the people who trust us with their next step.</p>
+          </div>
+          <div class="relative rounded-[1.5rem] border border-[#e4ebf0] bg-[#fbfcfc] p-6 sm:p-8">
+            <Icon name="lucide:quote" class="h-7 w-7 text-[#DE6129]" />
+            <Transition name="fade" mode="out-in">
+              <div :key="activeTestimonial">
+                <p class="mt-4 min-h-[7.5rem] text-[1rem] leading-8 text-[#243d4b]">“{{ testimonials[activeTestimonial].quote }}”</p>
+                <div class="mt-5 flex items-center justify-between gap-4 border-t border-[#e4ebf0] pt-4">
+                  <div>
+                    <p class="text-[12px] font-bold text-[#0a202b]">{{ testimonials[activeTestimonial].name }}</p>
+                    <p class="mt-0.5 text-[10px] font-medium text-[#8a9ba5]">{{ testimonials[activeTestimonial].role }}</p>
+                  </div>
+                  <div class="flex gap-1.5">
+                    <button
+                      v-for="(_, i) in testimonials"
+                      :key="i"
+                      type="button"
+                      class="h-1.5 rounded-full transition-all"
+                      :class="i === activeTestimonial ? 'w-5 bg-[#27628C]' : 'w-1.5 bg-[#d5e0e6]'"
+                      :aria-label="`Testimonial ${i + 1}`"
+                      @click="activeTestimonial = i"
+                    />
+                  </div>
+                </div>
+              </div>
+            </Transition>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <SiteCta
+      eyebrow="Take the next step"
+      title="Your next chapter in laboratory science starts here."
+      description="Join the community, sharpen your perspective and move with the people building what comes next."
+      primary-label="Join the community"
+      primary-to="/community"
+      secondary-label="Explore programmes"
+      secondary-to="/programs"
+    />
+  </main>
+</template>
+
 <style scoped>
-
-
-.youtube-video {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.word {
-  position: absolute;
-  inset: 0;
-  opacity: 0;    
-  animation-fill-mode: both;
-  text-align: center;
-}
-
-@keyframes fade-word {
-  0%, 100% { opacity: 0; transform: translateY(10px); }
-  10%, 40% { opacity: 1; transform: translateY(0); }
-  50%, 100% { opacity: 0; transform: translateY(-10px); }
-}
-
-.animate-fade-word {
-  animation: fade-word 6s ease-in-out infinite;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fade-in 1s ease-out;
-}
-
-.animate-fade-in-delay {
-  animation: fade-in 1s ease-out 0.3s both;
-}
-
-.bg-grid-white {
-  background-image: linear-gradient(white 1px, transparent 1px),
-                    linear-gradient(90deg, white 1px, transparent 1px);
-}
+.fade-enter-active,
+.fade-leave-active { transition: opacity 180ms ease, transform 180ms ease; }
+.fade-enter-from { opacity: 0; transform: translateY(4px); }
+.fade-leave-to { opacity: 0; transform: translateY(-4px); }
 </style>

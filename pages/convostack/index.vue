@@ -1,186 +1,11 @@
-<template>
-  <div class="min-h-screen bg-white font-sans text-gray-900 border-t border-gray-100">
-    
-    <!-- Substack-style Navigation Tab -->
-    <nav class="border-b border-gray-100 sticky top-0 z-40 bg-white/80 backdrop-blur-md">
-      <div class="max-w-5xl mx-auto px-6">
-        <div class="flex items-center gap-8 h-14 overflow-x-auto no-scrollbar">
-          <button 
-            @click="activeCategory = ''"
-            :class="[
-              'text-sm font-medium transition-colors whitespace-nowrap border-b-2 h-full px-1',
-              activeCategory === '' ? 'border-[#27628C] text-[#27628C]' : 'border-transparent text-gray-500 hover:text-gray-900'
-            ]"
-          >
-            All Stories
-          </button>
-          <button 
-            v-for="cat in categories" 
-            :key="cat"
-            @click="activeCategory = cat"
-            :class="[
-              'text-sm font-medium transition-colors whitespace-nowrap border-b-2 h-full px-1 capitalize',
-              activeCategory === cat ? 'border-[#27628C] text-[#27628C]' : 'border-transparent text-gray-500 hover:text-gray-900'
-            ]"
-          >
-            {{ cat }}
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Main Content Area -->
-    <main class="max-w-5xl mx-auto px-6 py-12 md:py-20">
-      
-      <!-- Loading State -->
-      <div v-if="loading" class="flex flex-col items-center justify-center py-40 gap-6">
-        <div class="w-10 h-10 border-4 border-gray-100 border-t-[#27628C] rounded-full animate-spin"></div>
-        <p class="text-xs font-bold text-gray-400">Syncing with the Stack...</p>
-      </div>
-
-      <div v-else-if="filteredPublications.length > 0" class="space-y-24">
-        
-        <!-- Featured Publication (Top of the Stack) -->
-        <section v-if="!activeCategory && !searchQuery" class="group relative grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <NuxtLink :to="`/convostack/${featuredPublication.slug}`" class="relative aspect-[16/9] md:aspect-[4/3] rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm transition-shadow group-hover:shadow-sm border border-slate-200">
-            <img 
-              v-if="featuredPublication.coverImage" 
-              :src="featuredPublication.coverImage" 
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div v-else class="w-full h-full flex items-center justify-center bg-[#27628C]/5 text-[#27628C]">
-               <Icon name="lucide:file-text" class="w-20 h-20 opacity-20" />
-            </div>
-          </NuxtLink>
-          
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <span class="text-sm font-bold text-[#27628C] bg-[#27628C]/5 px-3 py-1 rounded-full capitalize">{{ featuredPublication.category }}</span>
-              <span class="text-sm font-medium text-gray-400">{{ featuredPublication.readTime || 5 }} min read</span>
-            </div>
-            <NuxtLink :to="`/convostack/${featuredPublication.slug}`">
-              <h2 class="text-xl md:text-lg font-bold text-gray-900 leading-tight tracking-normal hover:text-[#27628C] transition-colors">
-                {{ featuredPublication.title }}
-              </h2>
-            </NuxtLink>
-            <p class="text-lg text-gray-500 leading-relaxed line-clamp-3">
-              {{ featuredPublication.excerpt }}
-            </p>
-            <div class="flex items-center gap-4 pt-4">
-               <div class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center font-bold text-[#27628C]">
-                  {{ (featuredPublication.authorName || 'M').charAt(0) }}
-               </div>
-               <div class="flex flex-col">
-                  <span class="text-sm font-bold text-gray-900">{{ featuredPublication.authorName || 'MedLabConvo' }}</span>
-                  <span class="text-xs text-gray-400">{{ formatDate(featuredPublication.publishedAt || featuredPublication.createdAt) }}</span>
-               </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- The Main Feed -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
-          
-          <!-- Recent Publications Column -->
-          <section class="md:col-span-2 space-y-16">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-4">
-               <h3 class="text-xs font-bold text-gray-400">{{ activeCategory || 'Latest' }} from the stack</h3>
-               <div class="relative max-w-[200px]">
-                  <input v-model="searchQuery" type="text" class="w-full pl-8 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-full text-xs outline-none focus:border-[#27628C] transition-all" />
-                  <!-- <Icon name="lucide:search" class="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400" /> -->
-               </div>
-            </div>
-
-            <div class="divide-y divide-gray-100">
-              <article 
-                v-for="pub in recentPublications" 
-                :key="pub._id"
-                class="py-10 first:pt-0 group"
-              >
-                <div class="flex flex-col md:flex-row gap-8">
-                  <div class="flex-1 space-y-4">
-                    <div class="flex items-center gap-3">
-                       <span class="text-sm font-bold text-[#27628C] capitalize">{{ pub.category }}</span>
-                       <span class="text-sm font-medium text-gray-400">{{ formatDate(pub.publishedAt || pub.createdAt) }}</span>
-                    </div>
-                    <NuxtLink :to="`/convostack/${pub.slug}`">
-                      <h4 class="text-xl md:text-lg font-bold text-gray-900 group-hover:text-[#27628C] transition-colors leading-snug">
-                        {{ pub.title }}
-                      </h4>
-                    </NuxtLink>
-                    <p class="text-sm text-gray-500 line-clamp-3 leading-relaxed">
-                      {{ pub.excerpt }}
-                    </p>
-                    <div class="flex items-center gap-4 pt-4 opacity-70">
-                       <span class="text-sm font-bold text-gray-900">{{ pub.authorName || 'MedLabConvo Team' }}</span>
-                       <span class="text-sm text-gray-400">{{ pub.readTime || 4 }} min read</span>
-                    </div>
-                  </div>
-                  <NuxtLink :to="`/convostack/${pub.slug}`" class="w-full md:w-40 aspect-[4/3] rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shrink-0 shadow-sm group-hover:shadow-md transition-all">
-                    <img v-if="pub.coverImage" :src="pub.coverImage" class="w-full h-full object-cover transition-transform group-hover:scale-105" />
-                    <div v-else class="w-full h-full flex items-center justify-center text-[#27628C]/20">
-                       <Icon name="lucide:file" class="w-10 h-10" />
-                    </div>
-                  </NuxtLink>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <!-- Sidebar (Recommendations & Substack Vibes) -->
-          <aside class="space-y-12">
-            <!-- Newsletter Widget -->
-            <div class="bg-[#27628C]/5 p-8 rounded-3xl border border-[#27628C]/10 space-y-6">
-               <h4 class="text-lg font-bold text-gray-900 tracking-tight leading-tight">Subscribe to the <br /> Convo Substack</h4>
-               <p class="text-xs text-gray-500 leading-relaxed font-medium">Join 2,500+ professionals receiving curated diagnostic insights and research pulses.</p>
-               <input 
-                  type="email" 
- 
-                  class="w-full px-5 py-3 bg-white border border-[#27628C]/20 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#27628C]/20 transition-all shadow-sm" 
-               />
-               <button class="w-full py-3.5 bg-[#27628C] text-white rounded-xl text-xs font-bold shadow-sm border border-slate-100 hover:bg-gray-900 transition-all active:scale-95">
-                  Subscribe for free
-               </button>
-            </div>
-
-            <!-- Recommendations -->
-            <div class="space-y-8">
-               <h3 class="text-sm font-bold text-gray-400 border-b border-gray-100 pb-3">Recommendations</h3>
-               <div class="space-y-8">
-                  <div v-for="rec in filteredPublications.slice(0, 4)" :key="rec._id" class="flex items-start gap-4 group">
-                     <span class="text-lg font-bold text-gray-200 mt-1  group-hover:text-[#27628C]/20 transition-colors">0{{ filteredPublications.indexOf(rec) + 1 }}</span>
-                     <div class="space-y-1">
-                        <NuxtLink :to="`/convostack/${rec.slug}`" class="text-sm font-bold text-gray-900 hover:text-[#27628C] transition-colors leading-tight block">
-                           {{ rec.title }}
-                        </NuxtLink>
-                        <span class="text-sm font-bold text-[#27628C]/60 capitalize">{{ rec.authorName || 'MedLabConvo' }}</span>
-                     </div>
-                  </div>
-               </div>
-            </div>
-          </aside>
-
-        </div>
-      </div>
-
-      <!-- Empty State -->
-      <div v-else class="text-center py-40 animate-in fade-in zoom-in duration-700">
-        <div class="w-20 h-20 bg-gray-50 rounded-full mx-auto mb-8 flex items-center justify-center border border-gray-100">
-           <Icon name="lucide:search" class="w-8 h-8 text-gray-300" />
-        </div>
-        <h3 class="text-xl font-bold text-gray-900 tracking-tight">Nothing found in the stack</h3>
-        <p class="text-gray-400 mt-2 text-sm">We couldn't find any articles matching your search criteria.</p>
-        <button @click="activeCategory = ''; searchQuery = ''" class="mt-8 text-[#27628C] text-xs font-bold hover:underline">View all stories</button>
-      </div>
-    </main>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
 import { convostack_api } from '@/api_factory/modules/convostack'
+import SiteHero from '@/components/site/SiteHero.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import ArticleCard from '@/components/site/ArticleCard.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
 
-const publications = ref([] as any[])
+const publications = ref<any[]>([])
 const loading = ref(true)
 const searchQuery = ref('')
 const activeCategory = ref('')
@@ -190,47 +15,174 @@ onMounted(async () => {
   try {
     const res = await convostack_api.$_get_publications()
     publications.value = res.data || []
-  } catch (e) {
-    console.error('Stack Retrieval Error:', e)
+  } catch (error) {
+    console.error('Convo Stack retrieval error:', error)
   } finally {
     loading.value = false
   }
 })
 
-const categories = computed(() => {
-  const cats = [...new Set((publications.value || []).map((p: any) => p.category).filter(Boolean))]
-  return cats
-})
-
+const categories = computed(() => [...new Set((publications.value || []).map((p: any) => p.category).filter(Boolean))])
 const filteredPublications = computed(() => {
   let list = publications.value || []
-  if (activeCategory.value) {
-    list = list.filter((p: any) => p.category === activeCategory.value)
-  }
+  if (activeCategory.value) list = list.filter((p: any) => p.category === activeCategory.value)
   if (searchQuery.value) {
     const q = searchQuery.value.toLowerCase()
     list = list.filter((p: any) =>
-      p.title?.toLowerCase().includes(q) || p.excerpt?.toLowerCase().includes(q) || p.authorName?.toLowerCase().includes(q)
-    )
+      p.title?.toLowerCase().includes(q) ||
+      p.excerpt?.toLowerCase().includes(q) ||
+      p.authorName?.toLowerCase().includes(q))
   }
   return list
 })
-
 const featuredPublication = computed(() => filteredPublications.value[0] || {})
 const recentPublications = computed(() => filteredPublications.value.slice(1))
 
-const formatDate = (date: string) => {
-  if (!date) return ''
-  return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-}
+const formatDate = (date: string) => date ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'
+const articleLink = (article: any) => `/convostack/${article.slug}`
+
+useHead({
+  title: 'Convo Stack | MedLabConvo',
+  meta: [{ name: 'description', content: 'A living editorial feed of laboratory science, careers, diagnostics and the wider health ecosystem.' }],
+})
 </script>
 
-<style scoped>
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-</style>
+<template>
+  <main class="bg-white">
+    <SiteHero
+      eyebrow="Convo Stack · The living feed"
+      title="The conversation around the lab, in real time."
+      description="A living editorial feed of careers, diagnostics, research and ecosystem pulses — written for people who want to stay close to what is changing."
+      primary-label="Read the latest"
+      primary-to="#feed"
+      secondary-label="Subscribe to the Stack"
+      secondary-to="/journo"
+      theme="light"
+    >
+      <template #visual>
+        <div class="relative mx-auto max-w-md">
+          <div class="site-card overflow-hidden p-2">
+            <div class="aspect-[4/4.2] overflow-hidden rounded-xl"><SiteMedia :src="featuredPublication?.coverImage" :alt="featuredPublication?.title || 'Convo Stack'" :label="featuredPublication?.category || 'The stack'" icon="lucide:messages-square" eager /></div>
+          </div>
+          <div class="absolute -bottom-5 -left-4 rounded-2xl border border-[#e4ebf0] bg-white p-4 shadow-xl sm:-left-6">
+            <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-[#8a9ba5]">On the stack</p>
+            <p class="mt-1 max-w-[12rem] line-clamp-2 text-[11px] font-semibold leading-5 text-[#0a202b]">{{ featuredPublication?.title || 'Fresh perspectives, regularly' }}</p>
+            <p class="mt-1 text-[9px] text-[#8a9ba5]">{{ categories.length }} themes · {{ publications.length }} stories</p>
+          </div>
+        </div>
+      </template>
+    </SiteHero>
+
+    <section id="feed" class="site-section">
+      <div class="site-container">
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" class="rounded-full border px-3.5 py-1.5 text-[10.5px] font-bold transition" :class="!activeCategory ? 'border-[#27628C] bg-[#27628C] text-white' : 'border-[#e4ebf0] bg-white text-[#5f7482] hover:border-[#27628C]/30'" @click="activeCategory = ''">All stories</button>
+          <button v-for="cat in categories" :key="cat" type="button" class="rounded-full border px-3.5 py-1.5 text-[10.5px] font-bold capitalize transition" :class="activeCategory === cat ? 'border-[#27628C] bg-[#27628C] text-white' : 'border-[#e4ebf0] bg-white text-[#5f7482] hover:border-[#27628C]/30'" @click="activeCategory = cat">{{ cat }}</button>
+          <div class="relative ml-auto w-full sm:w-56">
+            <Icon name="lucide:search" class="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#8a9ba5]" />
+            <input v-model="searchQuery" type="search" placeholder="Search the stack" class="h-9 w-full rounded-lg border border-[#e4ebf0] bg-white pl-9 pr-3 text-[11px] outline-none focus:border-[#27628C]/40" />
+          </div>
+        </div>
+
+        <div v-if="loading" class="mt-7 grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
+          <div class="site-skeleton h-[30rem]" />
+          <div class="grid gap-5"><div class="site-skeleton h-48" /><div class="site-skeleton h-48" /></div>
+        </div>
+
+        <template v-else-if="filteredPublications.length">
+          <div class="mt-7 grid gap-5 lg:grid-cols-[1.2fr_.8fr]">
+            <article v-if="featuredPublication" class="site-card group overflow-hidden">
+              <NuxtLink :to="articleLink(featuredPublication)" class="relative block aspect-[16/9] overflow-hidden">
+                <SiteMedia :src="featuredPublication.coverImage" :alt="featuredPublication.title" :label="featuredPublication.category || 'Convo Stack'" icon="lucide:messages-square" />
+                <span class="absolute left-4 top-4 rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#27628C]">Top of the stack</span>
+              </NuxtLink>
+              <div class="p-6 sm:p-7">
+                <div class="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
+                  <span class="text-[#27628C] capitalize">{{ featuredPublication.category }}</span>
+                  <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
+                  <span>{{ formatDate(featuredPublication.publishedAt || featuredPublication.createdAt) }}</span>
+                </div>
+                <NuxtLink :to="articleLink(featuredPublication)">
+                  <h2 class="mt-3 text-[1.65rem] font-bold leading-tight tracking-[-0.04em] text-[#0a202b] transition group-hover:text-[#27628C]">{{ featuredPublication.title }}</h2>
+                </NuxtLink>
+                <p class="mt-3 line-clamp-3 text-[0.86rem] leading-7 text-[#5f7482]">{{ featuredPublication.excerpt }}</p>
+                <div class="mt-5 flex items-center justify-between border-t border-[#eef2f5] pt-4">
+                  <div class="flex items-center gap-2.5">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#eef5f9] text-[11px] font-bold text-[#27628C]">{{ (featuredPublication.authorName || 'M').charAt(0) }}</span>
+                    <div>
+                      <p class="text-[10.5px] font-bold text-[#0a202b]">{{ featuredPublication.authorName || 'MedLabConvo' }}</p>
+                      <p class="text-[9px] text-[#8a9ba5]">{{ featuredPublication.readTime || 5 }} min read</p>
+                    </div>
+                  </div>
+                  <NuxtLink :to="articleLink(featuredPublication)" class="site-link-arrow">Read story <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+                </div>
+              </div>
+            </article>
+
+            <div class="grid gap-5">
+              <ArticleCard v-for="article in recentPublications.slice(0, 2)" :key="article._id || article.slug" :title="article.title" :excerpt="article.excerpt" :image="article.coverImage" :category="article.category || 'Stack'" :meta="formatDate(article.publishedAt || article.createdAt)" :to="articleLink(article)" label="Read story" />
+            </div>
+          </div>
+
+          <div class="mt-14 grid gap-10 lg:grid-cols-[1fr_20rem]">
+            <div>
+              <div class="flex items-end justify-between border-b border-[#e4ebf0] pb-3">
+                <div>
+                  <p class="site-eyebrow">The feed</p>
+                  <h2 class="mt-2 text-[1.5rem] font-bold tracking-[-0.03em] text-[#0a202b]">More from the stack</h2>
+                </div>
+                <p class="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">{{ filteredPublications.length }} stories</p>
+              </div>
+              <div class="divide-y divide-[#eef2f5]">
+                <article v-for="article in filteredPublications.slice(1)" :key="article._id || article.slug" class="group grid gap-4 py-6 sm:grid-cols-[1fr_10rem]">
+                  <div>
+                    <div class="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
+                      <span class="text-[#27628C] capitalize">{{ article.category }}</span>
+                      <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
+                      <span>{{ formatDate(article.publishedAt || article.createdAt) }}</span>
+                    </div>
+                    <NuxtLink :to="articleLink(article)" class="mt-2 block">
+                      <h3 class="text-[1.1rem] font-bold leading-snug tracking-[-0.02em] text-[#0a202b] transition group-hover:text-[#27628C]">{{ article.title }}</h3>
+                    </NuxtLink>
+                    <p class="mt-1.5 line-clamp-2 text-[11.5px] leading-6 text-[#5f7482]">{{ article.excerpt }}</p>
+                    <p class="mt-2 text-[9.5px] text-[#8a9ba5]">{{ article.authorName || 'MedLabConvo' }} · {{ article.readTime || 4 }} min read</p>
+                  </div>
+                  <NuxtLink :to="articleLink(article)" class="hidden overflow-hidden rounded-xl border border-[#eef2f5] sm:block">
+                    <SiteMedia :src="article.coverImage" :alt="article.title" :label="article.category" icon="lucide:file-text" />
+                  </NuxtLink>
+                </article>
+              </div>
+            </div>
+
+            <aside class="space-y-4">
+              <div class="rounded-2xl bg-[#27628C] p-5 text-white">
+                <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-white/50">The Convo Stack</p>
+                <h3 class="mt-2 text-[1.2rem] font-bold leading-tight tracking-[-0.03em]">Get the good stuff in your inbox.</h3>
+                <p class="mt-2 text-[10.5px] leading-5 text-white/60">Join professionals receiving curated diagnostics, career and research pulses.</p>
+                <NuxtLink to="/journo" class="site-btn site-btn-light mt-4 w-full">Subscribe free</NuxtLink>
+              </div>
+              <div class="rounded-2xl border border-[#e4ebf0] bg-white p-5">
+                <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-[#8a9ba5]">Recommendations</p>
+                <div class="mt-3 space-y-3">
+                  <NuxtLink v-for="(article, i) in filteredPublications.slice(0, 4)" :key="article._id" :to="articleLink(article)" class="group flex gap-2.5">
+                    <span class="text-[10px] font-bold text-[#c0ced7]">0{{ i + 1 }}</span>
+                    <span class="text-[11px] font-semibold leading-5 text-[#0a202b] transition group-hover:text-[#27628C]">{{ article.title }}</span>
+                  </NuxtLink>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </template>
+
+        <div v-else class="site-card mt-7 px-6 py-16 text-center">
+          <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eef5f9] text-[#27628C]"><Icon name="lucide:search-x" class="h-6 w-6" /></span>
+          <h2 class="mt-4 text-lg font-bold text-[#0a202b]">Nothing in the stack matches that.</h2>
+          <p class="mt-1 text-[12px] text-[#5f7482]">Try a different theme or clear the search.</p>
+          <button type="button" class="site-btn site-btn-ghost mt-5" @click="activeCategory = ''; searchQuery = ''">View all stories</button>
+        </div>
+      </div>
+    </section>
+
+    <SiteCta eyebrow="Keep the conversation going" title="A sharper feed starts with better questions." description="Subscribe to the Convo Stack for editorial that treats laboratory professionals as the main audience, not an afterthought." primary-label="Subscribe to the Stack" primary-to="/journo" secondary-label="Read Journo" secondary-to="/journo" />
+  </main>
+</template>

@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { navigateTo } from '#imports'
+navigateTo('/programs', { redirectCode: 302 })
+</script>
+
 <template>
-    <h1>Hello</h1>
+  <div />
 </template>

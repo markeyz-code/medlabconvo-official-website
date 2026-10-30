@@ -1,215 +1,128 @@
-<template>
-  <section class="py-24 md:py-40 bg-gray-50 overflow-hidden">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-        
-        <!-- Narratives & Brand Presence -->
-        <div class="space-y-12 animate-fade-in-left">
-          <div class="inline-block px-4 py-1.5 bg-[#27628C]/10 text-[#27628C] text-sm font-bold rounded-full">
-             Initiate Dialogue
-          </div>
-          <h2 class="text-lg md:text-xl font-bold text-gray-900 leading-tight tracking-normal ">
-            Expanding <span class="text-[#27628C]">Healthcare</span> <br /> Through Connection
-          </h2>
-          <p class="text-lg md:text-xl text-gray-500 font-medium leading-relaxed max-w-lg">
-            Have a question, a proposal, or seeking technical clarity? Our experts are standing by to bridge the gap between inquiry and action.
-          </p>
-
-          <div class="space-y-8 pt-8">
-             <div class="flex items-start gap-6 group">
-                <!-- <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#27628C] shadow-sm group-hover:bg-[#27628C] group-hover:text-white transition-all duration-500">
-                   <Icon name="lucide:message-square" class="w-6 h-6" />
-                </div> -->
-                <div>
-                   <h4 class="text-sm font-bold text-gray-900 mb-1">Direct Support</h4>
-                   <p class="text-sm font-medium text-gray-400">Response time within 24 operational hours.</p>
-                </div>
-             </div>
-             <div class="flex items-start gap-6 group text-gray-400">
-                <!-- <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-black group-hover:text-white transition-all duration-500">
-                   <Icon name="lucide:mail" class="w-6 h-6" />
-                </div> -->
-                <div>
-                   <h4 class="text-sm font-bold text-gray-900 mb-1">Email Registry</h4>
-                   <p class="text-sm font-medium">info@medlabconvo.com</p>
-                </div>
-             </div>
-          </div>
-        </div>
-
-        <!-- The Enquiry Engine (Form) -->
-        <div class="relative animate-fade-in-right">
-          <!-- Geometric Decor -->
-          <div class="absolute -right-20 -top-20 w-64 h-64 bg-[#27628C]/5 rounded-full blur-3xl"></div>
-          <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-blue-500/5 rounded-full blur-2xl"></div>
-
-          <div class="relative bg-white rounded-[3rem] p-8 md:p-12 shadow-sm border border-slate-200 border border-gray-100 overflow-hidden">
-             
-             <!-- Success State Overlay -->
-             <Transition name="fade">
-               <div v-if="success" class="absolute inset-0 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-12 text-center z-20">
-                  <div class="w-24 h-24 bg-emerald-50 text-emerald-500 rounded-[2.5rem] flex items-center justify-center mb-8 animate-bounce-slow">
-                     <Icon name="lucide:check-circle" class="w-12 h-12" />
-                  </div>
-                  <h3 class="text-lg font-bold text-gray-900 tracking-normal  mb-4">Transmission Received</h3>
-                  <p class="text-gray-500 font-medium mb-10 max-w-xs">Your enquiry has been successfully logged into our governance system. An expert will be in touch shortly.</p>
-                  <button @click="resetForm" class="px-10 py-4 bg-gray-900 text-white rounded-2xl font-bold text-sm tracking-normal hover:bg-black transition-all active:scale-95">
-                     Log Another
-                  </button>
-               </div>
-             </Transition>
-
-             <form @submit.prevent="handleSubmit" class="space-y-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div class="space-y-2">
-                    <label class="text-sm font-bold text-gray-400 px-1">First Name</label>
-                    <input 
-                      v-model="form.firstName" 
-                      type="text" 
-                      required 
-
-                      class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-medium focus:bg-white focus:border-[#27628C] focus:ring-4 focus:ring-[#27628C]/5 outline-none transition-all placeholder:text-gray-300"
-                    />
-                  </div>
-                  <div class="space-y-2">
-                    <label class="text-sm font-bold text-gray-400 px-1">Last Name</label>
-                    <input 
-                      v-model="form.lastName" 
-                      type="text" 
-                      required 
-
-                      class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-medium focus:bg-white focus:border-[#27628C] focus:ring-4 focus:ring-[#27628C]/5 outline-none transition-all placeholder:text-gray-300"
-                    />
-                  </div>
-                </div>
-
-                <div class="space-y-2">
-                  <label class="text-sm font-bold text-gray-400 px-1">Email Dimension</label>
-                  <input 
-                    v-model="form.email" 
-                    type="email" 
-                    required 
-
-                    class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-medium focus:bg-white focus:border-[#27628C] focus:ring-4 focus:ring-[#27628C]/5 outline-none transition-all placeholder:text-gray-300"
-                  />
-                </div>
-
-                <div class="space-y-2">
-                  <label class="text-sm font-bold text-gray-400 px-1">Phone Protocol</label>
-                  <input 
-                    v-model="form.phoneNumber" 
-                    type="tel" 
-                    required 
-
-                    class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl text-sm font-medium focus:bg-white focus:border-[#27628C] focus:ring-4 focus:ring-[#27628C]/5 outline-none transition-all placeholder:text-gray-300"
-                  />
-                </div>
-
-                <div class="space-y-2">
-                  <label class="text-sm font-bold text-gray-400 px-1">Core Context (Message)</label>
-                  <textarea 
-                    v-model="form.message" 
-                    required 
-                    rows="6"
-
-                    class="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-[2rem] text-sm font-medium focus:bg-white focus:border-[#27628C] focus:ring-4 focus:ring-[#27628C]/5 outline-none transition-all placeholder:text-gray-300 resize-none"
-                  ></textarea>
-                </div>
-
-                <button 
-                  type="submit" 
-                  :disabled="loading"
-                  class="w-full py-5 bg-[#27628C] text-white rounded-2xl font-bold text-sm tracking-normal hover:bg-gray-900 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(39,98,140,0.2)]"
-                >
-                  <div v-if="loading" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                  <span>Transmit Query</span>
-                </button>
-             </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
-
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import Icon from '@/components/Icon.vue'
 import { useCreateEnquiry } from '@/composables/modules/enquires/useCreateEnquiry'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 
+const props = defineProps<{ prefill?: string }>()
 const { showToast } = useCustomToast()
-
-const props = defineProps<{
-  prefill?: string
-}>()
+const { createEnquiry, loading, success, resetState } = useCreateEnquiry()
 
 const form = reactive({
   firstName: '',
   lastName: '',
   email: '',
   phoneNumber: '',
-  message: props.prefill ? `I am interested in: ${props.prefill}. \n\n` : ''
+  message: props.prefill ? `I am interested in: ${props.prefill}. \n\n` : '',
 })
-
-const { createEnquiry, loading, success, resetState } = useCreateEnquiry()
 
 const handleSubmit = async () => {
   try {
     await createEnquiry(form)
-  } catch (e) {
-    console.error('Enquiry Submission Error:', e)
-    showToast({
-      title: 'Error',
-      message: 'Failed to transmit query. Please check your network protocol.',
-      toastType: 'error'
-    })
+  } catch (error) {
+    console.error('Enquiry submission error:', error)
+    showToast({ title: 'Error', message: 'We could not send your enquiry. Please check your connection and try again.', toastType: 'error' })
   }
 }
 
 const resetForm = () => {
-  Object.assign(form, {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    message: ''
-  })
+  Object.assign(form, { firstName: '', lastName: '', email: '', phoneNumber: '', message: '' })
   resetState()
 }
 </script>
 
+<template>
+  <section class="site-section bg-white">
+    <div class="site-container grid gap-8 lg:grid-cols-[.82fr_1.18fr] lg:items-start">
+      <div class="space-y-4">
+        <div class="rounded-2xl bg-[#033958] p-6 text-white sm:p-7">
+          <p class="site-eyebrow !text-white/50">Start a conversation</p>
+          <h2 class="mt-3 text-[1.6rem] font-bold leading-tight tracking-[-0.04em]">Tell us what you are trying to do.</h2>
+          <p class="mt-3 text-[12px] leading-6 text-white/55">Whether it is a programme, partnership, product question or a professional enquiry, this reaches a real person on the team.</p>
+          <div class="mt-6 space-y-3 border-t border-white/10 pt-5">
+            <a href="mailto:info@medlabconvo.com" class="flex items-center gap-3 text-[11px] text-white/65 transition hover:text-white">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><Icon name="lucide:mail" class="h-3.5 w-3.5" /></span>
+              info@medlabconvo.com
+            </a>
+            <p class="flex items-center gap-3 text-[11px] text-white/65">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><Icon name="lucide:clock-3" class="h-3.5 w-3.5" /></span>
+              Response within 24 operational hours
+            </p>
+            <p class="flex items-center gap-3 text-[11px] text-white/65">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><Icon name="lucide:globe-2" class="h-3.5 w-3.5" /></span>
+              Global enquiries welcome
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-[#e4ebf0] bg-[#fbfcfc] p-5">
+          <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8a9ba5]">Looking for something specific?</p>
+          <div class="mt-3 space-y-2.5">
+            <NuxtLink to="/programs" class="flex items-center justify-between text-[11.5px] font-semibold text-[#0a202b] hover:text-[#27628C]">Programme enquiries <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+            <NuxtLink to="/products" class="flex items-center justify-between text-[11.5px] font-semibold text-[#0a202b] hover:text-[#27628C]">Shop & product support <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+            <NuxtLink to="/about-us" class="flex items-center justify-between text-[11.5px] font-semibold text-[#0a202b] hover:text-[#27628C]">Partnerships & press <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <Transition name="fade">
+          <div v-if="success" class="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-[1.5rem] border border-[#e4ebf0] bg-white/95 p-8 text-center backdrop-blur">
+            <span class="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Icon name="lucide:check" class="h-7 w-7" /></span>
+            <h3 class="mt-5 text-xl font-bold tracking-[-0.03em] text-[#0a202b]">Message received.</h3>
+            <p class="mt-2 max-w-xs text-[12px] leading-6 text-[#5f7482]">Thank you for reaching out. A member of the team will respond within 24 operational hours.</p>
+            <button type="button" class="site-btn site-btn-ghost mt-5" @click="resetForm">Send another message</button>
+          </div>
+        </Transition>
+
+        <form class="site-card p-5 sm:p-7" @submit.prevent="handleSubmit">
+          <div class="flex items-center justify-between border-b border-[#eef2f5] pb-4">
+            <div>
+              <p class="site-eyebrow">Enquiry form</p>
+              <h2 class="mt-2 text-[1.35rem] font-bold tracking-[-0.03em] text-[#0a202b]">How can we help?</h2>
+            </div>
+            <span class="hidden h-9 w-9 items-center justify-center rounded-xl bg-[#eef5f9] text-[#27628C] sm:flex"><Icon name="lucide:message-square" class="h-4 w-4" /></span>
+          </div>
+
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">First name <span class="text-[#DE6129]">*</span></span>
+              <input v-model="form.firstName" type="text" required autocomplete="given-name" placeholder="Your first name" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+            </label>
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">Last name <span class="text-[#DE6129]">*</span></span>
+              <input v-model="form.lastName" type="text" required autocomplete="family-name" placeholder="Your last name" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+            </label>
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">Email <span class="text-[#DE6129]">*</span></span>
+              <input v-model="form.email" type="email" required autocomplete="email" placeholder="you@example.com" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+            </label>
+            <label class="block">
+              <span class="text-[11px] font-semibold text-[#3b5361]">Phone <span class="text-[#DE6129]">*</span></span>
+              <input v-model="form.phoneNumber" type="tel" required autocomplete="tel" placeholder="+234…" class="mt-1.5 h-10 w-full rounded-lg border border-[#dfe7ee] bg-white px-3.5 text-[12px] text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+            </label>
+          </div>
+
+          <label class="mt-4 block">
+            <span class="text-[11px] font-semibold text-[#3b5361]">Message <span class="text-[#DE6129]">*</span></span>
+            <textarea v-model="form.message" required rows="6" placeholder="Tell us a little about what you need…" class="mt-1.5 w-full resize-y rounded-lg border border-[#dfe7ee] bg-white px-3.5 py-3 text-[12px] leading-6 text-[#0a202b] outline-none transition placeholder:text-[#b6c2cd] focus:border-[#27628C] focus:ring-2 focus:ring-[#27628C]/10" />
+          </label>
+
+          <button type="submit" :disabled="loading" class="site-btn site-btn-primary mt-5 w-full disabled:opacity-50">
+            <span v-if="loading" class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            {{ loading ? 'Sending…' : 'Send enquiry' }}
+            <Icon v-if="!loading" name="lucide:send" class="h-3.5 w-3.5" />
+          </button>
+          <p class="mt-3 text-center text-[9.5px] leading-5 text-[#8a9ba5]">By sending this enquiry you agree to our terms and data processing policy.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</template>
+
 <style scoped>
-.animate-fade-in-left {
-  animation: fadeInLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.animate-fade-in-right {
-  animation: fadeInRight 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.animate-bounce-slow {
-  animation: bounceSlow 3s infinite;
-}
-
-@keyframes bounceSlow {
-  0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
-  50% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-.fade-enter-from, .fade-leave-to {
-  opacity: 0;
-}
+.fade-enter-active,
+.fade-leave-active { transition: opacity 180ms ease; }
+.fade-enter-from,
+.fade-leave-to { opacity: 0; }
 </style>

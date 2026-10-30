@@ -1,174 +1,127 @@
+<script setup lang="ts">
+import SiteHero from '@/components/site/SiteHero.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
+import SiteCarousel from '@/components/site/SiteCarousel.vue'
+import interntionalImage from '@/assets/img/community1.png'
+import universeImage from '@/assets/img/community2.png'
+import bonding1 from '@/assets/img/bonding1.jpg'
+import bonding2 from '@/assets/img/bonding2.jpg'
+import bonding3 from '@/assets/img/bonding3.jpg'
+import bonding4 from '@/assets/img/bonding4.jpg'
+import bonding5 from '@/assets/img/bonding5.jpg'
+
+useHead({
+  title: 'Community | MedLabConvo',
+  meta: [{ name: 'description', content: 'Interntional and UniVerse — communities for laboratory interns, students and early-career professionals.' }],
+})
+</script>
+
 <template>
-  <div class="bg-white min-h-screen">
-    <main class="isolate">
-      <!-- Hero Section -->
-      <div class="relative isolate overflow-hidden bg-[#27628C] py-24 sm:py-40">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
-        
-        <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
-          <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
-            <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
-              <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-tight tracking-normal mb-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                A Global Network <br /> of Excellence
-              </h1>
-              <p class="text-2xl md:text-3xl leading-8 text-blue-50 font-medium max-w-xl animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-                Connecting laboratory professionals, researchers, and innovators to transform the future of clinical diagnostics through collaboration.
-              </p>
+  <main class="bg-white">
+    <SiteHero
+      eyebrow="The MedLabConvo community"
+      title="A global network of people who get it."
+      description="Interntional and UniVerse are peer communities for laboratory interns, students and early-career professionals who want more than a certificate — they want a room full of people building the same future."
+      primary-label="Join a community"
+      primary-to="#communities"
+      secondary-label="Explore programmes"
+      secondary-to="/programs"
+    >
+      <template #visual>
+        <div class="relative mx-auto max-w-lg">
+          <div class="grid grid-cols-3 gap-2.5">
+            <div class="col-span-2 overflow-hidden rounded-2xl border border-white/10"><div class="aspect-[4/5]"><SiteMedia :src="bonding1" label="Community" icon="lucide:users" eager /></div></div>
+            <div class="space-y-2.5">
+              <div class="overflow-hidden rounded-2xl border border-white/10"><div class="aspect-square"><SiteMedia :src="bonding2" label="Community" icon="lucide:users" /></div></div>
+              <div class="overflow-hidden rounded-2xl border border-white/10"><div class="aspect-square"><SiteMedia :src="bonding3" label="Community" icon="lucide:users" /></div></div>
             </div>
-            <div class="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
-              <div class="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
-                <div class="relative group">
-                  <img src="@/assets/img/bonding1.jpg" alt="" class="aspect-[2/3] w-full rounded-[2.5rem] bg-gray-900/5 object-cover shadow-sm border border-slate-200 transition-transform duration-700 group-hover:scale-105">
-                </div>
+          </div>
+          <div class="absolute -bottom-4 -left-3 rounded-xl bg-[#DE6129] px-4 py-3 text-white shadow-lg sm:-left-6">
+            <p class="text-[8px] font-bold uppercase tracking-[0.14em] text-white/70">Built for belonging</p>
+            <p class="text-[12px] font-bold">Peers. Mentors. Rooms that open.</p>
+          </div>
+        </div>
+      </template>
+    </SiteHero>
+
+    <section id="communities" class="site-section">
+      <div class="site-container space-y-5">
+        <article class="site-card overflow-hidden">
+          <div class="grid lg:grid-cols-[.95fr_1.05fr]">
+            <div class="relative min-h-[19rem] overflow-hidden bg-[#eef5f9] lg:order-2">
+              <SiteMedia :src="interntionalImage" alt="Interntional community" label="Interntional" icon="lucide:users" />
+            </div>
+            <div class="p-6 sm:p-8 lg:p-10">
+              <div class="flex items-center gap-2">
+                <span class="site-chip !border-[#27628C]/15 !bg-[#eef5f9] !text-[#27628C]">Interns</span>
+                <span class="site-chip">Community</span>
               </div>
-              <div class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
-                <div class="relative group">
-                  <img src="@/assets/img/bonding2.jpg" alt="" class="aspect-[2/3] w-full rounded-[2.5rem] bg-gray-900/5 object-cover shadow-sm border border-slate-200 transition-transform duration-700 group-hover:scale-105">
-                </div>
-                <div class="relative group">
-                  <img src="@/assets/img/bonding3.jpg" alt="" class="aspect-[2/3] w-full rounded-[2.5rem] bg-gray-900/5 object-cover shadow-sm border border-slate-200 transition-transform duration-700 group-hover:scale-105">
-                </div>
+              <h2 class="mt-4 text-[1.7rem] font-bold tracking-[-0.04em] text-[#0a202b]">Interntional</h2>
+              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">The internship year is a crucial milestone for every Medical Laboratory Science graduate — full of opportunity, but also significant barriers. Interntional is the community that helps interns navigate career growth, mentorship and the system with clarity.</p>
+              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">Through mentorship, professional development and a network that understands the year, we help interns thrive — not just survive.</p>
+              <a href="https://interntional.medlabconvo.com/" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-primary mt-6">Explore Interntional <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="site-card overflow-hidden">
+          <div class="grid lg:grid-cols-[1.05fr_.95fr]">
+            <div class="relative min-h-[19rem] overflow-hidden bg-[#eef5f9]">
+              <SiteMedia :src="universeImage" alt="UniVerse community" label="UniVerse" icon="lucide:graduation-cap" />
+            </div>
+            <div class="p-6 sm:p-8 lg:p-10">
+              <div class="flex items-center gap-2">
+                <span class="site-chip !border-[#DE6129]/15 !bg-[#fdf1eb] !text-[#b24a1e]">Students</span>
+                <span class="site-chip">Community</span>
               </div>
-              <div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
-                <div class="relative group">
-                  <img src="@/assets/img/bonding4.jpg" alt="" class="aspect-[2/3] w-full rounded-[2.5rem] bg-gray-900/5 object-cover shadow-sm border border-slate-200 transition-transform duration-700 group-hover:scale-105">
-                </div>
-                <div class="relative group">
-                  <img src="@/assets/img/bonding5.jpg" alt="" class="aspect-[2/3] w-full rounded-[2.5rem] bg-gray-900/5 object-cover shadow-sm border border-slate-200 transition-transform duration-700 group-hover:scale-105">
-                </div>
-              </div>
+              <h2 class="mt-4 text-[1.7rem] font-bold tracking-[-0.04em] text-[#0a202b]">UniVerse</h2>
+              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">The journey of a Medical Laboratory Science student extends beyond academics. UniVerse is a thriving community designed to support students in their personal, professional and systemic development — from study strategies to career direction.</p>
+              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">Build skills, forge connections and prepare for a future of impact alongside people walking the same road.</p>
+              <a href="https://universe.medlabconvo.com/" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-primary mt-6">Explore UniVerse <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="bg-[#f7f9f8] py-14 sm:py-20">
+      <div class="site-container">
+        <div class="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+          <div>
+            <p class="site-eyebrow">Why it works</p>
+            <h2 class="site-h2 mt-3">A network is infrastructure.</h2>
+            <p class="site-lead mt-3">Careers move through people. A strong peer network gives you context, courage and the occasional shortcut.</p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div v-for="item in [
+              { title: 'Peer support', text: 'People who understand the exact stage you are in.', icon: 'lucide:heart-handshake' },
+              { title: 'Mentorship', text: 'Access to professionals who have walked the path.', icon: 'lucide:compass' },
+              { title: 'Opportunity', text: 'Roles, programmes and collaborations shared early.', icon: 'lucide:sparkles' },
+            ]" :key="item.title" class="rounded-2xl border border-[#e4ebf0] bg-white p-5">
+              <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#eef5f9] text-[#27628C]"><Icon :name="item.icon" class="h-4 w-4" /></span>
+              <p class="mt-5 text-[12px] font-bold text-[#0a202b]">{{ item.title }}</p>
+              <p class="mt-1 text-[10.5px] leading-5 text-[#5f7482]">{{ item.text }}</p>
             </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Communities List -->
-      <div class="py-24 sm:py-40 space-y-32">
-        
-        <!-- Interntional Section -->
-        <section class="max-w-7xl mx-auto px-6 lg:px-8">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="order-2 lg:order-1 space-y-8">
-              <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-sm font-bold">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#27628C] animate-pulse"></span>
-                Active Community
-              </div> -->
-              <h2 class="text-4xl md:text-5xl font-bold text-gray-900  tracking-tight">Interntional</h2>
-              <div class="h-1.5 w-20 bg-[#27628C] rounded-full"></div>
-              
-              <div class="space-y-6 text-gray-600 font-medium leading-relaxed">
-                <p>
-                  The internship year is a crucial milestone for every Medical Laboratory Science (MLS) graduate—a period filled with opportunities but also significant challenges. Many interns struggle with navigating career growth and systemic barriers.
-                </p>
-                <p>
-                  Interntional is a dynamic community built to bridge these gaps. Through mentorship, professional development, and networking, we empower MLS interns to thrive—not just survive—during their transformative year.
-                </p>
-              </div>
-
-              <div class="pt-6">
-                <a 
-                  href="https://interntional.medlabconvo.com/" target="_blank"
-                  class="inline-flex items-center gap-3 px-10 py-2.5 bg-[#27628C] text-white rounded-2xl text-sm font-bold hover:bg-gray-900 transition-all shadow-sm border border-slate-200 shadow-blue-900/20 active:scale-95"
-                >
-                  Learn More About Interntional
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
-              </div>
-            </div>
-            
-            <div class="order-1 lg:order-2">
-              <div class="relative group">
-                <div class="absolute -inset-4 bg-[#27628C]/5 rounded-[3.5rem] blur-2xl group-hover:bg-[#27628C]/10 transition-colors"></div>
-                <img src="@/assets/img/community1.png" alt="Interntional Community" class="relative rounded-[3rem] shadow-sm border border-slate-200 border border-gray-100 object-cover aspect-video lg:aspect-square" />
-              </div>
-            </div>
+    <section class="site-section bg-white">
+      <div class="site-container">
+        <SiteCarousel
+          eyebrow="Inside the community"
+          title="The room, in motion."
+          description="Workshops, meetups and the informal moments in between — a look at what community looks like when it is working."
+        >
+          <div v-for="(image, index) in [bonding1, bonding2, bonding3, bonding4, bonding5]" :key="index" class="site-card overflow-hidden">
+            <div class="aspect-[4/3]"><SiteMedia :src="image" :alt="`MedLabConvo community moment ${index + 1}`" label="Community moment" icon="lucide:camera" /></div>
           </div>
-        </section>
-
-        <!-- UniVerse Section -->
-        <section class="bg-gray-50 py-24 sm:py-40">
-          <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div class="relative group">
-                <div class="absolute -inset-4 bg-[#27628C]/5 rounded-[3.5rem] blur-2xl group-hover:bg-[#27628C]/10 transition-colors"></div>
-                <img src="@/assets/img/community2.png" alt="UniVerse Community" class="relative rounded-[3rem] shadow-sm border border-slate-200 border border-gray-100 object-cover aspect-video lg:aspect-square" />
-              </div>
-
-              <div class="space-y-8">
-                <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-[#27628C] rounded-full text-sm font-bold">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
-                  
-                </div> -->
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900  tracking-tight">UniVerse</h2>
-                <div class="h-1.5 w-20 bg-[#27628C] rounded-full"></div>
-                
-                <div class="space-y-6 text-gray-600 font-medium leading-relaxed">
-                  <p>
-                    The journey of a Medical Laboratory Science student extends beyond academics—it’s about building skills, forging connections, and preparing for a future of impact.
-                  </p>
-                  <p>
-                    UniVerse, powered by MedLabConvo, is a thriving community designed to support MLS students in their personal, professional, and systemic development.
-                  </p>
-                </div>
-
-                <!-- <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                  <button disabled class="flex-1 px-8 py-5 bg-gray-100 text-gray-400 rounded-2xl text-sm font-bold cursor-not-allowed border border-gray-200">
-                    Download Handbook
-                  </button>
-                  <a href="https://universe.medlabconvo.com/" target="_blank" class="flex-1 px-8 py-5 bg-white text-[#27628C] border-2 border-[#27628C]/10 rounded-2xl text-sm font-bold cursor-not-allowed opacity-50">
-                    Learn more about UniVerse
-                  </a>
-                </div> -->
-                    <div class="pt-6">
-                <a 
-                  href="https://universe.medlabconvo.com/" target="_blank"
-                  class="inline-flex items-center gap-3 px-10 py-2.5 bg-[#27628C] text-white rounded-2xl text-sm font-bold hover:bg-gray-900 transition-all shadow-sm border border-slate-200 shadow-blue-900/20 active:scale-95"
-                >
-                  Learn more about UniVerse
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
-              </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        </SiteCarousel>
       </div>
-    </main>
-  </div>
+    </section>
+
+    <SiteCta eyebrow="Find your people" title="You do not have to navigate the lab alone." description="Join a community that takes your ambition seriously — and makes room for the version of you that is still becoming." primary-label="Join Interntional" primary-to="https://interntional.medlabconvo.com/" secondary-label="Join UniVerse" secondary-to="https://universe.medlabconvo.com/" />
+  </main>
 </template>
-
-<script setup lang="ts">
-import { useHead } from '#imports'
-
-useHead({
-  title: 'Community | MedLabConvo',
-  meta: [
-    { name: 'description', content: 'Explore the global communities of MedLabConvo connecting students and professionals.' }
-  ]
-})
-</script>
-
-<style scoped>
-.animate-in {
-  animation-duration: 1s;
-  animation-fill-mode: both;
-}
-.fade-in {
-  animation-name: fadeIn;
-}
-.slide-in-from-bottom-10 {
-  animation-name: slideInBottom;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes slideInBottom {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-.delay-200 {
-  animation-delay: 200ms;
-}
-</style>

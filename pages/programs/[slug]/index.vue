@@ -1,380 +1,8 @@
-<template>
-  <main class="min-h-screen bg-white">
-    <!-- Loading State -->
-    <div v-if="loading" class="flex flex-col items-center justify-center min-h-screen">
-      <div class="relative w-20 h-20">
-        <div class="absolute inset-0 border-4 border-[#27628C]/10 rounded-full"></div>
-        <div class="absolute inset-0 border-4 border-[#27628C] rounded-full border-t-transparent animate-spin"></div>
-      </div>
-      <p class="mt-8 text-sm font-bold text-[#27628C] animate-pulse  tracking-normal">Initialising Program...</p>
-    </div>
-
-    <!-- Error State -->
-    <div v-else-if="error" class="flex flex-col items-center justify-center min-h-screen p-8 text-center">
-      <div class="w-24 h-24 bg-rose-50 rounded-[2.5rem] flex items-center justify-center mb-8 border border-rose-100">
-        <Icon name="lucide:alert-circle" class="w-12 h-12 text-rose-500" />
-      </div>
-      <h2 class="text-xl font-black text-gray-900 mb-4 tracking-tight leading-tight">Identity not found</h2>
-      <p class="text-gray-500 mb-10 max-w-md font-medium leading-relaxed">{{ error }}</p>
-      <NuxtLink to="/programs" class="inline-flex items-center gap-3 bg-gray-900 text-white px-10 py-4 rounded-2xl font-bold text-sm hover:scale-105 active:scale-95 transition-all shadow-sm border border-slate-200 shadow-gray-900/10">
-        <Icon name="lucide:refresh-cw" class="w-4 h-4" />
-        Return to directory
-      </NuxtLink>
-    </div>
-
-    <!-- Main Content -->
-    <div v-else-if="program" class="animate-in fade-in duration-1000">
-      <!-- Dynamic Hero Section -->
-      <section class="relative min-h-[85vh] flex items-center pt-24 pb-12 overflow-hidden">
-        <!-- Floating Visual Elements -->
-        <div class="absolute top-[10%] right-[-5%] w-[40vw] h-[40vw] bg-[#27628B]/5 rounded-full blur-[120px] animate-pulse"></div>
-        <div class="absolute bottom-[10%] left-[-5%] w-[30vw] h-[30vw] bg-[#DE6129]/5 rounded-full blur-[100px]"></div>
-
-        <div class="container mx-auto px-6 lg:px-12 relative z-10">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            <!-- Hero Text Content -->
-            <div class="space-y-10 order-2 lg:order-1">
-              <div class="space-y-4">
-                <NuxtLink to="/programs" class="inline-flex items-center gap-2 text-[#27628B] font-black text-xs  tracking-normal hover:translate-x-1 transition-transform mb-6">
-                  <Icon name="lucide:arrow-left" class="w-4 h-4" />
-                  Directory
-                </NuxtLink>
-                
-                <div class="flex items-center gap-3">
-                  <span class="px-4 py-1.5 bg-[#27628C] text-white text-sm font-black  tracking-normal rounded-full">
-                    {{ program.category }}
-                  </span>
-                  <span v-if="program.duration" class="px-4 py-1.5 bg-gray-100 text-gray-900 text-sm font-black  tracking-normal rounded-full flex items-center gap-2 border border-gray-200/50">
-                    <Icon name="lucide:clock" class="w-4 h-4" />
-                    {{ program.duration }}
-                  </span>
-                </div>
-
-                <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight leading-[1.1]">
-                  {{ program.title }}
-                </h1>
-              </div>
-
-              <div class="prose prose-slate max-w-2xl text-gray-600 leading-relaxed text-lg" v-html="formattedDescription"></div>
-
-              <!-- Main CTAs -->
-              <div v-if="program.status === 'active'" class="flex flex-wrap items-center gap-5 pt-8">
-                <a 
-                  v-if="program.externalFormLink"
-                  :href="program.externalFormLink"
-                  target="_blank"
-                  class="h-16 px-12 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-3 shadow-sm border border-slate-200 shadow-blue-900/20"
-                >
-                  <span>Enrol Now</span>
-                  <Icon name="lucide:sparkles" class="w-5 h-5" />
-                </a>
-
-                <NuxtLink 
-                  v-else-if="program.form"
-                  :to="`/forms/submit/${program.form.slug || program.form._id}`"
-                  class="h-16 px-12 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-3 shadow-sm border border-slate-200 shadow-blue-900/20"
-                >
-                  <span>Enrol Now</span>
-                  <Icon name="lucide:sparkles" class="w-5 h-5" />
-                </NuxtLink>
-
-                <NuxtLink 
-                  v-else-if="program.formFields && program.formFields.length > 0"
-                  :to="`/programs/${program.slug}/apply`"
-                  class="h-16 px-12 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-3 shadow-sm border border-slate-200 shadow-blue-900/20"
-                >
-                  <span>Apply Now</span>
-                  <Icon name="lucide:sparkles" class="w-5 h-5" />
-                </NuxtLink>
-                
-                <button @click="shareProgram" class="h-16 px-10 bg-white text-gray-900 border-2 border-gray-100 rounded-[1.2rem] font-bold text-sm hover:bg-gray-50 active:scale-95 transition-all flex items-center justify-center space-x-3">
-                  <Icon name="lucide:share-2" class="w-5 h-5" />
-                  <span>Share Access</span>
-                </button>
-              </div>
-              <div v-else class="flex flex-wrap items-center gap-5 pt-8">
-                <div class="flex items-center gap-3 h-16 px-10 bg-rose-50 text-rose-600 rounded-[1.2rem] font-bold text-sm border border-rose-100">
-                  <Icon name="lucide:lock" class="w-5 h-5" />
-                  <span>Registration Closed / Paused</span>
-                </div>
-                
-                <button @click="shareProgram" class="h-16 px-10 bg-white text-gray-900 border-2 border-gray-100 rounded-[1.2rem] font-bold text-sm hover:bg-gray-50 active:scale-95 transition-all flex items-center justify-center space-x-3">
-                  <Icon name="lucide:share-2" class="w-5 h-5" />
-                  <span>Share Access</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Main Imagery -->
-            <div class="relative order-1 lg:order-2">
-              <div class="relative rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(39,98,140,0.25)] border-8 border-white group">
-                <img 
-                  :src="program.image || (program.images && program.images[0])" 
-                  class="w-full aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-110"
-                  :alt="program.title"
-                  @error="(e) => e.target.style.display = 'none'"
-                />
-                
-                <!-- Overlay Gradient -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-              </div>
-              
-              <!-- Floating Pill -->
-              <div class="absolute -bottom-6 -right-6 md:-right-10 bg-white/10 backdrop-blur-3xl border border-white/20 p-6 rounded-[2rem] shadow-sm border border-slate-200 animate-float max-w-[240px]">
-                <div class="flex items-center gap-4 mb-3">
-                  <!-- <div class="w-10 h-10 rounded-full bg-[#DE6129] flex items-center justify-center shadow-sm border border-slate-100 shadow-orange-500/30">
-                    <Icon name="lucide:graduation-cap" class="w-5 h-5 text-white" />
-                  </div> -->
-                  <p class="text-xs font-black text-gray-900 ">Interactive learning</p>
-                </div>
-                <p class="text-sm text-gray-500 font-bold leading-relaxed">Certified curriculum designed by clinical diagnostic experts.</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- Deep Dive Sections Container -->
-      <div class="bg-[#F8FAFC]">
-        
-        <!-- Scientific Speakers & Mentors -->
-        <section v-if="program.speakers?.length" class="py-32 container mx-auto px-6 lg:px-12 relative overflow-hidden">
-          <!-- Abstract Decor -->
-          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#27628C]/5 rounded-full blur-[180px] -z-10"></div>
-          
-          <div class="text-center mb-24 space-y-4">
-            <h3 class="text-xs font-black text-[#27628C]  tracking-normal">Faculty & Mentors</h3>
-            <h2 class="text-lg md:text-xl font-black text-gray-900 tracking-tight">Scientific Experts</h2>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-center">
-            <div 
-              v-for="(speaker, i) in program.speakers" 
-              :key="i"
-              class="group relative bg-white border border-slate-100 p-10 rounded-[3rem] shadow-sm hover:shadow-sm border border-slate-200 hover:shadow-slate-200/50 hover:-translate-y-2 transition-all duration-500 cursor-pointer"
-              @click="openSpeakerModal(speaker)"
-            >
-              <div class="flex flex-col items-center space-y-6">
-                <!-- Avatar -->
-                <div class="relative w-32 h-32">
-                  <div class="absolute inset-0 bg-gradient-to-tr from-[#27628C] to-[#DE6129] rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                  <img 
-                    :src="speaker.image || '/images/speaker-placeholder.jpg'" 
-                    class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-sm border border-slate-200 group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-
-                <!-- Info -->
-                <div class="space-y-4">
-                  <h4 class="text-xl font-black text-gray-900 tracking-tight">{{ speaker.name }}</h4>
-                  <div class="w-10 h-1 bg-[#DE6129]/20 mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
-                  <p class="text-sm font-medium text-gray-500 leading-relaxed line-clamp-3">
-                    {{ speaker.bio }}
-                  </p>
-                  
-                  <button class="text-sm font-black  tracking-normal text-[#27628C] hover:text-[#DE6129] transition-colors pt-2">
-                    Read Biography
-                  </button>
-                </div>
-              </div>
-
-              <!-- Decorative Decor -->
-              <div class="absolute top-8 right-10 opacity-0 group-hover:opacity-100 transition-opacity text-[#DE6129]">
-                 <Icon name="lucide:plus-circle" class="w-5 h-5" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Highlights & Insights -->
-        <section v-if="program.highlights?.length" class="py-32 container mx-auto px-6 lg:px-12">
-          <div class="text-center mb-20 space-y-4">
-            <h3 class="text-xs font-black text-[#DE6129]  tracking-normal">Expert Perspectives</h3>
-            <h2 class="text-lg font-black text-gray-900 tracking-tight">Core Highlights</h2>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div 
-              v-for="(highlight, i) in program.highlights" 
-              :key="i"
-              class="group relative bg-white p-10 rounded-[2.5rem] border border-slate-200/50 hover:border-[#27628C]/30 transition-all duration-500 hover:-translate-y-2"
-            >
-              <!-- <div class="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-[#27628C]/5 group-hover:text-[#27628C] mb-8 transition-colors">
-                <Icon :name="i % 2 === 0 ? 'lucide:terminal' : 'lucide:smartphone'" class="w-7 h-7" />
-              </div> -->
-              <h4 class="text-lg font-black text-gray-900 mb-4 tracking-tight leading-tight">{{ highlight.title }}</h4>
-              <p class="text-sm text-gray-500 leading-relaxed font-medium">{{ highlight.description }}</p>
-              
-              <!-- Subtle index -->
-              <span class="absolute top-8 right-10 text-[40px] font-black text-slate-100 group-hover:text-[#27628C]/10 transition-colors pointer-events-none">0{{ i + 1 }}</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Focus Areas vs Outcomes (Intelligent De-duplication) -->
-        <section class="py-32 bg-white relative overflow-hidden">
-          <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-              
-              <!-- Left Column: Outcomes -->
-              <div class="lg:col-span-5 space-y-12">
-                <div class="space-y-4">
-                  <h3 class="text-xs font-black text-[#27628C]  tracking-normal">Knowledge Pillars</h3>
-                  <h2 class="text-lg font-black text-gray-900 tracking-tight">Curriculum Focus</h2>
-                </div>
-
-                <div class="space-y-4">
-                  <div 
-                    v-for="(area, i) in (program.focusAreas || [])" 
-                    :key="i"
-                    class="p-6 bg-slate-50 border border-slate-100 rounded-2xl flex items-center gap-6 group hover:bg-[#27628C] transition-all duration-300"
-                  >
-                    <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-sm font-black text-slate-900 group-hover:scale-90 transition-transform">
-                      {{ i + 1 }}
-                    </div>
-                    <span class="text-sm font-bold text-slate-700 group-hover:text-white transition-colors">{{ area }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Right Column: Visual Card -->
-              <div class="lg:col-span-7" v-if="!areOutcomesSame">
-                <div class="relative h-full min-h-[500px] bg-[#27628C] rounded-[3rem] p-12 lg:p-20 overflow-hidden flex flex-col justify-center">
-                  <!-- Abstract Shapes -->
-                  <div class="absolute top-[-20%] right-[-10%] w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-                  
-                  <div class="relative z-10 space-y-12">
-                    <div class="space-y-2">
-                       <h3 class="text-xs font-black text-white/60  tracking-normal">Future Impact</h3>
-                       <h2 class="text-xl lg:text-lg font-black text-white tracking-tight">Key Outcomes</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                       <div v-for="(outcome, i) in program.outcomes" :key="i" class="space-y-3">
-                          <Icon name="lucide:badge-check" class="w-6 h-6 text-[#DE6129]" />
-                          <p class="text-sm font-bold text-white leading-relaxed">{{ outcome }}</p>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        <!-- Program Schedule -->
-        <section v-if="program.keyResponsibilities?.length" class="py-32 bg-slate-50 relative overflow-hidden">
-          <div class="container mx-auto px-6 lg:px-12">
-            <div class="text-center mb-16 space-y-4">
-              <h3 class="text-xs font-black text-[#DE6129]  tracking-normal">Curriculum Timeline</h3>
-              <h2 class="text-lg font-black text-gray-900 tracking-tight">Program Schedule</h2>
-            </div>
-            
-            <div class="max-w-4xl mx-auto">
-              <div class="space-y-6">
-                <div 
-                  v-for="(schedule, i) in program.keyResponsibilities" 
-                  :key="i"
-                  class="p-8 bg-white border border-slate-200 rounded-3xl flex flex-col md:flex-row md:items-center gap-6 hover:shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div class="w-14 h-14 shrink-0 rounded-2xl bg-[#27628C]/10 flex items-center justify-center text-[#27628C]">
-                    <Icon name="lucide:calendar" class="w-7 h-7" />
-                  </div>
-                  <div>
-                    <h4 class="text-lg font-bold text-gray-900">{{ schedule }}</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Media Gallery -->
-        <section v-if="program.images?.length > 1" class="py-32 container mx-auto px-6 lg:px-12">
-          <div class="text-center mb-20 space-y-4">
-            <h3 class="text-xs font-black text-[#DE6129]  tracking-normal">Visual Documentation</h3>
-            <h2 class="text-lg font-black text-gray-900 tracking-tight">Gallery & Media</h2>
-          </div>
-
-          <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
-            <div 
-              v-for="(img, i) in program.images" 
-              :key="i"
-              class="relative rounded-[2rem] overflow-hidden border-4 border-white shadow-sm border border-slate-200 hover:scale-[1.02] transition-transform duration-500 group"
-            >
-              <img :src="img" class="w-full object-cover">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex items-end">
-                <p class="text-white text-sm font-black  tracking-normal">{{ program.title }} / View {{ i + 1 }}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- Action Footer -->
-      <section class="py-32 bg-gray-900 overflow-hidden relative">
-          <!-- Abstract Background -->
-          <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#27628B]/10 rounded-full blur-[150px]"></div>
-          
-          <div class="container mx-auto px-6 text-center space-y-12 relative z-10">
-             <div class="max-w-3xl mx-auto space-y-4">
-                <h2 class="text-lg md:text-xl font-black text-white tracking-tight leading-tight">Ready to transform your professional journey?</h2>
-                <p class="text-gray-400 font-medium text-lg">Secure your spot today</p>
-             </div>
-             
-             <div class="flex flex-wrap justify-center gap-6">
-                <a 
-                  v-if="program.externalFormLink"
-                  :href="program.externalFormLink"
-                  target="_blank"
-                  class="h-16 px-16 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center shadow-sm border border-slate-200 shadow-blue-900/40"
-                >
-                  Enrol Today
-                </a>
-
-                <NuxtLink 
-                  v-else-if="program.form"
-                  :to="`/forms/submit/${program.form.slug || program.form._id}`"
-                  class="h-16 px-16 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center shadow-sm border border-slate-200 shadow-blue-900/40"
-                >
-                  Enrol Today
-                </NuxtLink>
-
-                <NuxtLink 
-                  v-else-if="program.formFields && program.formFields.length > 0"
-                  :to="`/programs/${program.slug}/apply`"
-                  class="h-16 px-16 bg-[#27628C] text-white rounded-[1.2rem] font-bold text-sm hover:scale-105 active:scale-95 transition-all flex items-center justify-center shadow-sm border border-slate-200 shadow-blue-900/40"
-                >
-                  Apply Today
-                </NuxtLink>
-
-                <button @click="shareProgram" class="h-16 px-12 bg-white/5 text-white border border-white/10 rounded-[1.2rem] font-bold text-sm hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center group">
-                  <!-- <Icon name="lucide:send" class="w-5 h-5 mr-3 -rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> -->
-                  Invite a Colleague
-                </button>
-             </div>
-          </div>
-      </section>
-
-    </div>
-
-    <!-- Speaker Modal -->
-    <SpeakerModal
-      v-if="activeSpeaker"
-      :speaker="activeSpeaker"
-      :is-visible="isSpeakerModalVisible"
-      @close="closeSpeakerModal"
-    />
-  </main>
-</template>
-
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import SpeakerModal from '@/components/SpeakerModal.vue'
+import SiteMedia from '@/components/site/SiteMedia.vue'
+import SiteCta from '@/components/site/SiteCta.vue'
 import { useGetProgram } from '@/composables/modules/programs/useGetProgram'
 import { useRoute } from 'vue-router'
 import { useCustomToast } from '@/composables/core/useCustomToast'
@@ -383,100 +11,214 @@ const route = useRoute()
 const { loading, error, program, getProgram } = useGetProgram()
 const { showToast } = useCustomToast()
 
-// Fetch program data on mount
-onMounted(() => {
-  const idOrSlug = route.params.slug as string
-  getProgram(idOrSlug)
-})
+onMounted(() => getProgram(route.params.slug as string))
 
-// Check if outcomes and focusAreas are identical to prevent repetition
-const areOutcomesSame = computed(() => {
-  if (!program.value?.focusAreas || !program.value?.outcomes) return false
-  if (program.value.focusAreas.length !== program.value.outcomes.length) return false
-  return program.value.focusAreas.every((val, index) => val === program.value.outcomes[index])
+const heroImage = computed(() => program.value?.image || program.value?.images?.[0] || '')
+const applyLink = computed(() => {
+  const item = program.value
+  if (!item) return ''
+  if (item.externalFormLink) return item.externalFormLink
+  if (item.form?.slug || item.form?._id) return `/forms/submit/${item.form.slug || item.form._id}`
+  if (item.formFields?.length) return `/programs/${item.slug}/apply`
+  return ''
 })
-
-// Format multiline description
+const isExternalApply = computed(() => /^https?:\/\//.test(applyLink.value))
 const formattedDescription = computed(() => {
   if (!program.value?.description) return ''
-  return program.value.description
-    .split('\n\n')
-    .map(p => `<p class="mb-6">${p.replace(/\n/g, '<br>')}</p>`)
-    .join('')
+  return program.value.description.split('\n\n').map((p: string) => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')
 })
-
-// SEO Meta
-useHead({
-  title: computed(() => program.value ? `${program.value.title} | MedLabConvo Programs` : 'Program Details | MedLabConvo'),
-  meta: [
-    {
-      name: 'description',
-      content: computed(() => program.value?.description?.substring(0, 160) || 'Explore this healthcare innovation program at MedLabConvo.')
-    },
-    { property: 'og:title', content: computed(() => program.value?.title || 'Healthcare Program') },
-    { property: 'og:description', content: computed(() => program.value?.description?.substring(0, 200) || 'Advancing medical laboratory science.') },
-    { property: 'og:image', content: computed(() => program.value?.image || '/images/medlabconvo-og-image.jpg') },
-    { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary_large_image' }
-  ]
-})
-
+const dateLabel = (value?: string) => value ? new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Flexible'
 const activeSpeaker = ref<any>(null)
 const isSpeakerModalVisible = ref(false)
-
-const openSpeakerModal = (speaker: any) => {
-  activeSpeaker.value = speaker
-  isSpeakerModalVisible.value = true
-}
-
-const closeSpeakerModal = () => {
-  isSpeakerModalVisible.value = false
-}
+const openSpeakerModal = (speaker: any) => { activeSpeaker.value = speaker; isSpeakerModalVisible.value = true }
 
 const shareProgram = async () => {
-  const { generateUtmUrl } = await import('@/utils/utm')
-  const baseUrl = window.location.origin + window.location.pathname
-  const url = generateUtmUrl(baseUrl, program.value?.title || 'program')
-  
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: program.value?.title || 'MedLabConvo Program',
-        text: program.value?.description?.substring(0, 100) || '',
-        url
-      })
-    } catch (err) {
-      copyToClipboard(url)
-    }
-  } else {
-    copyToClipboard(url)
-  }
+  if (!program.value) return
+  const url = window.location.href
+  try {
+    if (navigator.share) await navigator.share({ title: program.value.title, url })
+    else { await navigator.clipboard.writeText(url); showToast({ title: 'Link copied', message: 'Share it with someone who should see this.', toastType: 'success' }) }
+  } catch { /* dismissed */ }
 }
 
-const copyToClipboard = (text: string) => {
-  navigator.clipboard.writeText(text)
-  showToast({ title: 'Link Copied', message: 'Tracking link copied to clipboard!', toastType: 'success' })
-}
+useHead({
+  title: computed(() => program.value ? `${program.value.title} | MedLabConvo` : 'Programme | MedLabConvo'),
+  meta: [{ name: 'description', content: computed(() => program.value?.description?.substring(0, 160) || 'Explore this MedLabConvo programme.') }],
+})
 </script>
 
-<style scoped>
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
-}
+<template>
+  <main class="bg-white">
+    <div v-if="loading" class="site-container py-20">
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="site-skeleton h-[32rem]" />
+        <div class="space-y-4"><div class="site-skeleton h-12" /><div class="site-skeleton h-40" /><div class="site-skeleton h-12" /></div>
+      </div>
+    </div>
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+    <div v-else-if="error || !program" class="site-container py-24">
+      <div class="site-card mx-auto max-w-xl p-8 text-center">
+        <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#fdf1eb] text-[#DE6129]"><Icon name="lucide:compass" class="h-7 w-7" /></span>
+        <h1 class="mt-5 text-xl font-bold text-[#0a202b]">This programme could not be found.</h1>
+        <p class="mt-2 text-[12px] leading-6 text-[#5f7482]">{{ error || 'It may have been moved or is no longer active.' }}</p>
+        <NuxtLink to="/programs" class="site-btn site-btn-primary mt-5">Back to programmes</NuxtLink>
+      </div>
+    </div>
 
-:deep(.prose p) {
-  margin-bottom: 1.5rem;
-  line-height: 1.8;
-}
+    <template v-else>
+      <!-- Hero -->
+      <section class="relative overflow-hidden bg-[#033958] text-white">
+        <div class="absolute inset-0 site-hero-grid opacity-60" />
+        <div class="absolute inset-0 site-hero-glow" />
+        <div class="site-container relative grid gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:py-20">
+          <div>
+            <NuxtLink to="/programs" class="inline-flex items-center gap-2 text-[11px] font-semibold text-white/55 transition hover:text-white">
+              <Icon name="lucide:arrow-left" class="h-3.5 w-3.5" /> All programmes
+            </NuxtLink>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="site-chip !border-white/15 !bg-white/10 !text-white/70">{{ program.category || 'Programme' }}</span>
+              <span class="site-chip !border-white/15 !bg-white/10 !text-white/70" :class="program.status === 'active' ? '!border-[#DE6129]/40 !bg-[#DE6129]/20 !text-[#ffd8c8]' : ''">{{ program.status === 'active' ? 'Applications open' : 'Currently closed' }}</span>
+            </div>
+            <h1 class="site-display mt-5 text-[clamp(2.5rem,5vw,4.6rem)] !text-white site-text-balance">{{ program.title }}</h1>
+            <div class="site-rich mt-5 max-w-xl text-[0.95rem] leading-7 text-white/65" v-html="formattedDescription" />
+            <div class="mt-7 flex flex-col gap-2.5 sm:flex-row">
+              <NuxtLink v-if="applyLink && program.status === 'active'" :to="applyLink" :target="isExternalApply ? '_blank' : undefined" class="site-btn site-btn-light">
+                {{ program.externalFormLink ? 'Apply on partner site' : 'Apply now' }}
+                <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+              </NuxtLink>
+              <button type="button" class="site-btn site-btn-outline-light" @click="shareProgram"><Icon name="lucide:share-2" class="h-4 w-4" /> Share programme</button>
+            </div>
+            <div class="mt-7 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/15 pt-5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/45">
+              <span class="inline-flex items-center gap-1.5"><Icon name="lucide:clock-3" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ program.duration || 'Flexible duration' }}</span>
+              <span class="inline-flex items-center gap-1.5"><Icon name="lucide:calendar" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ dateLabel(program.startDate || program.createdAt) }}</span>
+              <span v-if="program.mode" class="inline-flex items-center gap-1.5"><Icon name="lucide:monitor" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ program.mode }}</span>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="site-card overflow-hidden !border-white/10 !bg-white/[0.06] p-2">
+              <div class="aspect-[4/4.35] overflow-hidden rounded-[1.15rem]"><SiteMedia :src="heroImage" :alt="program.title" :label="program.category || 'Programme'" icon="lucide:graduation-cap" eager /></div>
+            </div>
+            <div class="absolute -bottom-4 -left-3 rounded-2xl border border-white/15 bg-[#0a2f42] p-4 shadow-xl sm:-left-6">
+              <p class="text-[8px] font-bold uppercase tracking-[0.14em] text-white/45">Cohort experience</p>
+              <p class="mt-1 text-[12px] font-bold text-white">Live sessions · mentorship · projects</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-:deep(.prose b), :deep(.prose strong) {
-  color: #111827;
-  font-weight: 800;
-}
-</style>
+      <!-- Snapshot -->
+      <section class="border-b border-[#e4ebf0] bg-[#fbfcfc]">
+        <div class="site-container grid gap-4 py-6 sm:grid-cols-4">
+          <div v-for="item in [
+            { label: 'Format', value: program.mode || 'Cohort-based' },
+            { label: 'Duration', value: program.duration || 'Flexible' },
+            { label: 'Start', value: dateLabel(program.startDate || program.createdAt) },
+            { label: 'Investment', value: program.price ? `₦${program.price}` : 'Free / sponsored' },
+          ]" :key="item.label">
+            <p class="text-[9px] font-bold uppercase tracking-[0.12em] text-[#8a9ba5]">{{ item.label }}</p>
+            <p class="mt-1 text-[12px] font-semibold text-[#0a202b]">{{ item.value }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="site-section">
+        <div class="site-container grid gap-10 lg:grid-cols-[1.05fr_.95fr]">
+          <div>
+            <p class="site-eyebrow">What you will leave with</p>
+            <h2 class="site-h2 mt-3">Practical capability, not just content.</h2>
+            <div v-if="program.highlights?.length" class="mt-6 grid gap-3 sm:grid-cols-2">
+              <div v-for="(highlight, i) in program.highlights" :key="i" class="rounded-2xl border border-[#e4ebf0] bg-white p-5">
+                <span class="text-[9px] font-bold tracking-[0.14em] text-[#c0ced7]">0{{ i + 1 }}</span>
+                <h3 class="mt-4 text-[12px] font-bold text-[#0a202b]">{{ highlight.title }}</h3>
+                <p class="mt-1 text-[10.5px] leading-5 text-[#5f7482]">{{ highlight.description }}</p>
+              </div>
+            </div>
+            <div v-else class="mt-6 space-y-3 text-[12.5px] leading-7 text-[#5f7482]">
+              <p>This programme is designed around practical exposure, peer learning and direct access to practitioners.</p>
+            </div>
+          </div>
+
+          <div class="rounded-[1.5rem] bg-[#f7f9f8] p-6 sm:p-7">
+            <p class="site-eyebrow">The focus</p>
+            <h2 class="mt-2 text-[1.35rem] font-bold tracking-[-0.03em] text-[#0a202b]">What we will cover.</h2>
+            <ul v-if="program.focusAreas?.length" class="mt-4 space-y-2.5">
+              <li v-for="(area, i) in program.focusAreas" :key="i" class="flex items-start gap-3 rounded-xl border border-[#e4ebf0] bg-white p-3.5">
+                <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#eef5f9] text-[9px] font-bold text-[#27628C]">{{ i + 1 }}</span>
+                <span class="text-[11.5px] font-medium leading-5 text-[#3b5361]">{{ area }}</span>
+              </li>
+            </ul>
+            <p v-else class="mt-3 text-[12px] leading-6 text-[#5f7482]">The curriculum will be shared with accepted participants.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Outcomes -->
+      <section v-if="program.outcomes?.length" class="bg-[#033958] py-14 text-white sm:py-20">
+        <div class="site-container">
+          <p class="site-eyebrow !text-white/50">The outcome</p>
+          <h2 class="site-h2 mt-3 !text-white">What changes after the cohort.</h2>
+          <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-for="(outcome, i) in program.outcomes" :key="i" class="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <Icon name="lucide:badge-check" class="h-5 w-5 text-[#f1a37f]" />
+              <p class="mt-4 text-[12px] leading-6 text-white/70">{{ outcome }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Schedule -->
+      <section v-if="program.keyResponsibilities?.length" class="site-section">
+        <div class="site-container">
+          <p class="site-eyebrow">The rhythm</p>
+          <h2 class="site-h2 mt-3">How the programme runs.</h2>
+          <div class="mt-6 space-y-2.5">
+            <div v-for="(schedule, i) in program.keyResponsibilities" :key="i" class="flex items-start gap-4 rounded-2xl border border-[#e4ebf0] bg-white p-5">
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#eef5f9] text-[10px] font-bold text-[#27628C]">0{{ i + 1 }}</span>
+              <p class="text-[12px] font-medium leading-6 text-[#3b5361]">{{ schedule }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Speakers -->
+      <section v-if="program.speakers?.length" class="bg-[#f7f9f8] py-14 sm:py-20">
+        <div class="site-container">
+          <p class="site-eyebrow">Faculty & mentors</p>
+          <h2 class="site-h2 mt-3">Learn from people doing the work.</h2>
+          <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <button v-for="(speaker, i) in program.speakers" :key="i" type="button" class="group text-left" @click="openSpeakerModal(speaker)">
+              <div class="aspect-[4/4.5] overflow-hidden rounded-2xl border border-[#e4ebf0] bg-white">
+                <SiteMedia :src="speaker.image" :alt="speaker.name" :label="speaker.name" icon="lucide:user" />
+              </div>
+              <p class="mt-3 text-[12px] font-bold text-[#0a202b] transition group-hover:text-[#27628C]">{{ speaker.name }}</p>
+              <p class="mt-0.5 line-clamp-1 text-[10px] text-[#8a9ba5]">{{ speaker.title || 'Faculty' }}</p>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section v-if="program.images?.length > 1" class="site-section">
+        <div class="site-container">
+          <p class="site-eyebrow">Inside the cohort</p>
+          <h2 class="site-h2 mt-3">A look at the room.</h2>
+          <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div v-for="(img, i) in program.images" :key="i" class="aspect-[4/3] overflow-hidden rounded-2xl border border-[#eef2f5]"><SiteMedia :src="img" :alt="`${program.title} ${i + 1}`" label="Programme gallery" icon="lucide:image" /></div>
+          </div>
+        </div>
+      </section>
+
+      <SiteCta
+        eyebrow="Take the next step"
+        :title="program.status === 'active' ? 'The next cohort could be the one that changes your trajectory.' : 'Registration is currently closed.'"
+        :description="program.status === 'active' ? 'Applications are reviewed on a rolling basis. If the programme is right for you, start your application today.' : 'Join the community and we will let you know when the next cohort opens.'"
+        :primary-label="program.status === 'active' ? 'Apply now' : 'Join the community'"
+        :primary-to="program.status === 'active' && applyLink ? applyLink : '/community'"
+        secondary-label="Explore other programmes"
+        secondary-to="/programs"
+      />
+    </template>
+
+    <SpeakerModal v-if="activeSpeaker" :speaker="activeSpeaker" :is-visible="isSpeakerModalVisible" @close="isSpeakerModalVisible = false" />
+  </main>
+</template>
