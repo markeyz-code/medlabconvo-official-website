@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { convostack_api } from '@/api_factory/modules/convostack'
+import { convostack_api } from '@/api_factory/modules/journo'
 import SiteHero from '@/components/site/SiteHero.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
@@ -31,7 +31,7 @@ const filteredArchive = computed(() => activeFilter.value === 'All' ? archive.va
 const paginatedArchive = computed(() => filteredArchive.value)
 
 const formatDate = (value?: string) => value ? new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'
-const articleLink = (article: any) => `/convostack/${article.slug}`
+const articleLink = (article: any) => `/journo/${article.slug}`
 
 useHead({
   title: 'Journo | Research, articles and insights | MedLabConvo',
@@ -58,7 +58,7 @@ useHead({
             </div>
           </div>
           <div class="absolute -bottom-5 -left-4 max-w-[15rem] rounded-2xl border border-white/15 bg-[#0a2f42] p-4 shadow-xl sm:-left-8">
-            <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Latest dispatch</p>
+            <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Latest publication</p>
             <p class="mt-1 line-clamp-2 text-[11px] font-semibold leading-5 text-white">{{ featured?.title || 'A new perspective on the laboratory' }}</p>
             <p class="mt-1 text-[9px] text-white/40">{{ formatDate(featured?.publishedAt || featured?.createdAt) }}</p>
           </div>
@@ -136,7 +136,7 @@ useHead({
       <div class="site-container">
         <SiteSectionHeader
           eyebrow="The archive"
-          title="All dispatches."
+          title="All publications."
           description="Browse by theme, or read straight through the archive."
         />
         <div class="mt-6 flex flex-wrap gap-2">
@@ -167,7 +167,7 @@ useHead({
         </div>
         <div v-else class="site-card mt-7 px-6 py-14 text-center">
           <p class="text-[13px] font-semibold text-[#0a202b]">No pieces in this theme yet.</p>
-          <button type="button" class="site-link-arrow mt-3" @click="activeFilter = 'All'">View all dispatches</button>
+          <button type="button" class="site-link-arrow mt-3" @click="activeFilter = 'All'">View all publications</button>
         </div>
 
       </div>
@@ -177,12 +177,12 @@ useHead({
       <div class="overflow-hidden rounded-[1.5rem] border border-[#e4ebf0] bg-white">
         <div class="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_1.15fr] lg:items-center">
           <div>
-            <p class="site-eyebrow">The Convo Stack</p>
-            <h2 class="mt-2 text-[1.8rem] font-bold tracking-[-0.04em] text-[#0a202b]">The conversation continues in your inbox.</h2>
-            <p class="mt-2 max-w-md text-[12.5px] leading-6 text-[#5f7482]">Research, career notes and ecosystem pulses, written for people who work in and around the laboratory.</p>
-            <NuxtLink to="/convostack" class="site-link-arrow mt-4">Explore the Convo Stack <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
+            <p class="site-eyebrow">Journo</p>
+            <h2 class="mt-2 text-[1.8rem] font-bold tracking-[-0.04em] text-[#0a202b]">One subscription. Every update.</h2>
+            <p class="mt-2 max-w-md text-[12.5px] leading-6 text-[#5f7482]">New Journo publications, programme openings and community news — delivered through one list.</p>
+            <NuxtLink to="/journo" class="site-link-arrow mt-4">Explore Journo <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
           </div>
-          <ConvoSubscribe title="The Convo Stack, in your inbox." description="New essays, research notes and ecosystem pulses. Written by the MedLabConvo team, delivered from our own platform." button-label="Subscribe to the Convo Stack" />
+          <ConvoSubscribe title="One list. Every update." description="New Journo publications, programme openings and community news — one subscription, no duplicates." button-label="Subscribe once" />
         </div>
       </div>
     </section>

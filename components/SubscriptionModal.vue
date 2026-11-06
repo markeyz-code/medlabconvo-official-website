@@ -12,21 +12,21 @@
               <div class="absolute inset-0 site-hero-grid opacity-50" />
               <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[#DE6129]/20 blur-3xl" />
               <div class="relative">
-                <span class="site-eyebrow !text-white/50">The Convo Stack</span>
-                <h3 class="mt-3 text-[1.65rem] font-bold leading-[1.08] tracking-[-0.04em]">One considered email. Zero noise.</h3>
-                <p class="mt-3 text-[11.5px] leading-6 text-white/55">Professional medical journalism, career notes and ecosystem pulses for people who work in and around the laboratory.</p>
+                <span class="site-eyebrow !text-white/50">MedLabConvo updates</span>
+                <h3 class="mt-3 text-[1.65rem] font-bold leading-[1.08] tracking-[-0.04em]">One subscription. Every update that matters.</h3>
+                <p class="mt-3 text-[11.5px] leading-6 text-white/55">Journo publications, programme openings, community opportunities and the occasional ecosystem pulse — all in one considered email.</p>
               </div>
               <div class="relative mt-8 space-y-2 border-t border-white/10 pt-5 text-[10px] text-white/45">
-                <p class="flex items-center gap-2"><Icon name="lucide:check" class="h-3.5 w-3.5 text-[#f1a37f]" /> Research and reported features</p>
-                <p class="flex items-center gap-2"><Icon name="lucide:check" class="h-3.5 w-3.5 text-[#f1a37f]" /> Career and opportunity notes</p>
+                <p class="flex items-center gap-2"><Icon name="lucide:check" class="h-3.5 w-3.5 text-[#f1a37f]" /> New Journo publications</p>
+                <p class="flex items-center gap-2"><Icon name="lucide:check" class="h-3.5 w-3.5 text-[#f1a37f]" /> Programmes and community news</p>
                 <p class="flex items-center gap-2"><Icon name="lucide:check" class="h-3.5 w-3.5 text-[#f1a37f]" /> Unsubscribe anytime</p>
               </div>
             </div>
 
             <div class="relative bg-white p-6 sm:p-8">
-              <p class="site-eyebrow md:hidden">The Convo Stack</p>
-              <h3 class="mt-2 text-[1.45rem] font-bold tracking-[-0.03em] text-[#0a202b] md:mt-0">Stay close to what is changing.</h3>
-              <p class="mt-2 text-[11.5px] leading-6 text-[#5f7482]">Subscribe for free and get the next considered dispatch in your inbox.</p>
+              <p class="site-eyebrow md:hidden">MedLabConvo updates</p>
+              <h3 class="mt-2 text-[1.45rem] font-bold tracking-[-0.03em] text-[#0a202b] md:mt-0">Subscribe once. Stay in the loop.</h3>
+              <p class="mt-2 text-[11.5px] leading-6 text-[#5f7482]">Get every MedLabConvo email — new Journo publications, programme openings and community news — without subscribing twice.</p>
 
               <form class="mt-5 space-y-3" @submit.prevent="handleSubscribe">
                 <label class="block">
@@ -35,7 +35,7 @@
                 </label>
                 <button type="submit" :disabled="loading || !email" class="site-btn site-btn-primary w-full disabled:opacity-50">
                   <span v-if="loading" class="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  {{ loading ? 'Subscribing…' : 'Subscribe for free' }}
+                  {{ loading ? 'Subscribing…' : 'Subscribe once' }}
                   <Icon v-if="!loading" name="lucide:arrow-up-right" class="h-3.5 w-3.5" />
                 </button>
               </form>

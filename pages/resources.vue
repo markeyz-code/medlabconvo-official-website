@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { convostack_api } from '@/api_factory/modules/convostack'
+import { convostack_api } from '@/api_factory/modules/journo'
 import SiteHero from '@/components/site/SiteHero.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
@@ -97,12 +97,12 @@ useHead({
               <span class="absolute left-3 top-3 rounded-full bg-white/95 px-2 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-[#27628C]">{{ pub.category || 'Resource' }}</span>
             </div>
             <div class="flex flex-1 flex-col p-5">
-              <p class="text-[9.5px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">{{ pub.category || 'Convo Stack' }} · {{ pub.readTime || 5 }} min read</p>
+              <p class="text-[9.5px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">{{ pub.category || 'Journo' }} · {{ pub.readTime || 5 }} min read</p>
               <h3 class="mt-2 line-clamp-2 text-[1rem] font-bold leading-snug tracking-[-0.02em] text-[#0a202b] transition group-hover:text-[#27628C]">{{ pub.title }}</h3>
               <p class="mt-2 line-clamp-3 text-[11px] leading-6 text-[#5f7482]">{{ pub.excerpt || 'A professional resource from the MedLabConvo knowledge hub.' }}</p>
               <div class="mt-auto flex items-center justify-between gap-3 border-t border-[#eef2f5] pt-4">
                 <span class="text-[9.5px] text-[#8a9ba5]">{{ pub.authors?.join(', ') || 'MedLabConvo' }}</span>
-                <NuxtLink :to="`/convostack/${pub.slug}`" target="_blank" class="site-link-arrow">Access <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
+                <NuxtLink :to="`/journo/${pub.slug}`" target="_blank" class="site-link-arrow">Access <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></NuxtLink>
               </div>
             </div>
           </article>

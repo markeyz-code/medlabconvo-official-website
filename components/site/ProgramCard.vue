@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SiteMedia from '@/components/site/SiteMedia.vue'
+import { formatProgramClosing, isProgramOpen } from '@/utils/programs'
 const props = withDefaults(defineProps<{
   program: any
   compact?: boolean
@@ -8,13 +9,14 @@ const props = withDefaults(defineProps<{
 const image = computed(() => props.program?.image || props.program?.images?.[0] || '')
 const applyLink = computed(() => {
   const program = props.program
-  if (!program) return ''
+  if (!program || !isProgramOpen(program)) return ''
   if (program.externalFormLink) return program.externalFormLink
   if (program.form?.slug || program.form?._id) return `/forms/submit/${program.form.slug || program.form._id}`
   if (program.formFields?.length) return `/programs/${program.slug}/apply`
   return ''
 })
 
+const open = computed(() => isProgramOpen(props.program))
 const dateLabel = computed(() => {
   const value = props.program?.startDate || props.program?.createdAt
   if (!value) return 'Flexible'
@@ -31,8 +33,11 @@ const dateLabel = computed(() => {
         <span class="rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#27628C] backdrop-blur">
           {{ program.category || 'Programme' }}
         </span>
-        <span v-if="program.status === 'active'" class="rounded-full bg-[#DE6129] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+        <span v-if="open" class="rounded-full bg-[#DE6129] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
           Open
+        </span>
+        <span v-else class="rounded-full bg-[#0a202b]/80 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+          Closed
         </span>
       </div>
       <span class="absolute bottom-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/95 text-[#27628C] opacity-0 transition group-hover:opacity-100">
@@ -44,7 +49,7 @@ const dateLabel = computed(() => {
       <div class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9ba5]">
         <span class="inline-flex items-center gap-1"><Icon name="lucide:clock-3" class="h-3 w-3" />{{ program.duration || 'Flexible' }}</span>
         <span class="h-1 w-1 rounded-full bg-[#d5e0e6]" />
-        <span>{{ dateLabel }}</span>
+        <span>{{ formatProgramClosing(program) }}</span>
       </div>
 
       <NuxtLink :to="`/programs/${program.slug}`" class="mt-3 block">
@@ -60,7 +65,7 @@ const dateLabel = computed(() => {
           <Icon name="lucide:arrow-right" class="h-3.5 w-3.5" />
         </NuxtLink>
         <a
-          v-if="applyLink && program.status === 'active'"
+          v-if="applyLink"
           :href="applyLink"
           :target="program.externalFormLink ? '_blank' : undefined"
           class="site-btn site-btn-primary min-h-0 px-3 py-2 text-[0.66rem]"

@@ -5,8 +5,8 @@
       <div class="site-container flex min-h-9 flex-wrap items-center justify-center gap-x-3 gap-y-1 py-1.5 text-center text-[10.5px] font-medium text-white/80 sm:text-[11px]">
         <span class="inline-flex items-center gap-1.5">
           <span class="h-1.5 w-1.5 rounded-full bg-[#DE6129]" />
-          <span class="sm:hidden">New on the Convo Stack — fresh insight for the lab.</span>
-          <span class="hidden sm:inline">New on the Convo Stack — career, research and ecosystem insights.</span>
+          <span class="sm:hidden">New on Journo — fresh insight for the lab.</span>
+          <span class="hidden sm:inline">New on Journo — career, research and ecosystem insights.</span>
         </span>
         <button type="button" class="font-semibold text-white underline decoration-white/30 underline-offset-4 transition hover:decoration-white" @click="openSubscriptionModal">
           Subscribe for free
@@ -92,7 +92,7 @@
 
             <div class="space-y-2 border-t border-[#e4ebf0] p-5">
               <button type="button" class="site-btn site-btn-accent w-full" @click="openSubscriptionModal(); isOpen = false">
-                Subscribe to the Convo Stack
+                Subscribe to MedLabConvo updates
                 <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
               </button>
               <NuxtLink to="/donate" class="site-btn site-btn-ghost w-full" @click="isOpen = false">Support our work</NuxtLink>

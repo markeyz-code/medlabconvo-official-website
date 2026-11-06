@@ -44,10 +44,10 @@
         <section class="site-section">
           <div class="site-container grid gap-7 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
             <div class="min-w-0">
-              <div v-if="program.status !== 'active'" class="site-card p-7 text-center">
+              <div v-if="!applicationOpen" class="site-card p-7 text-center">
                 <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#fdf1eb] text-[#DE6129]"><Icon name="lucide:lock" class="h-6 w-6" /></span>
-                <h2 class="mt-4 text-lg font-bold text-[#0a202b]">Registration is closed.</h2>
-                <p class="mt-1 text-[12px] text-[#5f7482]">This cohort is not accepting applications right now.</p>
+                <h2 class="mt-4 text-lg font-bold text-[#0a202b]">Applications are closed.</h2>
+                <p class="mt-1 text-[12px] text-[#5f7482]">This cohort is no longer accepting applications.</p>
                 <NuxtLink to="/programs" class="site-btn site-btn-primary mt-5">Explore other programmes</NuxtLink>
               </div>
 
@@ -138,6 +138,7 @@ import { useRoute } from 'vue-router'
 import { useGetProgram } from '@/composables/modules/programs/useGetProgram'
 import { useSubmitApplication } from '@/composables/modules/programs/useSubmitApplication'
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { isProgramOpen } from '@/utils/programs'
 import { upload_api } from '@/api_factory/core/upload'
 import SiteHero from '@/components/site/SiteHero.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'

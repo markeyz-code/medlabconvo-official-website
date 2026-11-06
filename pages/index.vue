@@ -3,7 +3,7 @@ import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
 import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteCta from '@/components/site/SiteCta.vue'
 import { useGetPrograms } from '@/composables/modules/programs/useGetPrograms'
-import { convostack_api } from '@/api_factory/modules/convostack'
+import { convostack_api } from '@/api_factory/modules/journo'
 import { useGetLabCasts } from '@/composables/modules/labcast/useGetLabCasts'
 import heroImage from '@/assets/img/community1.png'
 import ProgramCard from '@/components/site/ProgramCard.vue'
@@ -19,7 +19,7 @@ onMounted(async () => {
     const response = await convostack_api.$_get_publications()
     publications.value = response.data || []
   } catch (error) {
-    console.error('Failed to load Convo Stack posts', error)
+    console.error('Failed to load Journo publications', error)
   } finally {
     publicationsLoading.value = false
   }
@@ -46,40 +46,32 @@ const ecosystem = [
     accent: false,
   },
   {
-    title: 'Convo Stack',
-    description: 'A living editorial feed on careers, diagnostics, research and the wider health ecosystem.',
-    href: '/convostack',
-    icon: 'lucide:messages-square',
-    number: '02',
-    accent: true,
-  },
-  {
     title: 'LabCast',
     description: 'Unfiltered conversations with the scientists, founders and policy leaders moving the field.',
     href: '/lab-cast',
     icon: 'lucide:mic',
-    number: '03',
+    number: '02',
   },
   {
     title: 'Programs',
     description: 'Cohort-based programmes that turn ambition into capability and career momentum.',
     href: '/programs',
     icon: 'lucide:graduation-cap',
-    number: '04',
+    number: '03',
   },
   {
     title: 'Community',
-    description: 'Interntional and UniVerse — peer networks for interns, students and early-career professionals.',
+    description: 'Interntional and UniVerse — peer networks for interns, NYSC corpers, students and early-career professionals.',
     href: '/community',
     icon: 'lucide:users',
-    number: '05',
+    number: '04',
   },
   {
     title: 'Shop',
     description: 'Books, courses and field-tested digital tools built for the realities of the laboratory.',
     href: '/products',
     icon: 'lucide:shopping-bag',
-    number: '06',
+    number: '05',
   },
 ]
 
@@ -120,7 +112,7 @@ useHead({
   meta: [
     { name: 'description', content: 'MedLabConvo advances medical laboratory science through editorial insight, podcasts, programmes, community and professional tools.' },
     { property: 'og:title', content: 'MedLabConvo | Laboratory science, reimagined' },
-    { property: 'og:description', content: 'A global platform for the people, ideas and opportunities shaping laboratory medicine.' },
+    { property: 'og:description', content: 'MedLabConvo is a non-profit organisation and global platform for the people, ideas and opportunities shaping laboratory medicine.' },
     { property: 'og:image', content: '/images/medlabconvo-og-image.jpg' },
     { property: 'og:url', content: 'https://www.medlabconvo.com' },
     { property: 'og:type', content: 'website' },
@@ -142,7 +134,7 @@ useHead({
             The people, ideas and opportunities moving the lab forward.
           </h1>
           <p class="mt-5 max-w-xl text-[0.98rem] leading-7 text-white/65">
-            MedLabConvo is a global platform connecting laboratory professionals, students and health innovators through intelligent journalism, honest conversation and career-defining programmes.
+            MedLabConvo is a non-profit organisation and global platform connecting laboratory professionals, students, corpers and health innovators through intelligent journalism, honest conversation and career-defining programmes.
           </p>
           <div class="mt-7 flex flex-col gap-2.5 sm:flex-row">
             <NuxtLink to="/programs" class="site-btn site-btn-light">
@@ -197,7 +189,7 @@ useHead({
       <div class="site-container">
         <SiteSectionHeader
           eyebrow="The ecosystem"
-          title="One home. Six ways to grow."
+          title="One home. Five ways to grow."
           description="Whether you are looking for a sharper perspective, a career move, a peer network or your next collaborator, there is a place for you here."
         >
           <template #actions>
@@ -254,7 +246,7 @@ useHead({
     <section class="site-section">
       <div class="site-container">
         <SiteSectionHeader
-          eyebrow="Journo & Convo Stack"
+          eyebrow="Journo"
           title="Ideas that make the lab legible."
           description="Reported pieces, essays and conversations that connect laboratory science to the forces shaping healthcare, careers and policy."
           link="/journo"
@@ -269,7 +261,7 @@ useHead({
             :image="featuredArticle.coverImage"
             :category="featuredArticle.category || 'Featured'"
             :meta="`${formatDate(featuredArticle.publishedAt || featuredArticle.createdAt)} · ${featuredArticle.authors?.join(', ') || 'MedLabConvo'}`"
-            :to="`/convostack/${featuredArticle.slug}`"
+            :to="`/journo/${featuredArticle.slug}`"
             label="Read the feature"
             featured
           />
@@ -282,7 +274,7 @@ useHead({
               :image="article.coverImage"
               :category="article.category || 'Insight'"
               :meta="formatDate(article.publishedAt || article.createdAt)"
-              :to="`/convostack/${article.slug}`"
+              :to="`/journo/${article.slug}`"
               label="Read story"
             />
           </div>
@@ -293,9 +285,9 @@ useHead({
 
         <div class="mt-4 flex flex-col gap-3 rounded-2xl border border-[#e4ebf0] bg-[#fbfcfc] p-5 sm:flex-row sm:items-center sm:justify-between">
           <p class="text-[12px] leading-6 text-[#5f7482]">
-            <span class="font-bold text-[#0a202b]">The Convo Stack</span> — a living feed of careers, diagnostics and ecosystem pulses, updated regularly.
+            <span class="font-bold text-[#0a202b]">The Journo archive</span> — every publication, essay and reported perspective in one place.
           </p>
-          <NuxtLink to="/convostack" class="site-link-arrow shrink-0">Explore the stack <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
+          <NuxtLink to="/journo" class="site-link-arrow shrink-0">Explore Journo <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></NuxtLink>
         </div>
       </div>
     </section>

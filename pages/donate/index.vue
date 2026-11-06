@@ -84,22 +84,47 @@ useHead({
 
     <section class="bg-[#f7f9f8] py-14 sm:py-20">
       <div class="site-container">
-        <div class="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
-          <div>
-            <p class="site-eyebrow">Give what you can</p>
-            <h2 class="site-h2 mt-3">Every amount is meaningful.</h2>
-            <p class="site-lead mt-3">We have deliberately kept the giving experience simple. Any amount supports the work; higher tiers receive a small token of our gratitude.</p>
-            <a href="https://paystack.com/pay/medlabconvodonation" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-primary mt-6">Donate securely <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></a>
-          </div>
-          <div class="space-y-3">
-            <div v-for="reward in rewards" :key="reward.amount" class="flex items-start gap-4 rounded-2xl border border-[#e4ebf0] bg-white p-5">
-              <span class="flex h-9 min-w-9 items-center justify-center rounded-lg bg-[#fdf1eb] text-[9px] font-bold text-[#b24a1e]">{{ reward.amount }}</span>
-              <div>
-                <p class="text-[12px] font-bold text-[#0a202b]">{{ reward.title }}</p>
-                <p class="mt-1 text-[10.5px] leading-5 text-[#5f7482]">{{ reward.text }}</p>
-              </div>
+        <div class="max-w-3xl">
+          <p class="site-eyebrow">Give what you can</p>
+          <h2 class="site-h2 mt-3">Every amount is meaningful.</h2>
+          <p class="site-lead mt-3">Keep the giving experience simple. Any amount supports the work; higher tiers receive a small token of our gratitude.</p>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <article class="relative overflow-hidden rounded-[1.5rem] border border-[#27628C]/15 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
+            <div class="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#eef5f9]" />
+            <p class="relative text-[10px] font-bold uppercase tracking-[0.16em] text-[#27628C]">Any amount</p>
+            <p class="relative mt-4 text-[2rem] font-bold tracking-[-0.045em] text-[#0a202b]">Thank you.</p>
+            <div class="relative mt-5 border-t border-[#eef2f5] pt-4">
+              <p class="text-[13px] font-bold text-[#0a202b]">A personal thank-you</p>
+              <p class="mt-1.5 text-[11.5px] leading-6 text-[#5f7482]">Every donor receives a heartfelt personalised email from the team.</p>
             </div>
-          </div>
+          </article>
+
+          <article class="relative overflow-hidden rounded-[1.5rem] border border-[#27628C]/25 bg-[#033958] p-6 text-white transition hover:-translate-y-1 hover:shadow-xl">
+            <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#27628C]/50 blur-2xl" />
+            <p class="relative text-[10px] font-bold uppercase tracking-[0.16em] text-[#f1a37f]">₦5,000+</p>
+            <p class="relative mt-4 text-[2rem] font-bold tracking-[-0.045em]">A card to keep.</p>
+            <div class="relative mt-5 border-t border-white/15 pt-4">
+              <p class="text-[13px] font-bold">A personalised thank-you card</p>
+              <p class="mt-1.5 text-[11.5px] leading-6 text-white/60">A physical card from the team, alongside your thank-you email.</p>
+            </div>
+          </article>
+
+          <article class="relative overflow-hidden rounded-[1.5rem] border-2 border-[#DE6129] bg-[#fff8f4] p-6 transition hover:-translate-y-1 hover:shadow-xl">
+            <div class="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[#DE6129]/10" />
+            <p class="relative text-[10px] font-bold uppercase tracking-[0.16em] text-[#b24a1e]">₦50,000+</p>
+            <p class="relative mt-4 text-[2rem] font-bold tracking-[-0.045em] text-[#0a202b]">A piece of the work.</p>
+            <div class="relative mt-5 border-t border-[#DE6129]/15 pt-4">
+              <p class="text-[13px] font-bold text-[#0a202b]">An exclusive souvenir</p>
+              <p class="mt-1.5 text-[11.5px] leading-6 text-[#5f7482]">A MedLabConvo keepsake alongside your card and personalised email.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-7 flex flex-col gap-3 rounded-2xl border border-[#e4ebf0] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-[11.5px] leading-6 text-[#5f7482]"><span class="font-bold text-[#0a202b]">Every tier starts with the same thing:</span> a direct contribution to the work.</p>
+          <a href="https://paystack.com/pay/medlabconvodonation" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-primary shrink-0">Donate securely <Icon name="lucide:arrow-up-right" class="h-4 w-4" /></a>
         </div>
       </div>
     </section>

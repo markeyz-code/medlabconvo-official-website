@@ -31,9 +31,9 @@ useHead({ title: 'Unsubscribe | MedLabConvo' })
 <template>
   <main class="bg-white">
     <SiteHero
-      eyebrow="The Convo Stack"
+      eyebrow="Journo"
       title="You are in control of your inbox."
-      description="Unsubscribe from Convo Stack emails. You can always subscribe again later."
+      description="Unsubscribe from Journo emails. You can always subscribe again later."
       theme="light"
       compact
     />
@@ -42,8 +42,8 @@ useHead({ title: 'Unsubscribe | MedLabConvo' })
         <div v-if="done">
           <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Icon name="lucide:check" class="h-6 w-6" /></div>
           <h2 class="mt-4 text-lg font-bold text-[#0a202b]">You have been unsubscribed.</h2>
-          <p class="mt-1 text-[12px] leading-6 text-[#5f7482]">{{ email }} will no longer receive Convo Stack newsletter emails.</p>
-          <NuxtLink to="/convostack" class="site-btn site-btn-primary mt-5">Back to the Convo Stack</NuxtLink>
+          <p class="mt-1 text-[12px] leading-6 text-[#5f7482]">{{ email }} will no longer receive Journo newsletter emails.</p>
+          <NuxtLink to="/journo" class="site-btn site-btn-primary mt-5">Back to Journo</NuxtLink>
         </div>
         <div v-else>
           <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8a9ba5]">Confirm</p>

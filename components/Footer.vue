@@ -15,7 +15,7 @@
             </span>
           </NuxtLink>
           <p class="mt-5 max-w-xs text-[12px] leading-6 text-white/55">
-            A global platform advancing medical laboratory science through knowledge, community, programmes and professional tools.
+            A non-profit organisation and global platform advancing medical laboratory science through knowledge, community, programmes and professional tools.
           </p>
           <div class="mt-6 flex items-center gap-2">
             <a
@@ -60,10 +60,10 @@
         </div>
 
         <div class="rounded-2xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur">
-          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f1a37f]">Stay insightful</p>
-          <h3 class="mt-2 text-[18px] font-bold tracking-[-0.02em]">The Convo Stack</h3>
+          <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#f1a37f]">One list. Every update.</p>
+          <h3 class="mt-2 text-[18px] font-bold tracking-[-0.02em]">MedLabConvo updates</h3>
           <p class="mt-2 text-[11.5px] leading-5 text-white/55">
-            Professional medical journalism, research pulses and opportunities — delivered to your inbox.
+            New Journo publications, programme openings and community news — one subscription, no duplicates.
           </p>
           <form class="mt-4 space-y-2" @submit.prevent="handleSubscribe">
             <input
@@ -76,7 +76,7 @@
             />
             <button type="submit" :disabled="loading || !email" class="site-btn site-btn-accent w-full min-h-0 py-2.5 text-[11.5px] disabled:opacity-40">
               <span v-if="loading" class="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-              {{ loading ? 'Subscribing…' : 'Subscribe for free' }}
+              {{ loading ? 'Subscribing…' : 'Subscribe once' }}
             </button>
           </form>
           <p class="mt-2 text-center text-[9px] text-white/30">No spam. Unsubscribe anytime.</p>
@@ -109,7 +109,6 @@ const handleSubscribe = async () => {
 
 const platform = [
   { name: 'Journo', href: '/journo' },
-  { name: 'Convo Stack', href: '/convostack' },
   { name: 'LabCast', href: '/lab-cast' },
   { name: 'Programs', href: '/programs' },
   { name: 'Community', href: '/community' },

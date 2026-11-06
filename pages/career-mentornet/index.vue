@@ -60,7 +60,7 @@ useHead({
           <p class="site-eyebrow">From the community</p>
           <h2 class="site-h2 mt-3">One relationship can change a career trajectory.</h2>
           <div class="mt-5 space-y-3 text-[13px] leading-7 text-[#5f7482]">
-            <p>The Interntional Community of MedLabConvo welcomes participants embarking on the Career Mentornet journey — designed to support Medical Laboratory Science graduates through mentorship, professional development and holistic growth.</p>
+            <p>The Interntional Community of MedLabConvo welcomes participants embarking on the Career Mentornet journey — designed to support Medical Laboratory Science graduates, interns and NYSC corpers through mentorship, professional development and holistic growth.</p>
             <p>This programme is a testament to our shared commitment to excellence, collaboration and the advancement of medical laboratory science worldwide.</p>
           </div>
         </div>

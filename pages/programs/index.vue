@@ -5,6 +5,7 @@ import SiteMedia from '@/components/site/SiteMedia.vue'
 import SiteSectionHeader from '@/components/site/SiteSectionHeader.vue'
 import ProgramCard from '@/components/site/ProgramCard.vue'
 import SiteCta from '@/components/site/SiteCta.vue'
+import { isProgramOpen } from '@/utils/programs'
 
 const { programs, loading } = useGetPrograms()
 
@@ -12,6 +13,7 @@ const search = ref('')
 const activeCategory = ref('All')
 
 const activePrograms = computed(() => (programs.value || []).filter((p: any) => p.status === 'active'))
+const openPrograms = computed(() => activePrograms.value.filter((p: any) => isProgramOpen(p)))
 const categories = computed(() => ['All', ...new Set(activePrograms.value.map((p: any) => p.category).filter(Boolean))])
 
 const filteredPrograms = computed(() => {
@@ -55,7 +57,7 @@ useHead({
           </div>
           <div class="absolute -bottom-5 -left-4 rounded-2xl border border-white/15 bg-[#0a2f42] p-4 shadow-xl sm:-left-8">
             <p class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Applications open</p>
-            <p class="mt-1 text-[15px] font-bold text-white">{{ activePrograms.length }} active programme{{ activePrograms.length === 1 ? '' : 's' }}</p>
+            <p class="mt-1 text-[15px] font-bold text-white">{{ openPrograms.length }} open programme{{ openPrograms.length === 1 ? '' : 's' }}</p>
             <p class="mt-1 text-[10px] text-white/50">Across clinical, research and career tracks</p>
           </div>
           <div class="absolute -right-3 top-8 rounded-xl bg-[#DE6129] px-3.5 py-2.5 shadow-lg">
@@ -88,7 +90,7 @@ useHead({
         <SiteSectionHeader
           eyebrow="Open opportunities"
           title="Current initiatives."
-          :description="loading ? 'Loading the latest programme directory…' : `${activePrograms.length} active programmes, designed to meet you where you are.`"
+          :description="loading ? 'Loading the latest programme directory…' : `${openPrograms.length} open programmes, designed to meet you where you are.`"
         >
           <template #actions>
             <div class="relative hidden sm:block">

@@ -13,7 +13,7 @@ import bonding5 from '@/assets/img/bonding5.jpg'
 
 useHead({
   title: 'Community | MedLabConvo',
-  meta: [{ name: 'description', content: 'Interntional and UniVerse — communities for laboratory interns, students and early-career professionals.' }],
+  meta: [{ name: 'description', content: 'Interntional and UniVerse — communities for laboratory interns, NYSC corpers, students and early-career professionals.' }],
 })
 </script>
 
@@ -22,7 +22,7 @@ useHead({
     <SiteHero
       eyebrow="The MedLabConvo community"
       title="A global network of people who get it."
-      description="Interntional and UniVerse are peer communities for laboratory interns, students and early-career professionals who want more than a certificate — they want a room full of people building the same future."
+      description="Interntional and UniVerse are peer communities for laboratory interns, NYSC corpers, students and early-career professionals who want more than a certificate — they want a room full of people building the same future."
       primary-label="Join a community"
       primary-to="#communities"
       secondary-label="Explore programmes"
@@ -54,12 +54,12 @@ useHead({
             </div>
             <div class="p-6 sm:p-8 lg:p-10">
               <div class="flex items-center gap-2">
-                <span class="site-chip !border-[#27628C]/15 !bg-[#eef5f9] !text-[#27628C]">Interns</span>
+                <span class="site-chip !border-[#27628C]/15 !bg-[#eef5f9] !text-[#27628C]">Interns & corpers</span>
                 <span class="site-chip">Community</span>
               </div>
               <h2 class="mt-4 text-[1.7rem] font-bold tracking-[-0.04em] text-[#0a202b]">Interntional</h2>
-              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">The internship year is a crucial milestone for every Medical Laboratory Science graduate — full of opportunity, but also significant barriers. Interntional is the community that helps interns navigate career growth, mentorship and the system with clarity.</p>
-              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">Through mentorship, professional development and a network that understands the year, we help interns thrive — not just survive.</p>
+              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">The internship and NYSC service years are crucial milestones for every Medical Laboratory Science graduate — full of opportunity, but also significant barriers. Interntional is the community that helps interns and corpers navigate career growth, mentorship and the system with clarity.</p>
+              <p class="mt-3 text-[12.5px] leading-7 text-[#5f7482]">Through mentorship, professional development and a network that understands both seasons, we help interns and corpers thrive — not just survive.</p>
               <a href="https://interntional.medlabconvo.com/" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-primary mt-6">Explore Interntional <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5" /></a>
             </div>
           </div>
@@ -122,6 +122,6 @@ useHead({
       </div>
     </section>
 
-    <SiteCta eyebrow="Find your people" title="You do not have to navigate the lab alone." description="Join a community that takes your ambition seriously — and makes room for the version of you that is still becoming." primary-label="Join Interntional" primary-to="https://interntional.medlabconvo.com/" secondary-label="Join UniVerse" secondary-to="https://universe.medlabconvo.com/" />
+    <SiteCta eyebrow="Find your people" title="You do not have to navigate the lab alone." description="Join a community that takes your ambition seriously — and makes room for the version of you that is still becoming." primary-label="Join Interntional" primary-to="https://interntional.medlabconvo.com/" secondary-label="Join UniVerse" secondary-to="https://universe.medlabconvo.com/" secondary-variant="light" />
   </main>
 </template>

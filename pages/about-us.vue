@@ -39,7 +39,7 @@ const coreValues = [
 
 useHead({
   title: 'About | MedLabConvo',
-  meta: [{ name: 'description', content: 'MedLabConvo is a movement shaping the future of medical laboratory science across Africa and beyond.' }],
+  meta: [{ name: 'description', content: 'MedLabConvo is a non-profit organisation and global community shaping the future of medical laboratory science across Africa and beyond.' }],
 })
 </script>
 
@@ -48,7 +48,7 @@ useHead({
     <SiteHero
       eyebrow="About MedLabConvo"
       title="A movement for the people behind the science."
-      :description="getSectionContent('hero_description', 'MedLabConvo is more than a platform. It is a movement dedicated to shaping the future of medical laboratory science, the professionals who carry it and the healthcare systems it serves.')"
+      :description="getSectionContent('hero_description', 'MedLabConvo is a non-profit organisation, community and digital platform dedicated to shaping the future of medical laboratory science — the professionals who carry it, the systems it serves and the public that depends on it.')"
       primary-label="Meet the team"
       primary-to="#leadership"
       secondary-label="Our programmes"

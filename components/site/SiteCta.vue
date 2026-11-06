@@ -7,6 +7,7 @@ withDefaults(defineProps<{
   primaryTo?: string
   secondaryLabel?: string
   secondaryTo?: string
+  secondaryVariant?: 'outline' | 'light'
 }>(), {
   eyebrow: 'Join the conversation',
   description: '',
@@ -14,6 +15,7 @@ withDefaults(defineProps<{
   primaryTo: '',
   secondaryLabel: '',
   secondaryTo: '',
+  secondaryVariant: 'outline',
 })
 </script>
 
@@ -38,10 +40,10 @@ withDefaults(defineProps<{
             {{ primaryLabel }}
             <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
           </NuxtLink>
-          <a v-if="secondaryLabel && secondaryTo && /^https?:\/\//.test(secondaryTo)" :href="secondaryTo" target="_blank" rel="noopener noreferrer" class="site-btn site-btn-outline-light">
+          <a v-if="secondaryLabel && secondaryTo && /^https?:\/\//.test(secondaryTo)" :href="secondaryTo" target="_blank" rel="noopener noreferrer" :class="secondaryVariant === 'light' ? 'site-btn site-btn-light' : 'site-btn site-btn-outline-light'">
             {{ secondaryLabel }}
           </a>
-          <NuxtLink v-else-if="secondaryLabel && secondaryTo" :to="secondaryTo" class="site-btn site-btn-outline-light">
+          <NuxtLink v-else-if="secondaryLabel && secondaryTo" :to="secondaryTo" :class="secondaryVariant === 'light' ? 'site-btn site-btn-light' : 'site-btn site-btn-outline-light'">
             {{ secondaryLabel }}
           </NuxtLink>
         </div>

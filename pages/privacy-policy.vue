@@ -38,7 +38,7 @@
             <h2 class="text-xl font-bold text-gray-900 mb-8">How We Use Your Information</h2>
             <p>We use the collected data to provide our services, maintain our community metrics, and improve our content delivery. Specifically, we use it for:</p>
             <ul class="space-y-4">
-              <li>Delivering the Convo Stack and other editorial content.</li>
+              <li>Delivering the Journo and other editorial content.</li>
               <li>Responding to professional enquiries and requests.</li>
               <li>Processing community scholarship and program applications.</li>
               <li>Analyzing platform performance to enhance user experience.</li>

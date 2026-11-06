@@ -6,6 +6,7 @@ import SiteCta from '@/components/site/SiteCta.vue'
 import { useGetProgram } from '@/composables/modules/programs/useGetProgram'
 import { useRoute } from 'vue-router'
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { formatProgramClosing, isProgramOpen } from '@/utils/programs'
 
 const route = useRoute()
 const { loading, error, program, getProgram } = useGetProgram()
@@ -14,9 +15,10 @@ const { showToast } = useCustomToast()
 onMounted(() => getProgram(route.params.slug as string))
 
 const heroImage = computed(() => program.value?.image || program.value?.images?.[0] || '')
+const applicationOpen = computed(() => isProgramOpen(program.value))
 const applyLink = computed(() => {
   const item = program.value
-  if (!item) return ''
+  if (!item || !applicationOpen.value) return ''
   if (item.externalFormLink) return item.externalFormLink
   if (item.form?.slug || item.form?._id) return `/forms/submit/${item.form.slug || item.form._id}`
   if (item.formFields?.length) return `/programs/${item.slug}/apply`
@@ -77,12 +79,12 @@ useHead({
             </NuxtLink>
             <div class="mt-5 flex flex-wrap gap-2">
               <span class="site-chip !border-white/15 !bg-white/10 !text-white/70">{{ program.category || 'Programme' }}</span>
-              <span class="site-chip !border-white/15 !bg-white/10 !text-white/70" :class="program.status === 'active' ? '!border-[#DE6129]/40 !bg-[#DE6129]/20 !text-[#ffd8c8]' : ''">{{ program.status === 'active' ? 'Applications open' : 'Currently closed' }}</span>
+              <span class="site-chip !border-white/15 !bg-white/10 !text-white/70" :class="applicationOpen ? '!border-[#DE6129]/40 !bg-[#DE6129]/20 !text-[#ffd8c8]' : ''">{{ applicationOpen ? 'Applications open' : 'Applications closed' }}</span>
             </div>
             <h1 class="site-display mt-5 text-[clamp(2.5rem,5vw,4.6rem)] !text-white site-text-balance">{{ program.title }}</h1>
             <div class="site-rich mt-5 max-w-xl text-[0.95rem] leading-7 text-white/65" v-html="formattedDescription" />
             <div class="mt-7 flex flex-col gap-2.5 sm:flex-row">
-              <NuxtLink v-if="applyLink && program.status === 'active'" :to="applyLink" :target="isExternalApply ? '_blank' : undefined" class="site-btn site-btn-light">
+              <NuxtLink v-if="applyLink && applicationOpen" :to="applyLink" :target="isExternalApply ? '_blank' : undefined" class="site-btn site-btn-light">
                 {{ program.externalFormLink ? 'Apply on partner site' : 'Apply now' }}
                 <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
               </NuxtLink>
@@ -90,7 +92,7 @@ useHead({
             </div>
             <div class="mt-7 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/15 pt-5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/45">
               <span class="inline-flex items-center gap-1.5"><Icon name="lucide:clock-3" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ program.duration || 'Flexible duration' }}</span>
-              <span class="inline-flex items-center gap-1.5"><Icon name="lucide:calendar" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ dateLabel(program.startDate || program.createdAt) }}</span>
+              <span class="inline-flex items-center gap-1.5"><Icon name="lucide:calendar" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ formatProgramClosing(program) }}</span>
               <span v-if="program.mode" class="inline-flex items-center gap-1.5"><Icon name="lucide:monitor" class="h-3.5 w-3.5 text-[#f1a37f]" />{{ program.mode }}</span>
             </div>
           </div>
@@ -210,10 +212,10 @@ useHead({
 
       <SiteCta
         eyebrow="Take the next step"
-        :title="program.status === 'active' ? 'The next cohort could be the one that changes your trajectory.' : 'Registration is currently closed.'"
-        :description="program.status === 'active' ? 'Applications are reviewed on a rolling basis. If the programme is right for you, start your application today.' : 'Join the community and we will let you know when the next cohort opens.'"
-        :primary-label="program.status === 'active' ? 'Apply now' : 'Join the community'"
-        :primary-to="program.status === 'active' && applyLink ? applyLink : '/community'"
+        :title="applicationOpen ? 'The next cohort could be the one that changes your trajectory.' : 'Applications are currently closed.'"
+        :description="applicationOpen ? 'Applications are reviewed on a rolling basis. If the programme is right for you, start your application today.' : 'Join the community and we will let you know when the next cohort opens.'"
+        :primary-label="applicationOpen ? 'Apply now' : 'Join the community'"
+        :primary-to="applicationOpen && applyLink ? applyLink : '/community'"
         secondary-label="Explore other programmes"
         secondary-to="/programs"
       />

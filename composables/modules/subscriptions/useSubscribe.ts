@@ -21,7 +21,7 @@ export const useSubscribe = () => {
       await subscriptions_api.$_create_subscription({ email })
       showToast({
         title: 'Subscription Successful',
-        message: 'You have been added to the Convo Stack.',
+        message: 'You are subscribed to MedLabConvo updates.',
         toastType: 'success'
       })
       return true

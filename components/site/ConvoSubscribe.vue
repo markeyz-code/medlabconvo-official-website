@@ -7,8 +7,8 @@ withDefaults(defineProps<{
   dark?: boolean
   buttonLabel?: string
 }>(), {
-  title: 'The Convo Stack, in your inbox.',
-  description: 'One considered email with new essays, research notes and ecosystem pulses.',
+  title: 'One list. Every MedLabConvo update.',
+  description: 'New Journo publications, programme openings and community news — delivered once, without duplicate sign-ups.',
   dark: false,
   buttonLabel: 'Subscribe for free',
 })
@@ -29,7 +29,7 @@ const submit = async () => {
 
 <template>
   <div class="rounded-2xl border p-5" :class="dark ? 'border-white/10 bg-white/5 text-white' : 'border-[#e4ebf0] bg-[#fbfcfc]'">
-    <p class="text-[9px] font-bold uppercase tracking-[0.16em]" :class="dark ? 'text-white/45' : 'text-[#8a9ba5]'">The Convo Stack</p>
+    <p class="text-[9px] font-bold uppercase tracking-[0.16em]" :class="dark ? 'text-white/45' : 'text-[#8a9ba5]'">MedLabConvo updates</p>
     <p class="mt-2 text-[13px] font-bold leading-snug" :class="dark ? 'text-white' : 'text-[#0a202b]'">{{ title }}</p>
     <p class="mt-1.5 text-[10.5px] leading-5" :class="dark ? 'text-white/55' : 'text-[#5f7482]'">{{ description }}</p>
 

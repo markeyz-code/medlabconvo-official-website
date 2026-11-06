@@ -65,7 +65,7 @@
     <div class="mt-20 flex justify-center items-center px-4">
       <div class="max-w-[900px] w-full flex flex-col justify-center items-center">
         <h2 class="text-lg md:text-xl text-center font-extrabold text-gray-900">
-          Transform Your Internship Experience, Transform Your Future!
+          Transform Your Internship or Service Year. Transform Your Future!
         </h2>
         <div class="overflow-hidden">
           <div class="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32 -mt-48 lg:-mt-0 md:-mt-0 sm:-mt-0">
@@ -156,12 +156,10 @@
         </div>
 
         <p class="text-xl md:text-lg max-w-[800px] w-full font-bold text-gray-900 text-center mt-">
-          Don't let your internship be just another year. Make it the stepping stone to a thriving career!
+          Don't let your internship or service year be just another season. Make it the stepping stone to a thriving career!
         </p>
         <p class="text-xl md:text-lg max-w-[800px] w-full font-bold text-gray-900 text-center mt-4">
-          If you are a medical laboratory science intern looking to navigate your internship with confidence, skill, and
-          purpose, Interntional, a dedicated community by MedLabConvo, is here to help you turn this crucial year into a
-          transformative journey.
+          If you are a medical laboratory science intern or NYSC corper looking to navigate your internship or service year with confidence, skill and purpose, Interntional — a dedicated MedLabConvo community — is here to help you turn this season into a transformative journey.
         </p>
       </div>
     </div>
